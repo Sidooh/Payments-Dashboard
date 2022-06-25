@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+:root {
+    --falcon-body-font-family: 'Varela Round', cursive !important;
+}
+
+.modal-footer > * {
+    margin: .25rem !important;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.table-sm tfoot > tr > th:first-child, .table-sm thead > tr > th:first-child, .table-sm tr th:first-child, .table-sm tr td:first-child {
+    padding-left: .7rem;
+}
+
+.ts-control {
+    box-shadow: var(--falcon-box-shadow-inset) !important;
+}
+
+
+.fs-8 {
+    font-size: 8pt !important
+}
+
+.fs-9 {
+    font-size: 9pt !important
+}
+
+.fs-10 {
+    font-size: 10pt !important
+}
+
+.fs-11 {
+    font-size: 11pt !important
+}
+
+.fs-12 {
+    font-size: 12pt !important
+}
+
+.fs-13 {
+    font-size: 13pt !important
+}
+
+.fs-14 {
+    font-size: 14pt !important
+}
+
+.fs-15 {
+    font-size: 15pt !important
+}
+
+.fs-16 {
+    font-size: 16pt !important
+}
+
+.fs-17 {
+    font-size: 17pt !important
+}
+
+.fs-18 {
+    font-size: 18pt !important
+}
+
+.fs-20 {
+    font-size: 20pt !important
+}
+
+.fs-22 {
+    font-size: 22pt !important
+}
+
+.fs-24 {
+    font-size: 24pt !important
+}
+
+.fs-32 {
+    font-size: 32pt !important
+}
+
+.fs-48 {
+    font-size: 48pt !important
+}
+
+
+/*________   ________ - ________ - DATATABLES   ________ - ________ - _________*/
+
+.table > :not(caption) > * > * {
+    padding: .4rem .5rem;
+    font-size: 10pt;
+}
+
+#table_id_filter input[type="search"] {
+    min-height: calc(1.5em + (0.5rem + 2px));
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+}
+
+table td.actions .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9pt;
+    width: 1.7rem;
+    height: 1.7rem;
+    padding: 4px;
+}
+
+.paginate_button a {
+    padding: .1875rem .75rem;
+    font-size: 0.875rem;
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #5e6e82;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent !important;
+    border-radius: .25rem;
+    margin-right: .3rem;
+    margin-left: .3rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    -o-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+}
+
+
+/*________   ________ - ________ - TOASTIFY   ________ - ________ - _________*/
+
+.toastify {
+    font-weight: bolder;
+}
+
+.toastify.success {
+    background: linear-gradient(30deg, rgb(10, 170, 30), rgba(10, 170, 100, .8), #73a5ff);
+}
+
+.toastify.info {
+    background: linear-gradient(30deg, rgb(37, 157, 138), rgba(37, 157, 138, .8), #73a5ff);
+}
+
+.toastify.warning {
+    background: linear-gradient(30deg, rgb(235, 166, 18), rgba(235, 166, 18, .8), #73a5ff);
+    color: rgb(30, 30, 30);
+}
+
+.toastify.danger {
+    background: linear-gradient(30deg, rgb(200, 20, 10), rgba(1200, 20, 10, .8), #73a5ff);
+}
+
+
+/*________   ________ - ________ - SIMPLE BAR   ________ - ________ - _________*/
+
+[data-simplebar] {
+    position: relative;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
+.simplebar-wrapper {
+    overflow: hidden;
+    width: inherit;
+    height: inherit;
+    max-width: inherit;
+    max-height: inherit;
+}
+
+.simplebar-height-auto-observer-wrapper {
+    box-sizing: inherit !important;
+    height: 100%;
+    width: 100%;
+    max-width: 1px;
+    position: relative;
+    float: left;
+    max-height: 1px;
+    overflow: hidden;
+    z-index: -1;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+    flex-grow: inherit;
+    flex-shrink: 0;
+    flex-basis: 0;
+}
+
+.simplebar-height-auto-observer, .simplebar-track {
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.simplebar-height-auto-observer {
+    box-sizing: inherit;
+    display: block;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    height: 1000%;
+    width: 1000%;
+    min-height: 1px;
+    min-width: 1px;
+    z-index: -1;
+}
+
+.simplebar-mask, .simplebar-offset {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0 !important;
+}
+
+.simplebar-mask {
+    direction: inherit;
+    overflow: hidden;
+    width: auto !important;
+    height: auto !important;
+    z-index: 0;
+}
+
+.simplebar-offset {
+    direction: inherit !important;
+    box-sizing: inherit !important;
+    resize: none !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.simplebar-content-wrapper {
+    direction: inherit;
+    box-sizing: border-box !important;
+    position: relative;
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.simplebar-placeholder {
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    pointer-events: none;
+}
+
+/*________   ________ - ________ - DATATABLE   ________ - ________ - _________*/
+
+.sort:after {
+    content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik02LjUyNiAzLjVjLjQyMyAwIC42MzUtLjQzOC4zMy0uNzA4TDMuODQuMTI1YS41MjkuNTI5IDAgMDAtLjY4MiAwTC4xNDUgMi43OTJjLS4zMDYuMjctLjA5NC43MDguMzMuNzA4aDYuMDV6TS40NzQgNS41Yy0uNDIzIDAtLjYzNS40MzgtLjMzLjcwOEwzLjE2IDguODc1YS41MjkuNTI5IDAgMDAuNjgyIDBsMy4wMTQtMi42NjdjLjMwNi0uMjcuMDk0LS43MDgtLjMzLS43MDhILjQ3NnoiIGZpbGw9IiNCNkMyRDIiLz48L3N2Zz4=");
+    margin-left: .25rem;
+}
+
+.sort.asc:after {
+    content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik02LjUyNiAzLjVjLjQyMyAwIC42MzUtLjQzOC4zMy0uNzA4TDMuODQuMTI1YS41MjkuNTI5IDAgMDAtLjY4MiAwTC4xNDUgMi43OTJjLS4zMDYuMjctLjA5NC43MDguMzMuNzA4aDYuMDV6IiBmaWxsPSIjQjZDMkQyIi8+PC9zdmc+") !important;
+    margin-top: -1px !important;
+}
+
+.sort.desc:after {
+    content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0uNDc0LjVjLS40MjMgMC0uNjM1LjQzOC0uMzMuNzA4TDMuMTYgMy44NzVhLjUyOS41MjkgMCAwMC42ODIgMGwzLjAxNC0yLjY2N0M3LjE2MS45MzggNi45NS41IDYuNTI1LjVILjQ3NnoiIGZpbGw9IiNCNkMyRDIiLz48L3N2Zz4=") !important;
+    margin-top: -1px !important;
+}
+
+
+.fa-icon-wait {
+    opacity: 1;
+}
