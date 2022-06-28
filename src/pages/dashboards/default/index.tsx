@@ -9,7 +9,7 @@ const Dashboard = () => {
     // console.log(process.env);
     // const {data, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
     // console.log(data);
-    //
+
     // if (isError) return <SectionError error={error}/>;
     // if (isLoading || !isSuccess || !data) return <SectionLoader/>;
 
