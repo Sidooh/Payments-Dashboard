@@ -26,11 +26,10 @@ const Dashboard = () => {
             <Row className="g-3 mb-3">
                 <Col>
                     <Row className="g-3">
-                        <Col md={6} xxl={12}>
-                            <PaymentsCount total={data.total_transactions}
-                                               total_today={data.total_transactions_today}/>
+                        <Col>
+                            <PaymentsCount total={data.total_transactions} total_today={data.total_transactions_today}/>
                         </Col>
-                        <Col md={6} xxl={12}>
+                        <Col>
                             <TotalRevenue total={data.total_revenue} total_today={data.total_revenue_today}/>
                         </Col>
                     </Row>

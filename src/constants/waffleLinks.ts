@@ -15,8 +15,9 @@ export const waffleLinks: WaffleLinkType[] = [
     {
         avatarText: 'A',
         title: 'Accounts',
-        link: `/events/event-detail`,
+        link: CONFIG.sidooh.services.accounts.dashboard.url,
         contentClass: 'bg-soft-primary text-primary',
+        enabled: true
     },
     {
         avatarText: 'E',
@@ -27,28 +28,23 @@ export const waffleLinks: WaffleLinkType[] = [
     {
         avatarText: 'L',
         title: 'Legacy',
-        link: CONFIG.sidooh.services.legacy.dashboard.url,
+        link: CONFIG.sidooh.services.legacy.url,
         contentClass: 'bg-soft-primary text-primary',
-        enabled:true
+        enabled: true
     },
     {
         avatarText: 'N',
         title: 'Notify',
         link: CONFIG.sidooh.services.notify.dashboard.url,
         contentClass: 'bg-soft-primary text-primary',
-        enabled:true
-    },
-    {
-        avatarText: 'p',
-        title: 'Payments',
-        link: `/events/event-detail`,
-        contentClass: 'bg-soft-primary text-primary',
+        enabled: true
     },
     {
         avatarText: 'P',
         title: 'Products',
-        link: `/events/event-detail`,
+        link: CONFIG.sidooh.services.products.dashboard.url,
         contentClass: 'bg-soft-primary text-primary',
+        enabled: true
     },
     {
         avatarText: 'S',

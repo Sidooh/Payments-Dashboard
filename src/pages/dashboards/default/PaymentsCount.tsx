@@ -1,6 +1,6 @@
 import { Card, Col, Row } from 'react-bootstrap';
 import CountUp from 'react-countup';
-import CardBgCorner from '../../../components/CardBgCorner';
+import CardBgCorner from 'components/CardBgCorner';
 import { Chip } from '@mui/material';
 
 const PaymentsCount = ({total, total_today}: { total: number, total_today: number }) => {
