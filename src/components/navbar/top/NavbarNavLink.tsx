@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Nav } from 'react-bootstrap';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
@@ -14,7 +13,7 @@ type NavbarNavLinkType = {
 };
 
 const NavbarNavLink = ({title, route}: NavbarNavLinkType) => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     const {navbarCollapsed, showBurgerMenu} = useAppSelector((state: RootState) => state.theme);
 
@@ -26,12 +25,7 @@ const NavbarNavLink = ({title, route}: NavbarNavLinkType) => {
     return (
         <Nav.Link
             as={Link}
-            className={classNames('fw-medium', {
-                'text-500': !route?.active,
-                'text-700 mb-0 fw-bold': title,
-                'py-1': !title,
-                'link-600': !title && route?.active
-            })}
+            className={`fw-medium ${!route?.active && 'text-500'} ${title ? 'text-700 mb-0 fw-bold' : 'py-1'} ${(!title && route?.active) && 'link-600'}`}
             to={String(route?.to)}
             onClick={handleClick}
         >

@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
 import Footer from 'components/Footer';
-import classNames from 'classnames';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { SectionError } from 'components/common/Error';
@@ -37,14 +36,11 @@ const MainLayout = () => {
             {(navbarPosition === 'vertical' || navbarPosition === 'combo') && (
                 <NavbarVertical/>
             )}
-            <div className={classNames('content', {'pb-0': isKanban})}>
+            <div className={`content ${isKanban && 'pb-0'}`}>
                 <NavbarTop/>
                 {/*------ Main Routes ------*/}
-                <ErrorBoundary FallbackComponent={SectionError}
-                               onReset={() => window.location.reload()}>
-                    <Suspense fallback={<SectionLoader/>}>
-                        <Outlet/>
-                    </Suspense>
+                <ErrorBoundary FallbackComponent={SectionError} onReset={() => window.location.reload()}>
+                    <Suspense fallback={<SectionLoader/>}><Outlet/></Suspense>
                 </ErrorBoundary>
 
                 {!isKanban && <Footer/>}

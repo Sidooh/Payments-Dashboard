@@ -1,8 +1,8 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import moment from 'moment';
-import { useAuth } from '../hooks/useAuth';
-import { login } from '../features/auth/authSlice';
+import { useAuth } from 'hooks/useAuth';
+import { login } from 'features/auth/authSlice';
 
 export const Middleware = {
     Guest: ({component}: { component: JSX.Element }) => {

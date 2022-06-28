@@ -49,7 +49,7 @@ const Login = () => {
                                helperText={formik.errors.email}/>
                 </div>
                 <div className="mb-3">
-                    <TextField label="Password" placeholder="Password..." required
+                    <TextField label="Password" placeholder="Password..." required type={'password'}
                                name={'password'} value={formik.values.password} onChange={formik.handleChange}
                                error={Boolean(formik.errors.password)} helperText={formik.errors.password}/>
                 </div>

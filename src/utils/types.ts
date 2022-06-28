@@ -1,9 +1,5 @@
-import { ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-
-export type Children = {
-    children: ReactNode
-}
+import { Status } from './enums';
 
 export type ToastDataType = {
     type: 'success' | 'info' | 'warning' | 'danger';
@@ -31,4 +27,54 @@ export type RouteType = {
     label: string
     labelDisable?: boolean
     children: RouteChildType[]
+}
+
+export type StkCallback = {
+    id: string
+    amount: number
+    result_desc: string
+    checkout_request_id: string
+    created_at: string
+}
+
+export type StkRequest = {
+    id: string
+    checkout_request_id: string
+    amount: number
+    phone: number
+    reference: string
+    status: Status
+    created_at: string
+    response?: StkCallback
+}
+
+export type Payment = {
+    amount: number
+    type: string
+    subtype: string
+    status: Status
+    provider?: StkRequest
+}
+
+export type TandaRequest = {
+    request_id: number
+    receipt_number: number
+    amount: number
+    provider: string
+    message: string
+    destination: string
+    last_modified: string
+    status: number
+}
+
+export type Transaction = {
+    id?: number
+    status: Status
+    description: string
+    destination: string
+    type: string
+    amount: number
+    created_at: string
+    payment?: Payment
+    request?: TandaRequest
 }

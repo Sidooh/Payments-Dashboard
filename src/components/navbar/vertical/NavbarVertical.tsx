@@ -1,5 +1,4 @@
 import { Fragment, useEffect } from 'react';
-import classNames from 'classnames';
 import { Col, Nav, Navbar, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import Logo from 'components/common/Logo';
@@ -64,9 +63,7 @@ const NavbarVertical = () => {
 
     return (
         <Navbar expand={navbarBreakPoint}
-            className={classNames('navbar-vertical', {
-                [`navbar-${navbarStyle}`]: navbarStyle !== 'transparent'
-            })} variant="light">
+            className={`navbar-vertical ${navbarStyle !== 'transparent' && `navbar-${navbarStyle}`}`} variant="light">
             <Flex alignItems="center">
                 <ToggleButton/>
                 <Logo at="navbar-vertical" width={70}/>

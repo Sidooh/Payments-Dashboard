@@ -21,13 +21,13 @@ export const dashboardRoutes: RouteType = {
     ]
 };
 
-export const transactionRoutes: RouteType = {
-    label: 'Transactions',
+export const paymentRoutes: RouteType = {
+    label: 'Payments',
     children: [
         {
-            name: 'All Transactions',
+            name: 'All Payments',
             icon: faGlobe,
-            to: '/transactions',
+            to: '/payments',
             active: true,
         },
     ]
@@ -47,7 +47,7 @@ export const appRoutes: RouteType = {
 
 const routes = [
     dashboardRoutes,
-    transactionRoutes,
+    paymentRoutes,
     appRoutes
 ];
 

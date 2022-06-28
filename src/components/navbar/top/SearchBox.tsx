@@ -1,8 +1,36 @@
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CloseButton from 'components/common/CloseButton';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useAppSelector } from 'app/hooks';
+
+type CloseButtonType = {
+    size: 'sm' | 'lg',
+    noOutline?: boolean,
+    variant?: 'white', // use 'white' for white variant
+    onClick: () => void,
+    className?: string
+};
+
+const CloseButton = ({
+    size,
+    onClick,
+    noOutline,
+    variant,
+    className,
+    ...rest
+}: CloseButtonType) => {
+    const {isDark} = useAppSelector(state => state.theme);
+
+    return (
+        <Button
+            variant={variant ? variant : isDark ? 'white' : undefined}
+            className={`${className} ${size && 'btn-${size}'} ${noOutline && 'outline-none'}`}
+            onClick={onClick}
+            {...rest}
+        />
+    );
+};
 
 const SearchBox = () => {
     const [searchInputValue, setSearchInputValue] = useState('');

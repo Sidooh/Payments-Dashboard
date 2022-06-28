@@ -8,6 +8,7 @@ import { Button } from '@mui/material';
 import { Add, ArrowRightAltRounded } from '@mui/icons-material';
 import pluralize from 'pluralize';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function BulkAction({ title, onCreateRow, selectedFlatRows, selectedRowIds = [], bulkActions, viewAll }) {
     const navigate = useNavigate();
@@ -17,6 +18,8 @@ function BulkAction({ title, onCreateRow, selectedFlatRows, selectedRowIds = [],
     const tableTitle = pluralize(title, selectedRowsCount);
 
     const executeBulkAction = () => {
+        console.log(action);
+
         const ids = selectedFlatRows.map(row => row.original.id);
         console.log(ids);
     };
@@ -27,8 +30,8 @@ function BulkAction({ title, onCreateRow, selectedFlatRows, selectedRowIds = [],
                 <h5 className="fs-0 mb-0 text-nowrap py-2 py-xl-0">
                     {
                         selectedRowsCount
-                            ? `You have selected ${selectedRowsCount} ${tableTitle}`
-                            : title
+                        ? `You have selected ${selectedRowsCount} ${tableTitle}`
+                        : title
                     }
                 </h5>
             </Col>
@@ -47,24 +50,24 @@ function BulkAction({ title, onCreateRow, selectedFlatRows, selectedRowIds = [],
                             </Button>
                         </div>
                     ) : (
-                        <div className={'d-flex align-items-center'}>
-                            {
-                                onCreateRow &&
-                                <Button size="small" startIcon={<Add/>} transform="shrink-3" className="me-2"
-                                        onClick={onCreateRow} variant={'contained'}>
-                                    <span className="d-none d-sm-inline-block ms-1">New</span>
-                                </Button>
-                            }
-                            {
-                                viewAll &&
-                                <Button size="small" icon="external-link-alt" transform="shrink-3"
-                                        onClick={() => navigate(viewAll)}>
-                                    <span className="d-none d-sm-inline-block ms-1">View All</span>
-                                    <ArrowRightAltRounded/>
-                                </Button>
-                            }
-                        </div>
-                    )}
+                         <div className={'d-flex align-items-center'}>
+                             {
+                                 onCreateRow &&
+                                 <Button size="small" startIcon={<Add/>} transform="shrink-3" className="me-2"
+                                         onClick={onCreateRow} variant={'contained'}>
+                                     <span className="d-none d-sm-inline-block ms-1">New</span>
+                                 </Button>
+                             }
+                             {
+                                 viewAll &&
+                                 <Button size="small" icon="external-link-alt" transform="shrink-3"
+                                         onClick={() => navigate(viewAll)}>
+                                     <span className="d-none d-sm-inline-block ms-1">View All</span>
+                                     <ArrowRightAltRounded/>
+                                 </Button>
+                             }
+                         </div>
+                     )}
                 </Col>}
         </Row>
     );
@@ -93,8 +96,9 @@ const DataTable = ({
             </Row>
             <AdvanceTable table headerClassName="bg-200 text-900 text-nowrap align-middle"
                           rowClassName="align-middle"
-                          tableProps={{ striped: true, className: `fs--1 mb-0 overflow-hidden ${tableClassName}`
-            }}/>
+                          tableProps={{
+                              striped: true, className: `fs--1 mb-0 overflow-hidden ${tableClassName}`
+                          }}/>
             <div className="mt-3">
                 <AdvanceTableFooter rowCount={data.length} table rowInfo navButtons rowsPerPageSelection/>
             </div>
@@ -102,14 +106,15 @@ const DataTable = ({
     );
 };
 
-/*DataTable.propTypes = {
+DataTable.propTypes = {
     title: PropTypes.string.isRequired,
     columns: PropTypes.arrayOf(PropTypes.object).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     perPage: PropTypes.number,
     bulkActions: PropTypes.bool,
     searchable: PropTypes.bool,
-    viewAll: PropTypes.string
-};*/
+    viewAll: PropTypes.string,
+    onCreateRow: PropTypes.func
+};
 
 export default memo(DataTable);

@@ -23,7 +23,7 @@ const NavbarTop = () => {
     const handleBurgerMenu = () => {
         navbarPosition === 'top' && dispatch(setTheme({key: 'navbarCollapsed', value: !navbarCollapsed}));
         (navbarPosition === 'vertical' || navbarPosition === 'combo') && dispatch(setTheme({
-            key: 'showBurgerMenu',
+            key  : 'showBurgerMenu',
             value: !showBurgerMenu
         }));
     };
@@ -44,32 +44,17 @@ const NavbarTop = () => {
 
     return (
         <Navbar
-            className={classNames('navbar-glass  fs--1 navbar-top sticky-kit', {
-                // 'navbar-glass-shadow': showDropShadow
-                'navbar-glass-shadow': showDropShadow && !isChat
-            })}
-            expand={
-                navbarPosition === 'top' || navbarPosition === 'combo'
-                    ? topNavbarBreakpoint
-                    : true
-            }
-        >
+            className={`navbar-glass  fs--1 navbar-top sticky-kit ${(showDropShadow && !isChat) && 'navbar-glass-shadow'}`}
+            expand={navbarPosition === 'top' || navbarPosition === 'combo' ? topNavbarBreakpoint : true}>
             <Navbar.Toggle
                 className={classNames('toggle-icon-wrapper me-md-3 me-2', {
-                    'd-lg-none': navbarPosition === 'top',
+                    'd-lg-none'                   : navbarPosition === 'top',
                     [`d-${navbarBreakPoint}-none`]:
                     navbarPosition === 'vertical' || navbarPosition === 'combo'
-                })}
-                as="div"
-            >
-                <button
-                    className="navbar-toggler-humburger-icon btn btn-link d-flex flex-center"
-                    onClick={handleBurgerMenu}
-                    id="burgerMenu"
-                >
-          <span className="navbar-toggle-icon">
-            <span className="toggle-line"/>
-          </span>
+                })} as="div">
+                <button className="navbar-toggler-humburger-icon btn btn-link d-flex flex-center"
+                        onClick={handleBurgerMenu} id="burgerMenu">
+                    <span className="navbar-toggle-icon"><span className="toggle-line"/></span>
                 </button>
             </Navbar.Toggle>
 

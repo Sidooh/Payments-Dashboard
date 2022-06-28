@@ -5,6 +5,19 @@ export const theme = createTheme({
         fontFamily: `${['"Varela Round"', 'cursive',].join(',')}!important`,
     },
     components: {
+        MuiChip: {
+            defaultProps: {
+                size: 'small'
+            },
+            styleOverrides:{
+                sizeSmall: {
+                    height:'20px'
+                },
+                iconSmall:{
+                    fontSize:'10px'
+                }
+            }
+        },
         MuiTextField    : {
             defaultProps: {
                 size     : 'small',

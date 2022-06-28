@@ -1,5 +1,4 @@
 import { Status } from 'utils/enums';
-import PropTypes from 'prop-types';
 import { Chip, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import { Check, Error, Info, Pending } from '@mui/icons-material';
 import { useState } from 'react';
@@ -24,13 +23,15 @@ const statusProps = (status: Status, colorIcon = true) => {
 };
 
 type StatusChipType = {
-    status: Status
+    status?: Status
     bg?: boolean
     entity: string,
     entityId: number
 }
 
 const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
+    if(!status) status = Status.FAILED
+
     const {color, icon} = statusProps(status, false);
 
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | undefined>(undefined);
@@ -52,8 +53,8 @@ const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
         <>
             <Chip sx={{px: .5}} onClick={e => setAnchorEl(e.currentTarget)}
                   variant={bg ? 'filled' : 'outlined'}
-                  color={color} className={`fw-bold font-size-11`}
-                  label={<span><b>Status:</b> {status}</span>}
+                  color={color} className={`fw-bold fs-7`}
+                  label={<span>{status}</span>}
                   icon={icon}
             />
             <Menu
@@ -72,13 +73,6 @@ const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
             </Menu>
         </>
     );
-};
-
-StatusChip.propTypes = {
-    status  : PropTypes.string.isRequired,
-    bg      : PropTypes.bool,
-    entity  : PropTypes.string,
-    entityId: PropTypes.number,
 };
 
 export default StatusChip;

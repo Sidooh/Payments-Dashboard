@@ -18,6 +18,43 @@ const SectionLoaderWrapper = styled(Box)({
     zIndex   : 1301,
 });
 
+const ComponentLoaderWrapper = styled(Box)({
+    display       : 'flex',
+    justifyContent: 'center',
+    alignItems    : 'center',
+});
+
+const ComponentLoader = ({size = 'md'}) => {
+    let height = '20vh';
+
+    if (size === 'sm') {
+        height = '10vh';
+    } else if (size === 'lg') {
+        height = '30vh';
+    } else if (size === 'xl') {
+        height = '50vh';
+    }
+
+    return (
+        <ComponentLoaderWrapper height={height}>
+            <Box position={'relative'}>
+                <CircularProgress variant="determinate" size={100} thickness={3} value={100}
+                                  sx={{color: (theme) => theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]}}/>
+                <CircularProgress variant="indeterminate" disableShrink
+                                  sx={{
+                                      color                                   : (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
+                                      animationDuration                       : '700ms',
+                                      position                                : 'absolute',
+                                      left                                    : 0,
+                                      [`& .${circularProgressClasses.circle}`]: {
+                                          strokeLinecap: 'round',
+                                      },
+                                  }} size={100} thickness={2}/>
+            </Box>
+        </ComponentLoaderWrapper>
+    );
+};
+
 // ==============================|| LOADER ||============================== //
 const PageLoader = () => <PageLoaderWrapper><LinearProgress color="primary"/></PageLoaderWrapper>;
 
@@ -57,5 +94,6 @@ const SectionLoader = () => {
 
 export {
     SectionLoader,
-    PageLoader
+    PageLoader,
+    ComponentLoader
 };
