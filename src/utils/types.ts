@@ -18,7 +18,7 @@ export type RouteChildType = {
     exact?: boolean
     badge?: {
         text?: string
-        type?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark',
+        type?: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
     }
     children?: RouteChildType[]
 }

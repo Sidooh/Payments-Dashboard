@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { getTelcoFromPhone, parsePhone } from 'src/utils/helpers';
+import { getTelcoFromPhone, parsePhone } from 'utils/helpers';
 import { Telco } from 'utils/enums';
 import { Chip } from '@mui/material';
 import { Phone } from '@mui/icons-material';
