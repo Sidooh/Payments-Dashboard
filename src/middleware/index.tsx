@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import moment from 'moment';
 import { useAuth } from 'hooks/useAuth';
@@ -20,15 +20,14 @@ export const Middleware = {
     Auth : ({component}: { component: JSX.Element }) => {
         const {auth} = useAuth();
         const location = useLocation();
-        const navigate = useNavigate();
         const dispatch = useAppDispatch();
 
         if (!auth) return <Navigate to="/login" state={{from: location}} replace/>;
 
         const expiresIn = moment.unix(auth.user.exp).diff(moment(), 'minutes');
-        console.log(`Session expires in: ${expiresIn}min`);
+        console.log(`Session expires in: ${expiresIn}mins`);
 
-        if (expiresIn < 1) return dispatch(login(auth.credentials)).then(() => component, () => navigate('/login'));
+        if (expiresIn < 1) dispatch(login(auth.credentials));
 
         return component;
     }
