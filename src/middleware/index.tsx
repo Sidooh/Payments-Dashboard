@@ -1,8 +1,9 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import moment from 'moment';
-import { useAuth } from 'hooks/useAuth';
-import { login } from 'features/auth/authSlice';
+import { useAuth } from '../hooks/useAuth';
+import { logout } from '../features/auth/authSlice';
+import { JWT } from '../utils/helpers';
 
 export const Middleware = {
     Guest: ({component}: { component: JSX.Element }) => {
@@ -24,10 +25,16 @@ export const Middleware = {
 
         if (!auth) return <Navigate to="/login" state={{from: location}} replace/>;
 
-        const expiresIn = moment.unix(auth.user.exp).diff(moment(), 'minutes');
-        console.log(`Session expires in: ${expiresIn}mins`);
+        const user = JWT.decode(auth.token)
+        const expiresIn = moment.unix(user.exp).diff(moment(), 'minutes');
 
-        if (expiresIn < 1) dispatch(login(auth.credentials));
+        console.log(`Session expires in: ${expiresIn} minutes`);
+
+        if (moment.unix(user.exp).isBefore(moment())) {
+            dispatch(logout());
+
+            return <Navigate to="/login" state={{from: location}} replace/>
+        }
 
         return component;
     }
