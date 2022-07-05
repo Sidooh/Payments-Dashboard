@@ -31,7 +31,6 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         accessorKey: 'updated_at',
                         header: 'Date',
-                        className: 'text-end',
                         cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
