@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
     readonly VITE_ACCOUNTS_API_URL: string
     readonly VITE_PRODUCTS_API_URL: string
+    readonly VITE_PAYMENTS_API_URL: string
     readonly VITE_NOTIFY_API_URL: string
 
     readonly VITE_NOTIFY_DASH_URL: string

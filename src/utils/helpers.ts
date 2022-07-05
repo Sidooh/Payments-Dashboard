@@ -62,9 +62,9 @@ const userAgent = ((navigator && navigator.userAgent) || '').toLowerCase();
 
 // build a 'comparator' object for various comparison checks
 let comparator = {
-    '<' : (a: any, b: string) => a < b,
+    '<': (a: any, b: string) => a < b,
     '<=': (a: any, b: string) => a <= b,
-    '>' : (a: any, b: string) => a > b,
+    '>': (a: any, b: string) => a > b,
     '>=': (a: any, b: string) => a >= b
 };
 
@@ -83,11 +83,11 @@ export const is = {
     windows: () => {
         return navigator.userAgent.indexOf("Win") !== -1;
     },
-    chrome : (range?: string): boolean => {
+    chrome: (range?: string): boolean => {
         let match = /google inc/.test(vendor) ? userAgent.match(/(?:chrome|crios)\/(\d+)/) : null;
         return match !== null && !is.opera() && compareVersion(match[1], range);
     },
-    opera  : (range?: string): boolean => {
+    opera: (range?: string): boolean => {
         let match = userAgent.match(/(?:^opera.+?version|opr)\/(\d+)/);
         return match !== null && compareVersion(match[1], range);
     },
@@ -103,11 +103,11 @@ export const toast = (data: ToastDataType) => {
         close = data.close ?? true;
 
     Toastify({
-        text     : data.msg,
-        duration : duration,
-        close    : close,
-        gravity  : data.gravity ?? 'bottom',
-        position : data.position ?? 'right',
+        text: data.msg,
+        duration: duration,
+        close: close,
+        gravity: data.gravity ?? 'bottom',
+        position: data.position ?? 'right',
         className: type,
     }).showToast();
 };
@@ -124,7 +124,7 @@ export const JWT = {
     },
 };
 
-export const parsePhone = (phone?: string|number) => phone && parsePhoneNumber(String(phone), 'KE').number;
+export const parsePhone = (phone?: string | number) => phone && parsePhoneNumber(String(phone), 'KE').number;
 
 export const getTelcoFromPhone = (phone: string) => {
     phone = String(phone);
@@ -147,5 +147,20 @@ export const getTelcoFromPhone = (phone: string) => {
         return Telco.FAIBA;
     } else {
         return null;
+    }
+};
+
+export const Str = {
+    headline: (str: string) => {
+        if (!str) return "";
+
+        str = str.replaceAll('_', ' ').replaceAll('-', ' ');
+
+        return str.replaceAll(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substring(1).toLowerCase());
+    },
+    ucFirst: (str: string) => {
+        str = str.toLowerCase();
+
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 };

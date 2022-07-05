@@ -12,7 +12,7 @@ export type ToastDataType = {
 
 export type RouteChildType = {
     name: string
-    active: boolean
+    active?: boolean
     icon?: IconProp
     to?: string
     exact?: boolean

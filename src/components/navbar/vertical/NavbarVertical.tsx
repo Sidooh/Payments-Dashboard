@@ -80,9 +80,7 @@ const NavbarVertical = () => {
                     <Nav className="flex-column" as="ul">
                         {routes.map(route => (
                             <Fragment key={route.label}>
-                                {!route.labelDisable && (
-                                    <NavbarLabel label={capitalize(route.label)}/>
-                                )}
+                                {!route.labelDisable && <NavbarLabel label={capitalize(route.label)}/>}
                                 <NavbarVerticalMenu routes={route.children}/>
                             </Fragment>
                         ))}

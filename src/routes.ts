@@ -1,19 +1,26 @@
 import { RouteType } from "utils/types";
-import { faWrench, faPieChart, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import {
+    faWrench,
+    faPieChart,
+    faGlobe,
+    faMoneyCheckDollar,
+    faHandHoldingDollar,
+    faSackDollar
+} from '@fortawesome/free-solid-svg-icons';
 
 export const dashboardRoutes: RouteType = {
-    label       : 'Dashboard',
+    label: 'Dashboard',
     labelDisable: true,
-    children    : [
+    children: [
         {
-            name    : 'Dashboard',
-            active  : true,
-            icon    : faPieChart,
+            name: 'Dashboard',
+            active: true,
+            icon: faPieChart,
             children: [
                 {
-                    name  : 'Home',
-                    to    : '/',
-                    exact : true,
+                    name: 'Home',
+                    to: '/',
+                    exact: true,
                     active: true
                 },
             ]
@@ -21,34 +28,40 @@ export const dashboardRoutes: RouteType = {
     ]
 };
 
-export const paymentRoutes: RouteType = {
-    label: 'Payments',
-    children: [
-        {
-            name: 'All Payments',
-            icon: faGlobe,
-            to: '/payments',
-            active: true,
-        },
-    ]
-};
-
 export const appRoutes: RouteType = {
     label: 'App',
     children: [
         {
-            name: 'Settings',
-            icon: faWrench,
-            to: '/settings',
-            active: true
+            name: 'Payments',
+            icon: faSackDollar,
+            to: '/payments',
+            active: true,
+        },
+        {
+            name: 'MPESA',
+            icon: faMoneyCheckDollar,
+            to: '/payments',
+            children: [
+                {name: 'STK', to: '/mpesa/stk',},
+                {name: 'C2B', to: '/mpesa/c2b',},
+                {name: 'B2C', to: '/mpesa/b2c',},
+            ]
+        },
+        {
+            name: 'Vouchers',
+            icon: faHandHoldingDollar,
+            to: '/payments',
+            children: [
+                {name: 'Vouchers', to: '/vouchers',},
+                {name: 'Transactions', to: '/vouchers/transactions',},
+            ]
         },
     ]
 };
 
 const routes = [
     dashboardRoutes,
-    paymentRoutes,
     appRoutes
 ];
 
-export default routes
+export default routes;

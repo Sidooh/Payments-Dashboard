@@ -17,6 +17,11 @@ export const CONFIG = {
                     url: import.meta.env.VITE_PRODUCTS_DASH_URL
                 }
             },
+            payments: {
+                api: {
+                    url: import.meta.env.VITE_PAYMENTS_API_URL
+                },
+            },
             notify  : {
                 api      : {
                     url: import.meta.env.VITE_NOTIFY_API_URL

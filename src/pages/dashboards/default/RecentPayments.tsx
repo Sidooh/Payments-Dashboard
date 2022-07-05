@@ -9,55 +9,36 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable bulkActions title={'Recent Payments'} columns={[
+                <DataTable title={'Recent Payments'} columns={[
                     {
-                        accessor: 'customer',
-                        Header  : 'Customer',
-                        Cell    : ({row}: any) => (
-                            <span>
-                                {row.original.account.phone} <br/>
-                                <small><b>Destination: {row.original.destination}</b></small>
-                            </span>
-                        )
+                        accessorKey: 'subtype',
+                        header: 'Sub Type'
                     },
                     {
-                        accessor: 'product',
-                        Header  : 'Product',
-                        Cell: ({row}:any) => row.original.product.name
-                    },
-                    {
-                        accessor: 'amount',
-                        Header  : 'Amount',
-                        Cell    : ({row}: any) => (new Intl.NumberFormat('en-GB', {
-                            style   : 'currency',
+                        accessorKey: 'amount',
+                        header: 'Amount',
+                        cell: ({row}: any) => (new Intl.NumberFormat('en-GB', {
+                            style: 'currency',
                             currency: 'KES'
                         })).format(row.original.amount)
                     },
                     {
-                        accessor: 'payment',
-                        Header  : 'Payment',
-                        Cell    : ({row}: any) => <StatusChip status={row.original.payment?.status} entity={'payment'}
-                                                              entityId={row.original.id}/>
+                        accessorKey: 'status',
+                        header: 'Status',
+                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'payment'}
+                                                          entityId={row.original.id}/>
                     },
                     {
-                        accessor: 'status',
-                        Header  : 'Status',
-                        Cell    : ({row}: any) => <StatusChip status={row.original.status} entity={'payment'}
-                                                              entityId={row.original.id}/>
-                    },
-                    {
-                        accessor : 'updated_at',
-                        Header   : 'Date',
+                        accessorKey: 'updated_at',
+                        header: 'Date',
                         className: 'text-end',
-                        Cell     : ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
-                        accessor     : 'actions',
-                        disableSortBy: true,
-                        className    : 'text-end',
-                        Cell         : ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
+                        id: 'actions',
+                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
                     }
-                ]} data={payments}/>
+                ]} data={payments} viewAllLink={'/payments'}/>
             </Card.Body>
         </Card>
     );
