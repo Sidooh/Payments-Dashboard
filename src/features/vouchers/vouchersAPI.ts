@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { Payment } from '../../utils/types';
+import { Voucher, VoucherTransaction } from '../../utils/types';
 
-export const paymentsAPI = createApi({
-    reducerPath: 'paymentsApi',
+export const vouchersAPI = createApi({
+    reducerPath: 'vouchersApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
@@ -17,20 +17,20 @@ export const paymentsAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboard: builder.query<any, void>({
-            query: () => '/dashboard',
+        vouchers: builder.query<Voucher[], void>({
+            query: () => '/vouchers'
         }),
-        payments: builder.query<Payment[], void>({
-            query: () => '/payments'
+        voucher: builder.query<Voucher, number>({
+            query: id => `/vouchers/${id}`
         }),
-        payment: builder.query<Payment, number>({
-            query: id => `/payments/${id}`
+        voucherTransactions: builder.query<VoucherTransaction[], void>({
+            query: () => `/vouchers/transactions?with=payment`
         })
     })
 });
 
 export const {
-    useGetDashboardQuery,
-    usePaymentsQuery,
-    usePaymentQuery
-} = paymentsAPI;
+    useVouchersQuery,
+    useVoucherQuery,
+    useVoucherTransactionsQuery
+} = vouchersAPI;

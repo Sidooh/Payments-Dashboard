@@ -1,20 +1,28 @@
 import { Card } from 'react-bootstrap';
-import DataTable from 'components/common/datatable';
 import StatusChip from 'components/chips/StatusChip';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import { Payment } from 'utils/types';
-import { currencyFormat } from '../../../utils/helpers';
+import DataTable from 'components/common/datatable';
+import { SectionLoader } from 'components/common/Loader';
+import { SectionError } from 'components/common/Error';
+import { useParams } from 'react-router-dom';
+import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
+import { currencyFormat } from '../../utils/helpers';
 
-const RecentPayments = ({payments}: { payments: Payment[] }) => {
+const Payments = () => {
+    const {subType} = useParams();
+    console.log(subType);
+
+    let {data: payments, isLoading, isSuccess, isError, error} = useMpesaPaymentsQuery(String(subType));
+    console.log(payments);
+
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !payments) return <SectionLoader/>;
+
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={'Recent Payments'} columns={[
-                    {
-                        accessorKey: 'subtype',
-                        header: 'Sub Type'
-                    },
+                <DataTable title={`${subType?.toUpperCase()} Payments`} columns={[
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
@@ -35,10 +43,10 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                         id: 'Actions',
                         cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
                     }
-                ]} data={payments} viewAllLink={'/payments'}/>
+                ]} data={payments}/>
             </Card.Body>
         </Card>
     );
 };
 
-export default RecentPayments;
+export default Payments;

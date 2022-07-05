@@ -164,3 +164,8 @@ export const Str = {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 };
+
+export const currencyFormat = (number?:number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency
+})).format(number);

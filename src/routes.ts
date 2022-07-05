@@ -40,7 +40,6 @@ export const appRoutes: RouteType = {
         {
             name: 'MPESA',
             icon: faMoneyCheckDollar,
-            to: '/payments',
             children: [
                 {name: 'STK', to: '/mpesa/stk',},
                 {name: 'C2B', to: '/mpesa/c2b',},
@@ -53,7 +52,7 @@ export const appRoutes: RouteType = {
             to: '/payments',
             children: [
                 {name: 'Vouchers', to: '/vouchers',},
-                {name: 'Transactions', to: '/vouchers/transactions',},
+                {name: 'Transactions', to: '/voucher/transactions',},
             ]
         },
     ]

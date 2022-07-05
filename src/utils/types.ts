@@ -48,12 +48,33 @@ export type StkRequest = {
     response?: StkCallback
 }
 
+export type Voucher = {
+    id: number
+    type: string
+    balance: number
+    account_id: number
+    created_at: string
+    voucher_transactions?: VoucherTransaction[]
+}
+
+export type VoucherTransaction = {
+    id: number
+    type: string
+    amount: number
+    description: string
+    voucher_id: number
+    created_at: string
+    voucher?: Voucher
+}
+
 export type Payment = {
+    id: number
     amount: number
     type: string
     subtype: string
     status: Status
-    provider?: StkRequest
+    created_at: string
+    provider?: StkRequest | VoucherTransaction
 }
 
 export type TandaRequest = {

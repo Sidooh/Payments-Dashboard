@@ -3,8 +3,8 @@ import { CONFIG } from 'config';
 import { RootState } from 'app/store';
 import { Payment } from '../../utils/types';
 
-export const paymentsAPI = createApi({
-    reducerPath: 'paymentsApi',
+export const mpesaAPI = createApi({
+    reducerPath: 'mpesaApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
@@ -17,20 +17,12 @@ export const paymentsAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboard: builder.query<any, void>({
-            query: () => '/dashboard',
+        mpesaPayments: builder.query<Payment[], string>({
+            query: (subType) => `/mpesa/${subType}/payments`
         }),
-        payments: builder.query<Payment[], void>({
-            query: () => '/payments'
-        }),
-        payment: builder.query<Payment, number>({
-            query: id => `/payments/${id}`
-        })
     })
 });
 
 export const {
-    useGetDashboardQuery,
-    usePaymentsQuery,
-    usePaymentQuery
-} = paymentsAPI;
+    useMpesaPaymentsQuery,
+} = mpesaAPI;
