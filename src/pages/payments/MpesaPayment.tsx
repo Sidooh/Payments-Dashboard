@@ -1,10 +1,12 @@
 import { Card, Table } from 'react-bootstrap';
-import { Payment } from 'utils/types';
+import { Payment, StkRequest } from 'utils/types';
 import { currencyFormat, parsePhone } from 'utils/helpers';
 import moment from 'moment';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     console.log(payment);
+
+    const provider: StkRequest = payment.provider as StkRequest;
 
     return (
         <Card className="mb-3">
@@ -24,15 +26,15 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
 
                     <tr className="border-200">
                         <td className="align-middle">
-                            <h6 className="mb-0 text-nowrap">{payment.provider?.reference}</h6>
-                            <p className="mb-0">{parsePhone(payment.provider?.phone)}</p>
+                            <h6 className="mb-0 text-nowrap">{provider?.reference}</h6>
+                            <p className="mb-0">{parsePhone(provider?.phone)}</p>
                         </td>
-                        <td className="align-middle text-center">{payment.provider?.status}</td>
+                        <td className="align-middle text-center">{provider?.status}</td>
                         <td className="align-middle">The service request is processed successfully.</td>
-                        <td className="align-middle">{currencyFormat(payment.provider?.amount)}</td>
+                        <td className="align-middle">{currencyFormat(provider?.amount)}</td>
                         <td className="text-end">
-                            {moment(payment.provider?.response?.created_at || payment.provider?.created_at).format('MMM D, Y')}<br/>
-                            <small>{moment(payment.provider?.response?.created_at || payment.provider?.created_at).format('hh:mm A')}</small>
+                            {moment(provider?.response?.created_at || provider?.created_at).format('MMM D, Y')}<br/>
+                            <small>{moment(provider?.response?.created_at || provider?.created_at).format('hh:mm A')}</small>
                         </td>
                     </tr>
                     </tbody>
