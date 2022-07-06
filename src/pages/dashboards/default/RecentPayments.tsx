@@ -29,7 +29,7 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         accessorKey: 'updated_at',
                         header: 'Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({row}: any) => <TableDate date={row.original.updated_at ?? row.original.created_at}/>
                     },
                     {
                         id: 'Actions',

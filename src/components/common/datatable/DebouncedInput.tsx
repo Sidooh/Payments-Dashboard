@@ -19,5 +19,5 @@ export default function DebouncedInput({value: initialValue, onChange, debounce 
         return () => clearTimeout(timeout);
     }, [value]);
 
-    return <FormControl size={'sm'} className={''} {...props} value={value} onChange={e => setValue(e.target.value)}/>;
+    return <FormControl {...props} size="sm" value={value} onChange={e => setValue(e.target.value)}/>;
 }
