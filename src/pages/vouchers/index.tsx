@@ -6,6 +6,7 @@ import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { useVouchersQuery } from '../../features/vouchers/vouchersAPI';
 import { currencyFormat } from '../../utils/helpers';
+import PhoneChip from '../../components/chips/PhoneChip';
 
 const Vouchers = () => {
     let {data: vouchers, isLoading, isSuccess, isError, error} = useVouchersQuery();
@@ -18,6 +19,11 @@ const Vouchers = () => {
         <Card className={'mb-3'}>
             <Card.Body>
                 <DataTable title={`Vouchers`} columns={[
+                    {
+                        accessorKey: 'customer',
+                        header: 'Customer',
+                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
+                    },
                     {
                         accessorKey: 'type',
                         header: 'Type',

@@ -18,7 +18,7 @@ export const vouchersAPI = createApi({
     }),
     endpoints: (builder) => ({
         vouchers: builder.query<Voucher[], void>({
-            query: () => '/vouchers'
+            query: () => '/vouchers?with=account'
         }),
         voucher: builder.query<Voucher, number>({
             query: id => `/vouchers/${id}`
