@@ -3,6 +3,8 @@ import Section from './Section';
 import { Col, Row } from 'react-bootstrap';
 import Logo from './Logo';
 import PrettyJSON from './PrettyJSON';
+import { useAppDispatch } from '../../app/hooks';
+import { logout } from '../../features/auth/authSlice';
 
 /** ____________________________________________________    PAGE ERROR
  * */
@@ -12,6 +14,8 @@ type ErrorFallbackType = {
 }
 
 export const ErrorFallback = ({error, resetErrorBoundary}: ErrorFallbackType) => {
+    console.log(error);
+
     return (
         <Section className="py-0">
             <Row className="flex-center min-vh-100 py-6">
@@ -55,6 +59,10 @@ const ErrorWrapper = styled('div')({
 });
 
 export const SectionError = ({error}: any) => {
+    const dispatch = useAppDispatch();
+
+    if(error?.status === 401) dispatch(logout());
+
     return (
         <Wrapper className="row position-relative fw-bolder ">
             <Card className="col-xl-10 position-absolute card p-3 bg-soft-danger text-danger">
