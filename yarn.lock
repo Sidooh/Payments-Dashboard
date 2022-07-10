@@ -985,22 +985,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-table@npm:^8.1.3":
-  version: 8.1.3
-  resolution: "@tanstack/react-table@npm:8.1.3"
+"@tanstack/react-table@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "@tanstack/react-table@npm:8.2.2"
   dependencies:
-    "@tanstack/table-core": 8.1.2
+    "@tanstack/table-core": 8.2.2
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: 6d178dd4595d78999ab499fe1c3cf0c4fa97b07ff5f0aa5731955e8845236ea00ef61562427dbc163f6b4ee4caeec2f1105bd170c09a2ed45c36ecc71b0d7674
+  checksum: 711c4cecb5216037afdf97808f5a373d05a6d3bb72d2b51d845a9467013ed1baebf17c4be4becb1325437a7bd78101521363abe427d933789e5426bc9d4fb765
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.1.2":
-  version: 8.1.2
-  resolution: "@tanstack/table-core@npm:8.1.2"
-  checksum: 5ea040a621ebbe05784303caef9da70fb26a096338959b33938662489d623179b44d1352bddd2fae4a6d7415efce1eb1ff83c362a71fdf6491b023099e798c6d
+"@tanstack/table-core@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@tanstack/table-core@npm:8.2.2"
+  checksum: da7083c23e1ac808d3a982d32291641db829769b96a37a6ddcc3ef59e7ef922909b92d75ef0372c7a673d94be08f30f77598cd291a5a1cd3c6e54f887c07d5c4
   languageName: node
   linkType: hard
 
@@ -2499,7 +2499,7 @@ __metadata:
     "@mui/material": ^5.8.6
     "@reduxjs/toolkit": ^1.8.2
     "@tanstack/match-sorter-utils": ^8.1.1
-    "@tanstack/react-table": ^8.1.3
+    "@tanstack/react-table": ^8.2.2
     "@types/node": ^18.0.1
     "@types/pluralize": ^0.0.29
     "@types/react": ^18.0.0

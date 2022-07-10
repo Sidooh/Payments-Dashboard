@@ -2,7 +2,7 @@ import DebouncedInput from 'components/common/datatable/DebouncedInput';
 import { useMemo } from 'react';
 import { Column, Table } from '@tanstack/react-table';
 
-export default function Filter({table, column}: { table: Table<any>, column: Column<any> }) {
+export default function Filter({column, table,}: { column: Column<any, unknown>, table: Table<any> }) {
     const firstValue = table
         .getPreFilteredRowModel()
         .flatRows[0]?.getValue(column.id);
