@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { SectionError } from '../../components/common/Error';
-import { SectionLoader } from '../../components/common/Loader';
-import { useVoucherQuery } from '../../features/vouchers/vouchersAPI';
+import { SectionError } from 'components/common/Error';
+import { SectionLoader } from 'components/common/Loader';
+import { useVoucherQuery } from 'features/vouchers/vouchersAPI';
 
 const Show = () => {
     const {id} = useParams();
