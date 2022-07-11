@@ -31,7 +31,7 @@ const VoucherTransactions = () => {
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.payment.status} entity={'voucher'}
+                        cell: ({row}: any) => <StatusChip status={row.original.payment?.status} entity={'voucher'}
                                                           entityId={row.original.id}/>
                     },
                     {
