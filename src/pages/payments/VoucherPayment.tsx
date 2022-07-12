@@ -22,12 +22,12 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                     <tbody>
 
                     <tr className="border-200">
-                        <td><h6 className="mb-0 text-nowrap">{(payment.provider as VoucherTransaction)?.type}</h6></td>
-                        <td>{(payment.provider as VoucherTransaction)?.description}</td>
-                        <td>{currencyFormat(payment.provider?.amount)}</td>
+                        <td><h6 className="mb-0 text-nowrap">{(payment.providable as VoucherTransaction)?.type}</h6></td>
+                        <td>{(payment.providable as VoucherTransaction)?.description}</td>
+                        <td>{currencyFormat(payment.providable?.amount)}</td>
                         <td className="text-end">
-                            {moment(payment.provider?.created_at).format('MMM D, Y')}<br/>
-                            <small>{moment(payment.provider?.created_at).format('hh:mm A')}</small>
+                            {moment(payment.providable?.created_at).format('MMM D, Y')}<br/>
+                            <small>{moment(payment.providable?.created_at).format('hh:mm A')}</small>
                         </td>
                     </tr>
                     </tbody>

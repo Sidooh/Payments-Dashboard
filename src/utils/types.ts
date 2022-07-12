@@ -74,7 +74,7 @@ export type Payment = {
     subtype: string
     status: Status
     created_at: string
-    provider?: StkRequest | VoucherTransaction
+    providable?: StkRequest | VoucherTransaction
 }
 
 export type TandaRequest = {
