@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { Voucher, VoucherTransaction } from '../../utils/types';
+import { ApiResponse, Voucher, VoucherTransaction } from '../../utils/types';
 
 export const vouchersAPI = createApi({
     reducerPath: 'vouchersApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
-        prepareHeaders: (headers, {getState}) => {
+        prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.auth?.token;
 
             if (token) headers.set('authorization', `Bearer ${token}`);
@@ -17,13 +17,13 @@ export const vouchersAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        vouchers: builder.query<Voucher[], void>({
+        vouchers: builder.query<ApiResponse<Voucher[]>, void>({
             query: () => '/vouchers?with=account'
         }),
-        voucher: builder.query<Voucher, number>({
+        voucher: builder.query<ApiResponse<Voucher>, number>({
             query: id => `/vouchers/${id}`
         }),
-        voucherTransactions: builder.query<VoucherTransaction[], void>({
+        voucherTransactions: builder.query<ApiResponse<VoucherTransaction[]>, void>({
             query: () => `/vouchers/transactions?with=payment`
         })
     })

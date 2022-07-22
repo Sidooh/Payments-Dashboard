@@ -10,14 +10,16 @@ import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
 import { currencyFormat } from '../../utils/helpers';
 
 const Payments = () => {
-    const {subType} = useParams();
+    const { subType } = useParams();
     console.log(subType);
 
-    let {data: payments, isLoading, isSuccess, isError, error} = useMpesaPaymentsQuery(String(subType));
-    console.log(payments);
+    let { data, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery(String(subType));
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !payments) return <SectionLoader/>;
+    if (isError) return <SectionError error={error} />;
+    if (isLoading || !isSuccess || !data) return <SectionLoader />;
+
+    let payments = data.data
+    console.log(payments);
 
     return (
         <Card className={'mb-3'}>
@@ -26,24 +28,24 @@ const Payments = () => {
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.amount)
+                        cell: ({ row }: any) => currencyFormat(row.original.amount)
                     },
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'payment'}
-                                                          entityId={row.original.id}/>
+                        cell: ({ row }: any) => <StatusChip status={row.original.status} entity={'payment'}
+                            entityId={row.original.id} />
                     },
                     {
                         accessorKey: 'updated_at',
                         header: 'Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({ row }: any) => <TableDate date={row.original.updated_at} />
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
+                        cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'payment'} />
                     }
-                ]} data={payments}/>
+                ]} data={payments} />
             </Card.Body>
         </Card>
     );

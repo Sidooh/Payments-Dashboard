@@ -9,11 +9,14 @@ import { currencyFormat } from '../../utils/helpers';
 import PhoneChip from '../../components/chips/PhoneChip';
 
 const Vouchers = () => {
-    let {data: vouchers, isLoading, isSuccess, isError, error} = useVouchersQuery();
-    console.log(vouchers);
+    let { data, isLoading, isSuccess, isError, error } = useVouchersQuery();
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !vouchers) return <SectionLoader/>;
+    if (isError) return <SectionError error={error} />;
+    if (isLoading || !isSuccess || !data) return <SectionLoader />;
+
+    let vouchers = data.data
+
+    console.log(data);
 
     return (
         <Card className={'mb-3'}>
@@ -22,7 +25,7 @@ const Vouchers = () => {
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
-                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
+                        cell: ({ row }: any) => <PhoneChip phone={row.original.account.phone} />
                     },
                     {
                         accessorKey: 'type',
@@ -31,18 +34,18 @@ const Vouchers = () => {
                     {
                         accessorKey: 'balance',
                         header: 'Balance',
-                        cell: ({row}: any) => currencyFormat(row.original.balance)
+                        cell: ({ row }: any) => currencyFormat(row.original.balance)
                     },
                     {
                         accessorKey: 'updated_at',
                         header: 'Last Updated At',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({ row }: any) => <TableDate date={row.original.updated_at} />
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'voucher'}/>
+                        cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'voucher'} />
                     }
-                ]} data={vouchers}/>
+                ]} data={vouchers} />
             </Card.Body>
         </Card>
     );
