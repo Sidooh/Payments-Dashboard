@@ -43,7 +43,7 @@ const VoucherTransactions = () => {
                     },
                     {
                         id: 'Actions',
-                        cell: ({ row }: any) => <TableActions entityId={row.original.payment.id} entity={'payment'} />
+                        cell: ({ row }: any) => <TableActions entityId={row.original.payment?.id} entity={'payment'} />
                     }
                 ]} data={transactions} />
             </Card.Body>
