@@ -14,12 +14,11 @@ const Payments = () => {
     console.log(subType);
 
     let { data, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery(String(subType));
+    let payments = data?.data
+    console.log(payments);
 
     if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !data) return <SectionLoader />;
-
-    let payments = data.data
-    console.log(payments);
+    if (isLoading || !isSuccess || !payments) return <SectionLoader />;
 
     return (
         <Card className={'mb-3'}>

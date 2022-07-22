@@ -10,13 +10,12 @@ import PhoneChip from '../../components/chips/PhoneChip';
 
 const Vouchers = () => {
     let { data, isLoading, isSuccess, isError, error } = useVouchersQuery();
-
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !data) return <SectionLoader />;
-
-    let vouchers = data.data
+    let vouchers = data?.data
 
     console.log(data);
+
+    if (isError) return <SectionError error={error} />;
+    if (isLoading || !isSuccess || !vouchers) return <SectionLoader />;
 
     return (
         <Card className={'mb-3'}>

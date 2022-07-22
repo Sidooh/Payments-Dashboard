@@ -10,12 +10,11 @@ import { currencyFormat } from '../../utils/helpers';
 
 const Payments = () => {
     let { data, isLoading, isSuccess, isError, error } = usePaymentsQuery();
+    let payments = data?.data
+    console.log(payments);
 
     if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !data) return <SectionLoader />;
-
-    let payments = data.data
-    console.log(data);
+    if (isLoading || !isSuccess || !payments) return <SectionLoader />;
 
     return (
         <Card className={'mb-3'}>

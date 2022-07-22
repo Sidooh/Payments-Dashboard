@@ -6,7 +6,7 @@ import moment from 'moment';
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     console.log(payment);
 
-    const provider: StkRequest = payment.provider as StkRequest;
+    const provider: StkRequest = payment.providable as StkRequest;
 
     return (
         <Card className="mb-3">

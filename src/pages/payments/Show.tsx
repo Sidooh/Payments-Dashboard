@@ -13,7 +13,8 @@ import VoucherPayment from './VoucherPayment';
 
 const Show = () => {
     const {id} = useParams();
-    const {data: payment, isError, error, isLoading, isSuccess} = usePaymentQuery(Number(id));
+    const {data, isError, error, isLoading, isSuccess} = usePaymentQuery(Number(id));
+    let payment = data?.data
     console.log('Payment:', payment);
 
     if (isError) return <SectionError error={error}/>;

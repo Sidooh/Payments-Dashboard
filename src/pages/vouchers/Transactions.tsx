@@ -10,13 +10,12 @@ import StatusChip from '../../components/chips/StatusChip';
 
 const VoucherTransactions = () => {
     let { data, isLoading, isSuccess, isError, error } = useVoucherTransactionsQuery();
+    let transactions = data?.data
+
+    console.log(transactions);
 
     if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !data) return <SectionLoader />;
-
-    let transactions = data.data
-
-    console.log(data);
+    if (isLoading || !isSuccess || !transactions) return <SectionLoader />;
 
     return (
         <Card className={'mb-3'}>
