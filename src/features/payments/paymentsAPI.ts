@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { ApiResponse, Payment } from '../../utils/types';
+import { ApiResponse, Payment } from 'utils/types';
 
 export const paymentsAPI = createApi({
     reducerPath: 'paymentsApi',
