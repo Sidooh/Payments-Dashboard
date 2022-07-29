@@ -5,10 +5,8 @@ import { authAPI, LoginRequest } from './authAPI';
 const auth = JSON.parse(String(localStorage.getItem('auth')));
 
 export type AuthState = {
-    auth: {
-        user: { id: number, exp: number, name: string, email: string }
+    auth?: {
         token: string
-        credentials: LoginRequest
     } | null;
     isError: boolean;
     isSuccess: boolean;
@@ -65,10 +63,10 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.message = String(action.payload);
-                state.auth = null;
+                state.auth = undefined;
             })
             .addCase(logout.fulfilled, (state) => {
-                state.auth = null;
+                state.auth = undefined;
             });
     }
 });

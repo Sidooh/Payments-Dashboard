@@ -1,5 +1,7 @@
 import Toastify from 'toastify-js';
 import { ToastDataType } from './types';
+import { Telco } from './enums';
+import { parsePhoneNumber } from 'libphonenumber-js';
 
 export const getItemFromStore = (key: string, defaultValue?: string | boolean, store = localStorage) => {
     try {
@@ -60,9 +62,9 @@ const userAgent = ((navigator && navigator.userAgent) || '').toLowerCase();
 
 // build a 'comparator' object for various comparison checks
 let comparator = {
-    '<' : (a: any, b: string) => a < b,
+    '<': (a: any, b: string) => a < b,
     '<=': (a: any, b: string) => a <= b,
-    '>' : (a: any, b: string) => a > b,
+    '>': (a: any, b: string) => a > b,
     '>=': (a: any, b: string) => a >= b
 };
 
@@ -81,11 +83,11 @@ export const is = {
     windows: () => {
         return navigator.userAgent.indexOf("Win") !== -1;
     },
-    chrome : (range?: string): boolean => {
+    chrome: (range?: string): boolean => {
         let match = /google inc/.test(vendor) ? userAgent.match(/(?:chrome|crios)\/(\d+)/) : null;
         return match !== null && !is.opera() && compareVersion(match[1], range);
     },
-    opera  : (range?: string): boolean => {
+    opera: (range?: string): boolean => {
         let match = userAgent.match(/(?:^opera.+?version|opr)\/(\d+)/);
         return match !== null && compareVersion(match[1], range);
     },
@@ -101,11 +103,11 @@ export const toast = (data: ToastDataType) => {
         close = data.close ?? true;
 
     Toastify({
-        text     : data.msg,
-        duration : duration,
-        close    : close,
-        gravity  : data.gravity ?? 'bottom',
-        position : data.position ?? 'right',
+        text: data.msg,
+        duration: duration,
+        close: close,
+        gravity: data.gravity ?? 'bottom',
+        position: data.position ?? 'right',
         className: type,
     }).showToast();
 };
@@ -121,3 +123,49 @@ export const JWT = {
         return JSON.parse(jsonPayload);
     },
 };
+
+export const parsePhone = (phone?: string | number) => phone && parsePhoneNumber(String(phone), 'KE').number;
+
+export const getTelcoFromPhone = (phone: string) => {
+    phone = String(phone);
+
+    const safRegEx = /^(?:254|\+254|0)?((?:7(?:[0129]\d|4[0123568]|5[789]|6[89])|(1(1[0-5])))\d{6})$/,
+        airtelRegEx = /^(?:254|\+254|0)?((?:(7(?:(3\d)|(5[0-6])|(6[27])|(8\d)))|(1(0[0-6])))\d{6})$/,
+        telkomRegEx = /^(?:254|\+254|0)?(7(7\d)\d{6})$/,
+        equitelRegEx = /^(?:254|\+254|0)?(7(6[3-6])\d{6})$/,
+        faibaRegEx = /^(?:254|\+254|0)?(747\d{6})$/;
+
+    if (phone.match(safRegEx)) {
+        return Telco.SAFARICOM;
+    } else if (phone.match(airtelRegEx)) {
+        return Telco.AIRTEL;
+    } else if (phone.match(telkomRegEx)) {
+        return Telco.TELKOM;
+    } else if (phone.match(equitelRegEx)) {
+        return Telco.EQUITEL;
+    } else if (phone.match(faibaRegEx)) {
+        return Telco.FAIBA;
+    } else {
+        return null;
+    }
+};
+
+export const Str = {
+    headline: (str: string) => {
+        if (!str) return "";
+
+        str = str.replaceAll('_', ' ').replaceAll('-', ' ');
+
+        return str.replaceAll(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substring(1).toLowerCase());
+    },
+    ucFirst: (str: string) => {
+        str = str.toLowerCase();
+
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+};
+
+export const currencyFormat = (number?:number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency
+})).format(number);

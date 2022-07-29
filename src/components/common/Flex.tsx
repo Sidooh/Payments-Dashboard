@@ -3,9 +3,9 @@ import classNames from 'classnames';
 
 type FlexType = {
     children: ReactNode,
-    justifyContent?: string,
+    justifyContent?: 'center' | 'between',
     inline?: boolean,
-    alignItems?: string,
+    alignItems?: 'center',
     alignContent?: string,
     wrap?: string,
     className?: string,
@@ -16,7 +16,7 @@ type FlexType = {
 
 const Flex = ({
     justifyContent,
-    alignItems,
+    alignItems = 'center',
     alignContent,
     inline,
     wrap,
@@ -31,13 +31,13 @@ const Flex = ({
         // @ts-ignore
         <Tag className={classNames(
             {
-                [`d-${breakpoint ? breakpoint + '-' : ''}flex`]       : !inline,
+                [`d-${breakpoint ? breakpoint + '-' : ''}flex`]: !inline,
                 [`d-${breakpoint ? breakpoint + '-' : ''}inline-flex`]: inline,
-                [`flex-${direction}`]                                 : direction,
-                [`justify-content-${justifyContent}`]                 : justifyContent,
-                [`align-items-${alignItems}`]                         : alignItems,
-                [`align-content-${alignContent}`]                     : alignContent,
-                [`flex-${wrap}`]                                      : wrap
+                [`flex-${direction}`]: direction,
+                [`justify-content-${justifyContent}`]: justifyContent,
+                [`align-items-${alignItems}`]: alignItems,
+                [`align-content-${alignContent}`]: alignContent,
+                [`flex-${wrap}`]: wrap
             },
             className
         )} {...rest}>

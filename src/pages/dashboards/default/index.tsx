@@ -1,43 +1,38 @@
 import { Col, Row } from "react-bootstrap";
 import { lazy } from 'react';
+import { useGetDashboardQuery } from "features/payments/paymentsAPI";
+import { SectionError } from 'components/common/Error';
+import { SectionLoader } from 'components/common/Loader';
 
 const TotalRevenue = lazy(() => import('./TotalRevenue'));
 const PaymentsCount = lazy(() => import('./PaymentsCount'));
 const RecentPayments = lazy(() => import('./RecentPayments'));
 
 const Dashboard = () => {
-    // console.log(process.env);
-    // const {data, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
-    // console.log(data);
+    let { data, isError, error, isLoading, isSuccess } = useGetDashboardQuery();
 
-    // if (isError) return <SectionError error={error}/>;
-    // if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isError) return <SectionError error={error} />;
+    if (isLoading || !isSuccess || !data) return <SectionLoader />;
 
-    const data = {
-        total_transactions: 3,
-        total_transactions_today: 30,
-        total_revenue: 100,
-        total_revenue_today: 100,
-        recent_payments: []
-    };
+    data = data.data
+    console.log(data);
 
     return (
         <>
             <Row className="g-3 mb-3">
                 <Col>
                     <Row className="g-3">
-                        <Col md={6} xxl={12}>
-                            <PaymentsCount total={data.total_transactions}
-                                               total_today={data.total_transactions_today}/>
+                        <Col>
+                            <PaymentsCount total={data.total_payments} total_today={data.total_payments_today} />
                         </Col>
-                        <Col md={6} xxl={12}>
-                            <TotalRevenue total={data.total_revenue} total_today={data.total_revenue_today}/>
+                        <Col>
+                            <TotalRevenue total={data.total_revenue} total_today={data.total_revenue_today} />
                         </Col>
                     </Row>
                 </Col>
             </Row>
 
-            <RecentPayments payments={data.recent_payments}/>
+            <RecentPayments payments={data.recent_payments} />
         </>
     );
 };

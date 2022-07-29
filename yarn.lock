@@ -976,6 +976,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/match-sorter-utils@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "@tanstack/match-sorter-utils@npm:8.1.1"
+  dependencies:
+    remove-accents: 0.4.2
+  checksum: bf1458b7ca08cf79750ebd46fddef9c9b845ef55b5b69c0f7f69d48d6cbd73dbfd98763509f655298033b93cfc92b21d54f9f13a4d631cc68ca9191913967205
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "@tanstack/react-table@npm:8.2.2"
+  dependencies:
+    "@tanstack/table-core": 8.2.2
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 711c4cecb5216037afdf97808f5a373d05a6d3bb72d2b51d845a9467013ed1baebf17c4be4becb1325437a7bd78101521363abe427d933789e5426bc9d4fb765
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.2.2":
+  version: 8.2.2
+  resolution: "@tanstack/table-core@npm:8.2.2"
+  checksum: da7083c23e1ac808d3a982d32291641db829769b96a37a6ddcc3ef59e7ef922909b92d75ef0372c7a673d94be08f30f77598cd291a5a1cd3c6e54f887c07d5c4
+  languageName: node
+  linkType: hard
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -1000,10 +1028,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.0.1":
+  version: 18.0.1
+  resolution: "@types/node@npm:18.0.1"
+  checksum: be14b251c54cc2b4ca78ac6eadf2fe5e831e487f2e17848f21d576295945b538271dcc674d0bba582b3f8d95b84f6826e99b6ba4710c76f165a8bdd4d4f0618e
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
   checksum: fd6bce2b674b6efc3db4c7c3d336bd70c90838e8439de639b909ce22f3720d21344f52427f1d9e57b265fcb7f6c018699b99e5e0c208a1a4823014269a6bf35b
+  languageName: node
+  linkType: hard
+
+"@types/pluralize@npm:^0.0.29":
+  version: 0.0.29
+  resolution: "@types/pluralize@npm:0.0.29"
+  checksum: db7732b733ba1dc59f080f87364c9f985c1ae9f1e5ec5fcefb83c1327149e01ecac42766352eb7b19b117cf39defa99cf514629f3666968a3bdeb00e74f2a97e
   languageName: node
   linkType: hard
 
@@ -1056,6 +1098,13 @@ __metadata:
   version: 0.16.2
   resolution: "@types/scheduler@npm:0.16.2"
   checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
+  languageName: node
+  linkType: hard
+
+"@types/toastify-js@npm:^1.11.1":
+  version: 1.11.1
+  resolution: "@types/toastify-js@npm:1.11.1"
+  checksum: 2738cfcbc541f88b8a8752881578f1351c4eb10075b55f72aa068cef905dce307cd0249bb56394396d0626af2b2ad28e6e30f27a357b43a369a1b7a93e50407b
   languageName: node
   linkType: hard
 
@@ -2077,6 +2126,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"libphonenumber-js@npm:^1.10.7":
+  version: 1.10.7
+  resolution: "libphonenumber-js@npm:1.10.7"
+  checksum: 46c5afec95c5b18f24c6a19958136922e28654287a2c3dd7d67e3bda5540f540c0c69bbfb0a9470110e636bf98cab4eada6462cf2122372da6ba47c0e8379ac6
+  languageName: node
+  linkType: hard
+
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
@@ -2442,12 +2498,18 @@ __metadata:
     "@mui/lab": ^5.0.0-alpha.88
     "@mui/material": ^5.8.6
     "@reduxjs/toolkit": ^1.8.2
+    "@tanstack/match-sorter-utils": ^8.1.1
+    "@tanstack/react-table": ^8.2.2
+    "@types/node": ^18.0.1
+    "@types/pluralize": ^0.0.29
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.0
+    "@types/toastify-js": ^1.11.1
     "@types/yup": ^0
     "@vitejs/plugin-react": ^1.3.0
     classnames: ^2.3.1
     formik: ^2.2.9
+    libphonenumber-js: ^1.10.7
     moment: ^2.29.3
     pluralize: ^8.0.0
     react: ^18.0.0
@@ -2457,7 +2519,6 @@ __metadata:
     react-error-boundary: ^3.1.4
     react-redux: ^8.0.2
     react-router-dom: ^6.3.0
-    react-table: ^7.8.0
     simplebar-react: ^2.4.1
     toastify-js: ^1.11.2
     typescript: ^4.6.3
@@ -2704,15 +2765,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-table@npm:^7.8.0":
-  version: 7.8.0
-  resolution: "react-table@npm:7.8.0"
-  peerDependencies:
-    react: ^16.8.3 || ^17.0.0-0 || ^18.0.0
-  checksum: 44ca0fb848c6869cd793cede8dc33072b38ebb8f8d2833565afe7cf3eac5d1fa455ac5fb9d06838b16fab0523d5d03e3e82f7645032f71245096e67b892313b9
-  languageName: node
-  linkType: hard
-
 "react-transition-group@npm:^4.4.2":
   version: 4.4.2
   resolution: "react-transition-group@npm:4.4.2"
@@ -2770,6 +2822,13 @@ __metadata:
   version: 0.13.9
   resolution: "regenerator-runtime@npm:0.13.9"
   checksum: 65ed455fe5afd799e2897baf691ca21c2772e1a969d19bb0c4695757c2d96249eb74ee3553ea34a91062b2a676beedf630b4c1551cc6299afb937be1426ec55e
+  languageName: node
+  linkType: hard
+
+"remove-accents@npm:0.4.2":
+  version: 0.4.2
+  resolution: "remove-accents@npm:0.4.2"
+  checksum: 84a6988555dea24115e2d1954db99509588d43fe55a1590f0b5894802776f7b488b3151c37ceb9e4f4b646f26b80b7325dcea2fae58bc3865df146e1fa606711
   languageName: node
   linkType: hard
 
