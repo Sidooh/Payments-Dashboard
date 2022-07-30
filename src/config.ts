@@ -10,9 +10,6 @@ export const CONFIG = {
                 }
             },
             products: {
-                api: {
-                    url: import.meta.env.VITE_PRODUCTS_API_URL
-                },
                 dashboard: {
                     url: import.meta.env.VITE_PRODUCTS_DASH_URL
                 }
@@ -23,9 +20,6 @@ export const CONFIG = {
                 },
             },
             notify  : {
-                api      : {
-                    url: import.meta.env.VITE_NOTIFY_API_URL
-                },
                 dashboard: {
                     url: import.meta.env.VITE_NOTIFY_DASH_URL
                 }
