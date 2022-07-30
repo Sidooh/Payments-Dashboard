@@ -12,11 +12,12 @@ const TotalRevenue = ({total, total_today}: { total: number, total_today: number
                     <Col className="d-md-flex d-lg-block flex-between-center">
                         <h6 className="mb-md-0 mb-lg-2">Revenue</h6>
                         <Chip sx={{px: .5}} variant={'outlined'} color={'success'} className={`fs-8`}
-                              label={<CountUp end={total_today} prefix={'<b>Today:</b> KES '} decimals={2}/>}/>
+                              label={<CountUp end={total_today} prefix={'<b>Today:</b> KES '} decimals={2}
+                                              separator={','}/>}/>
                     </Col>
                     <Col xs="auto">
                         <h4 className="fs-3 fw-normal text-700">
-                            <CountUp end={total} prefix={'KES '} decimals={2}/>
+                            <CountUp end={total} prefix={'KES '} decimals={2} separator={','}/>
                         </h4>
                     </Col>
                 </Row>
