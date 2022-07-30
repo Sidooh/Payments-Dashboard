@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const statusProps = (status: Status, colorIcon = true) => {
     let color: undefined | 'success' | 'warning' | 'info' | 'error' = undefined, icon;
-    if ([Status.COMPLETED].includes(status)) {
+    if ([Status.COMPLETED, Status.PAID].includes(status)) {
         color = 'success';
         icon = <Check color={colorIcon ? color : 'disabled'}/>;
     } else if (status === Status.PENDING) {
@@ -30,7 +30,7 @@ type StatusChipType = {
 }
 
 const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
-    if(!status) status = Status.FAILED
+    if (!status) status = Status.FAILED;
 
     const {color, icon} = statusProps(status, false);
 

@@ -2,11 +2,12 @@ import { Card, Table } from 'react-bootstrap';
 import { Payment, StkRequest } from 'utils/types';
 import { currencyFormat, parsePhone } from 'utils/helpers';
 import moment from 'moment';
+import StatusChip from '../../components/chips/StatusChip';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
-    console.log(payment);
+    const provider: StkRequest = payment.provider as StkRequest;
 
-    const provider: StkRequest = payment.providable as StkRequest;
+    console.log(payment);
 
     return (
         <Card className="mb-3">
@@ -29,7 +30,9 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                             <h6 className="mb-0 text-nowrap">{provider?.reference}</h6>
                             <p className="mb-0">{parsePhone(provider?.phone)}</p>
                         </td>
-                        <td className="align-middle text-center">{provider?.status}</td>
+                        <td className="align-middle text-center">
+                            <StatusChip status={provider?.status} entity={'payment'} entityId={provider.id} bg={false}/>
+                        </td>
                         <td className="align-middle">The service request is processed successfully.</td>
                         <td className="align-middle">{currencyFormat(provider?.amount)}</td>
                         <td className="text-end">

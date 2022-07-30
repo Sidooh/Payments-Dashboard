@@ -8,6 +8,7 @@ export enum Telco {
 
 export enum Status {
     COMPLETED = 'COMPLETED',
+    PAID = 'PAID',
     PENDING = 'PENDING',
     REFUNDED = 'REFUNDED',
     FAILED = 'FAILED',
