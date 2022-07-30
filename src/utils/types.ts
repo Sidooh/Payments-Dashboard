@@ -77,5 +77,5 @@ export interface Payment extends Model {
     type: string;
     subtype: string;
     status: Status;
-    providable?: StkRequest | VoucherTransaction;
+    provider?: StkRequest | VoucherTransaction;
 }
