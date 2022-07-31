@@ -4,25 +4,38 @@ import StatusChip from 'components/chips/StatusChip';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import {Payment} from 'utils/types';
-import {currencyFormat} from '../../../utils/helpers';
 
-const RecentPayments = ({payments}: { payments: Payment[] }) => {
+const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={'Recent Payments'} columns={[
+                <DataTable title={tableTitle} columns={[
                     {
                         accessorKey: 'id',
-                        header: '#'
+                        header: '#',
+                        // cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
-                        accessorKey: 'subtype',
-                        header: 'Sub Type'
+                        accessorKey: 'description',
+                        header: 'Description',
+                        cell: ({row}: any) => (
+                            <span>
+                                {row.original.description}<br/>
+                                <small><b>{row.original.destination}</b></small>
+                            </span>
+                        )
                     },
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.amount)
+                        cell: ({row}: any) => (new Intl.NumberFormat('en-GB', {
+                            style: 'currency',
+                            currency: 'KES'
+                        })).format(row.original.amount)
+                    },
+                    {
+                        accessorKey: 'type',
+                        header: 'Type',
                     },
                     {
                         accessorKey: 'status',
@@ -33,16 +46,17 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         accessorKey: 'updated_at',
                         header: 'Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at ?? row.original.created_at}/>
+                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
-                        id: 'Actions',
+                        id: 'actions',
+                        header: '',
                         cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
                     }
-                ]} data={payments} viewAllLink={'/payments'}/>
+                ]} data={payments}/>
             </Card.Body>
         </Card>
     );
 };
 
-export default RecentPayments;
+export default Payments;

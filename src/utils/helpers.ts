@@ -1,7 +1,7 @@
 import Toastify from 'toastify-js';
-import { ToastDataType } from './types';
-import { Telco } from './enums';
-import { parsePhoneNumber } from 'libphonenumber-js';
+import {ToastDataType} from './types';
+import {Telco} from './enums';
+import {parsePhoneNumber} from 'libphonenumber-js';
 
 export const getItemFromStore = (key: string, defaultValue?: string | boolean, store = localStorage) => {
     try {
@@ -165,7 +165,50 @@ export const Str = {
     }
 };
 
-export const currencyFormat = (number?:number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
+export const currencyFormat = (number?: number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currency
 })).format(number);
+
+
+//===============================
+// Colors
+//===============================
+
+export const colors = [
+    '#2c7be5',
+    '#00d97e',
+    '#e63757',
+    '#39afd1',
+    '#fd7e14',
+    '#02a8b5',
+    '#727cf5',
+    '#6b5eae',
+    '#ff679b',
+    '#f6c343'
+];
+export const hexToRgb = (hexValue: string) => {
+    let hex;
+    hexValue.indexOf('#') === 0
+        ? (hex = hexValue.substring(1))
+        : (hex = hexValue);
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+        hex.replace(shorthandRegex, (_m, r, g, b) => r + r + g + g + b + b)
+    );
+    return result
+        ? [
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16)
+        ]
+        : null;
+};
+export const rgbaColor = (color = colors[0], alpha = 0.5) =>
+    `rgba(${hexToRgb(color)},${alpha})`;
+
+export const getColor = function getColor(name: string) {
+    let dom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document.documentElement;
+    return getComputedStyle(dom).getPropertyValue("--falcon-".concat(name)).trim();
+};

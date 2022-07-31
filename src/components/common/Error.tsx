@@ -1,10 +1,10 @@
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Section from './Section';
-import { Col, Row } from 'react-bootstrap';
+import {Col, Row} from 'react-bootstrap';
 import Logo from './Logo';
 import PrettyJSON from './PrettyJSON';
-import { useAppDispatch } from '../../app/hooks';
-import { logout } from '../../features/auth/authSlice';
+import {useAppDispatch} from '../../app/hooks';
+import {logout} from '../../features/auth/authSlice';
 
 /** ____________________________________________________    PAGE ERROR
  * */
@@ -41,11 +41,12 @@ export const ErrorFallback = ({error, resetErrorBoundary}: ErrorFallbackType) =>
 /** ____________________________________________________    SECTION ERROR
  * */
 const Wrapper = styled('div')({
-    height: '80vh'
+    maxHeight: '50vh',
+    height: '200px'
 });
 
 const Card = styled('div')({
-    maxHeight: '70vh',
+    maxHeight: '50vh',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -61,7 +62,10 @@ const ErrorWrapper = styled('div')({
 export const SectionError = ({error}: any) => {
     const dispatch = useAppDispatch();
 
-    if(error?.status === 401) dispatch(logout());
+    if (error?.status === 401) dispatch(logout());
+
+    if (error?.status === 404) error = "This item is missing";
+    if (error?.status === 500) error = "Something went wrong with this item.";
 
     return (
         <Wrapper className="row position-relative fw-bolder ">

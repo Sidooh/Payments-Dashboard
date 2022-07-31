@@ -1,9 +1,9 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Status } from './enums';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {Status} from './enums';
 
 export interface ApiResponse<T> {
-    status?: string;
-    data?: T;
+    status: string;
+    data: T;
 }
 
 export type ToastDataType = {
@@ -46,6 +46,7 @@ export interface StkCallback extends Model {
     amount: number;
     result_desc: string;
     checkout_request_id: string;
+    mpesa_receipt_number: string
 }
 
 export interface StkRequest extends Model {
