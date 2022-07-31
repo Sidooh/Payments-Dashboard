@@ -1,14 +1,30 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CONFIG } from 'config';
-import { RootState } from 'app/store';
-import { ApiResponse, Payment } from 'utils/types';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {CONFIG} from 'config';
+import {RootState} from 'app/store';
+import {ApiResponse, Payment} from 'utils/types';
+import {Status} from "../../utils/enums";
+
+type ChartData = {
+    labels: string[],
+    datasets: number[]
+}
+
+interface RevenueDayData {
+    [key: string]: ChartData
+}
+
+type RevenueData = {
+    today: RevenueDayData
+    yesterday: RevenueDayData
+}
 
 export const paymentsAPI = createApi({
     reducerPath: 'paymentsApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
+    tagTypes: ['Payment'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: (headers, {getState}) => {
             const token = (getState() as RootState).auth.auth?.token;
 
             if (token) headers.set('authorization', `Bearer ${token}`);
@@ -17,20 +33,32 @@ export const paymentsAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboard: builder.query<any, void>({
+        getDashboardSummaries: builder.query<any, void>({
             query: () => '/dashboard',
         }),
-        payments: builder.query<ApiResponse<Payment[]>, void>({
-            query: () => '/payments'
+        getDashboardRevenueData: builder.query<RevenueData, void>({
+            query: () => '/dashboard/revenue-chart',
+        }),
+        payments: builder.query<ApiResponse<Payment[]>, Status | void>({
+            query: (status?: Status) => {
+                let url = '/payments';
+
+                if (status) url += `?status=${status}`;
+
+                return url;
+            },
+            providesTags: ['Payment']
         }),
         payment: builder.query<ApiResponse<Payment>, number>({
-            query: id => `/payments/${id}`
+            query: id => `/payments/${id}`,
+            providesTags: ['Payment']
         })
     })
 });
 
 export const {
-    useGetDashboardQuery,
+    useGetDashboardSummariesQuery,
+    useGetDashboardRevenueDataQuery,
     usePaymentsQuery,
     usePaymentQuery
 } = paymentsAPI;
