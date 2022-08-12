@@ -2,12 +2,11 @@ import { memo, Suspense, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
-import Footer from 'components/Footer';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { SectionError } from 'components/common/Error';
-import { SectionLoader } from 'components/common/Loader';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Footer, SectionError, SectionLoader } from '@nabcellent/sui-react';
+import { CONFIG } from '../config';
 
 const MainLayout = () => {
     const {hash, pathname} = useLocation();
@@ -43,7 +42,7 @@ const MainLayout = () => {
                     <Suspense fallback={<SectionLoader/>}><Outlet/></Suspense>
                 </ErrorBoundary>
 
-                {!isKanban && <Footer/>}
+                {!isKanban && <Footer version={CONFIG.sidooh.version} serviceName={'Payments'}/>}
             </div>
         </div>
     );

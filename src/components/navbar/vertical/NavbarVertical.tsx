@@ -1,16 +1,14 @@
 import { Fragment, useEffect } from 'react';
 import { Col, Nav, Navbar, Row } from 'react-bootstrap';
-import Flex from 'components/common/Flex';
-import Logo from 'components/common/Logo';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes';
-import { capitalize } from 'utils/helpers';
 import NavbarTopDropDownMenus from 'components/navbar/top/NavbarTopDropDownMenus';
 import { IMAGES } from 'constants/images';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { navbarBreakPoint, topNavbarBreakpoint } from 'constants/breakpoints';
+import { capitalize, Flex, Logo } from '@nabcellent/sui-react';
 
 const NavbarVertical = () => {
     const {
@@ -66,7 +64,7 @@ const NavbarVertical = () => {
             className={`navbar-vertical ${navbarStyle !== 'transparent' && `navbar-${navbarStyle}`}`} variant="light">
             <Flex alignItems="center">
                 <ToggleButton/>
-                <Logo at="navbar-vertical" width={70}/>
+                <Logo src={IMAGES.logos.sidooh} at="navbar-vertical" width={70}/>
             </Flex>
             <Navbar.Collapse in={showBurgerMenu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                 style={{

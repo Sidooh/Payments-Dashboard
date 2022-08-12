@@ -1,8 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import { lazy } from 'react';
 import { useGetDashboardQuery } from "features/payments/paymentsAPI";
-import { SectionError } from 'components/common/Error';
-import { SectionLoader } from 'components/common/Loader';
+import { SectionError, SectionLoader } from "@nabcellent/sui-react";
 
 const TotalRevenue = lazy(() => import('./TotalRevenue'));
 const PaymentsCount = lazy(() => import('./PaymentsCount'));
@@ -14,7 +13,6 @@ const Dashboard = () => {
     if (isError) return <SectionError error={error} />;
     if (isLoading || !isSuccess || !data) return <SectionLoader />;
 
-    data = data.data
     console.log(data);
 
     return (

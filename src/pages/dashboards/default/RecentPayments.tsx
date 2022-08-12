@@ -1,12 +1,12 @@
 import { Card } from 'react-bootstrap';
-import DataTable from 'components/common/datatable';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import { Payment } from 'utils/types';
-import { currencyFormat } from '../../../utils/helpers';
+import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { useNavigate } from 'react-router-dom';
 
 const RecentPayments = ({payments}: { payments: Payment[] }) => {
+    const navigate = useNavigate();
+
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -23,8 +23,7 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'payment'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
@@ -35,7 +34,7 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                         id: 'Actions',
                         cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
                     }
-                ]} data={payments} viewAllLink={'/payments'}/>
+                ]} data={payments} onViewAll={() => navigate('/payments')}/>
             </Card.Body>
         </Card>
     );

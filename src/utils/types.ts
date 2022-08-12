@@ -1,9 +1,9 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Status } from './enums';
+import { Status } from '@nabcellent/sui-react';
 
 export interface ApiResponse<T> {
-    status?: string;
-    data?: T;
+    result: 0 | 1;
+    data: T;
 }
 
 export type ToastDataType = {

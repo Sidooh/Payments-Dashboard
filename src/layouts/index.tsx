@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Middleware } from '../middleware';
 import MainLayout from './MainLayout';
 import GuestLayout from './GuestLayout';
-import { is } from 'utils/helpers';
+import { is } from '@nabcellent/sui-react';
 import SettingsToggle from 'components/settings-panel/SettingsToggle';
 import SettingsPanel from 'components/settings-panel/SettingsPanel';
 

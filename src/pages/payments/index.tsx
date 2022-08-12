@@ -1,16 +1,10 @@
 import { Card } from 'react-bootstrap';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
 import { usePaymentsQuery } from 'features/payments/paymentsAPI';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
-import { currencyFormat } from '../../utils/helpers';
+import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
 
 const Payments = () => {
-    let { data, isLoading, isSuccess, isError, error } = usePaymentsQuery();
-    let payments = data?.data
+    let { data:payments, isLoading, isSuccess, isError, error } = usePaymentsQuery();
     console.log(payments);
 
     if (isError) return <SectionError error={error} />;
@@ -32,8 +26,7 @@ const Payments = () => {
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({ row }: any) => <StatusChip status={row.original.status} entity={'payment'}
-                            entityId={row.original.id} />
+                        cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',

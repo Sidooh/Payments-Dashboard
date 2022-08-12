@@ -1,24 +1,21 @@
 import { useParams } from 'react-router-dom';
-import { usePaymentQuery } from '../../features/payments/paymentsAPI';
-import { SectionError } from '../../components/common/Error';
-import { SectionLoader } from '../../components/common/Loader';
-import CardBgCorner from '../../components/CardBgCorner';
-import StatusChip from '../../components/chips/StatusChip';
+import { usePaymentQuery } from 'features/payments/paymentsAPI';
+import CardBgCorner from 'components/CardBgCorner';
 import moment from 'moment';
-import { PaymentType } from '../../utils/enums';
+import { PaymentType } from 'utils/enums';
 import { Card } from 'react-bootstrap';
-import Flex from '../../components/common/Flex';
 import MpesaPayment from './MpesaPayment';
 import VoucherPayment from './VoucherPayment';
+import { Flex, SectionError, SectionLoader, StatusChip } from '@nabcellent/sui-react';
 
 const Show = () => {
     const {id} = useParams();
-    const {data, isError, error, isLoading, isSuccess} = usePaymentQuery(Number(id));
-    let payment = data?.data
-    console.log('Payment:', payment);
+    const {data: payment, isError, error, isLoading, isSuccess} = usePaymentQuery(Number(id));
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !payment) return <SectionLoader/>;
+
+    console.log('Payment:', payment);
 
     return (
         <>
@@ -34,7 +31,7 @@ const Show = () => {
                     </Flex>
                     <p className="fs--1">{moment(payment?.created_at).format("MMMM Do YYYY, h:mm A")}</p>
                     <div><strong className="me-2">Status: </strong>
-                        <StatusChip status={payment.status} entity={'payment'} entityId={payment.id}/>
+                        <StatusChip status={payment.status}/>
                     </div>
                 </Card.Body>
             </Card>

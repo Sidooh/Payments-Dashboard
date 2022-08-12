@@ -877,6 +877,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nabcellent/sui-react@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@nabcellent/sui-react@npm:1.4.1"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 4a5cad026a7b554ade5597ab71a19f716c6cc3e50eebc85e28176ec1d3567faa5ab29c56927544d30506bf7a005cccdf41148ac56ea0a257cb20da16a59d6466
+  languageName: node
+  linkType: hard
+
 "@npmcli/fs@npm:^2.1.0":
   version: 2.1.0
   resolution: "@npmcli/fs@npm:2.1.0"
@@ -2497,6 +2507,7 @@ __metadata:
     "@mui/icons-material": ^5.8.4
     "@mui/lab": ^5.0.0-alpha.88
     "@mui/material": ^5.8.6
+    "@nabcellent/sui-react": ^1.4.1
     "@reduxjs/toolkit": ^1.8.2
     "@tanstack/match-sorter-utils": ^8.1.1
     "@tanstack/react-table": ^8.2.2
@@ -3168,7 +3179,7 @@ __metadata:
 
 "typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
   version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

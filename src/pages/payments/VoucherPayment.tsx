@@ -1,7 +1,7 @@
 import { Card, Table } from 'react-bootstrap';
 import { Payment, VoucherTransaction } from 'utils/types';
-import { currencyFormat, parsePhone } from 'utils/helpers';
 import moment from 'moment';
+import { currencyFormat } from '@nabcellent/sui-react';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     console.log(payment);

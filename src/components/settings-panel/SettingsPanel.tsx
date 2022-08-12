@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Button, ButtonGroup, Col, Form, Offcanvas, Row } from 'react-bootstrap';
-import Flex from 'components/common/Flex';
 import { IMAGES } from 'constants/images';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
@@ -9,6 +8,7 @@ import { resetTheme, setTheme } from 'features/theme/themeSlice';
 import { CONFIG } from 'config';
 import { faPalette, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { Chip } from '@mui/material';
+import { Flex } from '@nabcellent/sui-react';
 
 const SettingsPanel = () => {
     const {

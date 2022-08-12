@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getItemFromStore, setItemToStore } from 'utils/helpers';
+import { getItemFromStore, setItemToStore } from '@nabcellent/sui-react';
 
 type ThemeState = {
     isDark: boolean,

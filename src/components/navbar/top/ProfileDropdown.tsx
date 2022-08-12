@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import Avatar from 'components/common/Avatar';
-import { useAppDispatch } from '../../../app/hooks';
-import { logout, reset } from '../../../features/auth/authSlice';
+import { useAppDispatch } from 'app/hooks';
+import { logout, reset } from 'features/auth/authSlice';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
+import { Avatar } from '@nabcellent/sui-react';
 
 const ProfileDropdown = () => {
     const navigate = useNavigate()

@@ -1,21 +1,15 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
 import { useVouchersQuery } from '../../features/vouchers/vouchersAPI';
-import { currencyFormat } from '../../utils/helpers';
-import PhoneChip from '../../components/chips/PhoneChip';
+import { currencyFormat, DataTable, PhoneChip, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 
 const Vouchers = () => {
-    let { data, isLoading, isSuccess, isError, error } = useVouchersQuery();
-    let vouchers = data?.data
-
-    console.log(data);
+    let { data:vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();
 
     if (isError) return <SectionError error={error} />;
     if (isLoading || !isSuccess || !vouchers) return <SectionLoader />;
+
+    console.log(vouchers);
 
     return (
         <Card className={'mb-3'}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Flex from 'components/common/Flex';
+import { Flex } from '@nabcellent/sui-react';
 import { RouteChildType } from 'utils/types';
 import { Chip } from '@mui/material';
 

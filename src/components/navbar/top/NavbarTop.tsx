@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import classNames from 'classnames';
-import Logo from '../../common/Logo';
 import SearchBox from './SearchBox';
 import NavbarTopDropDownMenus from './NavbarTopDropDownMenus';
 import TopNavRightSideNavItem from './TopNavRightSideNavItem';
@@ -10,6 +9,8 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { setTheme } from 'features/theme/themeSlice';
 import { navbarBreakPoint, topNavbarBreakpoint } from 'constants/breakpoints';
+import { Logo } from '@nabcellent/sui-react';
+import { IMAGES } from '../../../constants/images';
 
 const NavbarTop = () => {
     const dispatch = useAppDispatch();
@@ -58,7 +59,7 @@ const NavbarTop = () => {
                 </button>
             </Navbar.Toggle>
 
-            <Logo at="navbar-top" width={40}/>
+            <Logo src={IMAGES.logos.sidooh} at="navbar-top" width={40}/>
 
             {navbarPosition === 'top' || navbarPosition === 'combo' ? (
                 <Navbar.Collapse in={navbarCollapsed} className="scrollbar pb-3 pb-lg-0">
