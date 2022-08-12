@@ -1,7 +1,7 @@
 import {CSSProperties, memo} from 'react';
 import _ from 'lodash';
-import {getColor} from 'utils/helpers';
 import BaseECharts from './BaseECharts';
+import { getColor } from '@nabcellent/sui-react';
 
 const getOption = () => ({
     color: getColor('primary'),

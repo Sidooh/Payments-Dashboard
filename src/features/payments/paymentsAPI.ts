@@ -1,8 +1,8 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {CONFIG} from 'config';
-import {RootState} from 'app/store';
-import {ApiResponse, Payment} from 'utils/types';
-import {Status} from "../../utils/enums";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { CONFIG } from 'config';
+import { RootState } from 'app/store';
+import { ApiResponse, Payment } from 'utils/types';
+import { Status } from '@nabcellent/sui-react';
 
 type ChartData = {
     labels: string[],
@@ -10,7 +10,7 @@ type ChartData = {
 }
 
 interface RevenueDayData {
-    [key: string]: ChartData
+    [key: string]: ChartData;
 }
 
 type RevenueData = {
@@ -48,7 +48,7 @@ export const paymentsAPI = createApi({
         getDashboardRevenueData: builder.query<RevenueData, void>({
             query: () => '/dashboard/revenue-chart',
         }),
-        payments: builder.query<Payment[], void>({
+        payments: builder.query<Payment[], Status | void>({
             query: (status?: Status) => {
                 let url = '/payments';
 

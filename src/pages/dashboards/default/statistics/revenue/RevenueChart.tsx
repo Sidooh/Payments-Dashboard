@@ -1,11 +1,10 @@
 import * as echarts from 'echarts/core';
-import {LineChart} from 'echarts/charts';
-import {GridComponent, LegendComponent, TooltipComponent} from 'echarts/components';
-import {getColor, rgbaColor} from 'utils/helpers';
-import {useAppSelector} from 'app/hooks';
-import {RootState} from 'app/store';
+import { LineChart } from 'echarts/charts';
+import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
+import { useAppSelector } from 'app/hooks';
+import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';
-import {Status} from 'utils/enums';
+import { getColor, rgbaColor, Status } from '@nabcellent/sui-react';
 
 type PaymentChartType = {
     data: any
