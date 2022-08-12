@@ -1,7 +1,22 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CONFIG } from 'config';
-import { RootState } from 'app/store';
-import { ApiResponse, Payment } from 'utils/types';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {CONFIG} from 'config';
+import {RootState} from 'app/store';
+import {ApiResponse, Payment} from 'utils/types';
+import {Status} from "../../utils/enums";
+
+type ChartData = {
+    labels: string[],
+    datasets: number[]
+}
+
+interface RevenueDayData {
+    [key: string]: ChartData
+}
+
+type RevenueData = {
+    today: RevenueDayData
+    yesterday: RevenueDayData
+}
 
 type DashboardData = {
     total_payments: number
@@ -26,24 +41,35 @@ export const paymentsAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboard: builder.query<DashboardData, void>({
+        getDashboardSummaries: builder.query<DashboardData, void>({
             query: () => '/dashboard',
             transformResponse: (response: ApiResponse<DashboardData>) => response.data
         }),
+        getDashboardRevenueData: builder.query<RevenueData, void>({
+            query: () => '/dashboard/revenue-chart',
+        }),
         payments: builder.query<Payment[], void>({
-            query: () => '/payments',
+            query: (status?: Status) => {
+                let url = '/payments';
+
+                if (status) url += `?status=${status}`;
+
+                return url;
+            },
             transformResponse: (response: ApiResponse<Payment[]>) => response.data,
             providesTags: ['Payment']
         }),
         payment: builder.query<Payment, number>({
             query: id => `/payments/${id}`,
-            transformResponse: (response: ApiResponse<Payment>) => response.data
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            providesTags: ['Payment']
         })
     })
 });
 
 export const {
-    useGetDashboardQuery,
+    useGetDashboardSummariesQuery,
+    useGetDashboardRevenueDataQuery,
     usePaymentsQuery,
     usePaymentQuery
 } = paymentsAPI;

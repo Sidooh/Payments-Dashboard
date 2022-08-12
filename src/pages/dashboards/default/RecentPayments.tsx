@@ -12,6 +12,10 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
             <Card.Body>
                 <DataTable title={'Recent Payments'} columns={[
                     {
+                        accessorKey: 'id',
+                        header: '#'
+                    },
+                    {
                         accessorKey: 'subtype',
                         header: 'Sub Type'
                     },

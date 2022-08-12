@@ -1,5 +1,6 @@
 import { Card, Table } from 'react-bootstrap';
 import { Payment, StkRequest } from 'utils/types';
+import { currencyFormat, parsePhone } from 'utils/helpers';
 import moment from 'moment';
 import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
 
@@ -16,9 +17,10 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                     <thead className="bg-200 text-900">
                     <tr>
                         <th className="border-0">Reference</th>
-                        <th className="border-0 text-center">Status</th>
-                        <th className="border-0">Result</th>
                         <th className="border-0">Amount</th>
+                        <th className="border-0">Result</th>
+                        <th className="border-0">Receipt</th>
+                        <th className="border-0 text-center">Status</th>
                         <th className="border-0">Date</th>
                     </tr>
                     </thead>
@@ -29,11 +31,12 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                             <h6 className="mb-0 text-nowrap">{provider?.reference}</h6>
                             <p className="mb-0">{provider?.phone}</p>
                         </td>
+                        <td className="align-middle">{currencyFormat(provider?.amount)}</td>
+                        <td className="align-middle">{provider.response?.result_desc}</td>
+                        <td className="align-middle">{provider.response?.mpesa_receipt_number}</td>
                         <td className="align-middle text-center">
                             <StatusChip status={provider?.status} bg={false}/>
                         </td>
-                        <td className="align-middle">The service request is processed successfully.</td>
-                        <td className="align-middle">{currencyFormat(provider?.amount)}</td>
                         <td className="text-end">
                             {moment(provider?.response?.created_at || provider?.created_at).format('MMM D, Y')}<br/>
                             <small>{moment(provider?.response?.created_at || provider?.created_at).format('hh:mm A')}</small>
