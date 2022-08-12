@@ -2,10 +2,12 @@
 
 :root {
     --falcon-body-font-family: 'Varela Round', cursive !important;
+    --falcon-line-chart-gradient: linear-gradient(-45deg, #414ba7, #198019)
 }
 
 .modal-footer > * {
     margin: .25rem !important;
+    color: #198019;
 }
 
 td {

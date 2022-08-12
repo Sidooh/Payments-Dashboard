@@ -1,11 +1,9 @@
-import {Card} from 'react-bootstrap';
-import DataTable from 'components/common/datatable';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
+import { Card } from 'react-bootstrap';
 import TableActions from 'components/common/TableActions';
-import {Payment} from 'utils/types';
+import { Payment } from 'utils/types';
+import { DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
 
-const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
+const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -13,7 +11,6 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
                     {
                         accessorKey: 'id',
                         header: '#',
-                        // cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
                         accessorKey: 'description',
@@ -40,8 +37,7 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'payment'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
@@ -59,4 +55,4 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
     );
 };
 
-export default Payments;
+export default PaymentsTable;

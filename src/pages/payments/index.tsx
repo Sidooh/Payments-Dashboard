@@ -1,46 +1,16 @@
-import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { usePaymentsQuery } from 'features/payments/paymentsAPI';
-import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { SectionError, SectionLoader } from '@nabcellent/sui-react';
+import PaymentsTable from 'components/tables/PaymentsTable';
 
 const Payments = () => {
-    let { data:payments, isLoading, isSuccess, isError, error } = usePaymentsQuery();
+    let {data: payments, isLoading, isSuccess, isError, error} = usePaymentsQuery();
+
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !payments) return <SectionLoader/>;
+
     console.log(payments);
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !payments) return <SectionLoader />;
-
-    return (
-        <Card className={'mb-3'}>
-            <Card.Body>
-                <DataTable title={'Payments'} columns={[
-                    {
-                        accessorKey: 'subtype',
-                        header: 'Via'
-                    },
-                    {
-                        accessorKey: 'amount',
-                        header: 'Amount',
-                        cell: ({ row }: any) => currencyFormat(row.original.amount)
-                    },
-                    {
-                        accessorKey: 'status',
-                        header: 'Status',
-                        cell: ({ row }: any) => <StatusChip status={row.original.status}/>
-                    },
-                    {
-                        accessorKey: 'updated_at',
-                        header: 'Date',
-                        cell: ({ row }: any) => <TableDate date={row.original.updated_at} />
-                    },
-                    {
-                        id: 'Actions',
-                        cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'payment'} />
-                    }
-                ]} data={payments} />
-            </Card.Body>
-        </Card>
-    );
+    return <PaymentsTable tableTitle={'Payments'} payments={payments}/>;
 };
 
 export default Payments;

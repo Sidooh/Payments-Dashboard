@@ -1,5 +1,5 @@
 import { usePaymentsQuery } from 'features/payments/paymentsAPI';
-import Payments from './Payments';
+import PaymentsTable from 'components/tables/PaymentsTable';
 import CardHeader from "components/common/CardHeader";
 import { Card } from 'react-bootstrap';
 import { Icon } from "@mui/material";
@@ -15,16 +15,13 @@ const PendingPayments = () => {
 
     console.log('Pending Payments', payments);
 
-    if (payments.length)
-        return <Payments tableTitle={'Pending Payments'} payments={payments}/>;
-    else
-        return (
-            <Card className={'mb-3 bg-soft-primary'}>
-                <CardHeader title={'No pending Payments'}>
-                    <Icon><FontAwesomeIcon icon={faInfo}/></Icon>
-                </CardHeader>
-            </Card>
-        );
+    return payments.length ? <PaymentsTable tableTitle={'Pending Payments'} payments={payments}/> : (
+        <Card className={'mb-3 bg-soft-primary'}>
+            <CardHeader title={'No Pending Payments'}>
+                <Icon><FontAwesomeIcon icon={faInfo}/></Icon>
+            </CardHeader>
+        </Card>
+    );
 };
 
 export default PendingPayments;

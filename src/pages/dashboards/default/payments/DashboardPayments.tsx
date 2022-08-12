@@ -1,4 +1,4 @@
-import {ComponentLoader} from 'components/common/Loader';
+import { ComponentLoader } from '@nabcellent/sui-react';
 import {lazy, Suspense} from 'react';
 
 const PendingPayments = lazy(() => import('./PendingPayments'));

@@ -1,7 +1,6 @@
-import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { useVoucherTransactionsQuery } from 'features/vouchers/vouchersAPI';
-import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { SectionError, SectionLoader } from '@nabcellent/sui-react';
+import VoucherTransactionsTable from 'components/tables/VoucherTransactionsTable';
 
 const VoucherTransactions = () => {
     let {data: transactions, isLoading, isSuccess, isError, error} = useVoucherTransactionsQuery();
@@ -11,37 +10,7 @@ const VoucherTransactions = () => {
 
     console.log(transactions);
 
-    return (
-        <Card className={'mb-3'}>
-            <Card.Body>
-                <DataTable title={`Voucher Transactions`} columns={[
-                    {
-                        accessorKey: 'type',
-                        header: 'Type',
-                    },
-                    {
-                        accessorKey: 'amount',
-                        header: 'Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.amount)
-                    },
-                    {
-                        accessorKey: 'status',
-                        header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.payment?.status}/>
-                    },
-                    {
-                        accessorKey: 'updated_at',
-                        header: 'Transaction Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
-                    },
-                    {
-                        id: 'Actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.payment?.id} entity={'payment'}/>
-                    }
-                ]} data={transactions}/>
-            </Card.Body>
-        </Card>
-    );
+    return <VoucherTransactionsTable transactions={transactions}/>
 };
 
 export default VoucherTransactions;

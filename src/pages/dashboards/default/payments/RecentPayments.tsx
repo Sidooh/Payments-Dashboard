@@ -1,5 +1,5 @@
 import { usePaymentsQuery } from 'features/payments/paymentsAPI';
-import Payments from './Payments';
+import PaymentsTable from 'components/tables/PaymentsTable';
 import { Payment } from 'utils/types';
 import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 
@@ -12,7 +12,7 @@ const RecentPayments = () => {
     payments = payments.filter((t: Payment) => t.status !== Status.PENDING);
     console.log('Recent Payments', payments);
 
-    return <Payments tableTitle={'Recent Payments'} payments={payments}/>;
+    return <PaymentsTable tableTitle={'Recent Payments'} payments={payments}/>;
 };
 
 export default RecentPayments;

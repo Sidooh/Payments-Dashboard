@@ -1,6 +1,5 @@
 import { Card, Table } from 'react-bootstrap';
 import { Payment, StkRequest } from 'utils/types';
-import { currencyFormat, parsePhone } from 'utils/helpers';
 import moment from 'moment';
 import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
 
@@ -33,7 +32,7 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                         </td>
                         <td className="align-middle">{currencyFormat(provider?.amount)}</td>
                         <td className="align-middle">{provider.response?.result_desc}</td>
-                        <td className="align-middle">{provider.response?.mpesa_receipt_number}</td>
+                        <td className="align-middle">{provider.response?.mpesa_receipt_number || 'N/A'}</td>
                         <td className="align-middle text-center">
                             <StatusChip status={provider?.status} bg={false}/>
                         </td>

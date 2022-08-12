@@ -42,6 +42,18 @@ interface Model {
     created_at: string;
 }
 
+export type User = Model & {
+    name: string
+    email: string
+}
+
+export type Account = Model & {
+    phone: string
+    user?: User
+    user_id: number,
+    status: string
+}
+
 export interface StkCallback extends Model {
     amount: number;
     result_desc: string;
@@ -63,6 +75,7 @@ export interface Voucher extends Model {
     balance: number;
     account_id: number;
     voucher_transactions?: VoucherTransaction[];
+    account?: Account;
 }
 
 export interface VoucherTransaction extends Model {
