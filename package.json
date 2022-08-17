@@ -16,7 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.1",
-    "@nabcellent/sui-react": "^2.1.7",
+    "@nabcellent/sui-react": "^2.2.1",
     "@reduxjs/toolkit": "^1.8.4",
     "echarts": "^5.3.3",
     "formik": "^2.2.9",

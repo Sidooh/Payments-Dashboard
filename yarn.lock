@@ -870,13 +870,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabcellent/sui-react@npm:^2.1.7":
-  version: 2.1.7
-  resolution: "@nabcellent/sui-react@npm:2.1.7"
+"@nabcellent/sui-react@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@nabcellent/sui-react@npm:2.2.1"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 692b4da0e0d101d5e4eff9dd58eb3b519b30f5723929b6951656223f6ee764d5015eae9b9ef9bc7bb684b02ad8671c1c9504e2642af43f10fc73002a6ee0286b
+  checksum: f4aff8e7418ccfede38ea694ac121ca932633943346ce275580d80ac62de6cdd8acc6129b92000be69ca7c44612126ac9b4afb738f4b900c28ff0d2b113784fc
   languageName: node
   linkType: hard
 
@@ -2490,7 +2490,7 @@ __metadata:
     "@fortawesome/react-fontawesome": ^0.2.0
     "@mui/icons-material": ^5.8.4
     "@mui/material": ^5.10.1
-    "@nabcellent/sui-react": ^2.1.7
+    "@nabcellent/sui-react": ^2.2.1
     "@reduxjs/toolkit": ^1.8.4
     "@types/echarts": ^4.9.16
     "@types/node": ^18.7.6

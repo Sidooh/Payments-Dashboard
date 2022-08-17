@@ -1,11 +1,11 @@
-import { lazy, memo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, reset } from 'features/auth/authSlice';
 import { useAuth } from 'hooks/useAuth';
 import { useAppDispatch } from 'app/hooks';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { toast, TextField, LoadingButton } from '@nabcellent/sui-react';
+import { LoadingButton, TextField, toast } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +37,7 @@ const Login = () => {
     return (
         <>
             <div className="row flex-between-center mb-2">
-                <div className="col-auto"><h5><FontAwesomeIcon icon={faKey}/> Sign In</h5></div>
+                <div className="col-auto"><h5>Sign In</h5></div>
             </div>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
@@ -76,4 +76,4 @@ const Login = () => {
     );
 };
 
-export default memo(Login);
+export default Login;

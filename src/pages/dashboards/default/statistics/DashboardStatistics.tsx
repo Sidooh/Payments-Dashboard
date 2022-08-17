@@ -10,7 +10,7 @@ const DashboardStatistics = () => {
         <>
             <Row className="g-3 mb-3">
                 <Col xxl={9}>
-                    <RevenueChartWrapper/>
+                    <Suspense fallback={<ComponentLoader/>}><RevenueChartWrapper/></Suspense>
                 </Col>
                 <Col>
                     <Suspense fallback={<ComponentLoader/>}><PaymentSummaries/></Suspense>

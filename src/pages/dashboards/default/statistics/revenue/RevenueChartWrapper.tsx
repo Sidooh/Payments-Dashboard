@@ -1,21 +1,22 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { useGetDashboardRevenueDataQuery } from 'features/payments/paymentsAPI';
 import CountUp from 'react-countup';
-import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
+import { SectionError, Status } from '@nabcellent/sui-react';
 
 const RevenueChart = lazy(() => import('./RevenueChart'))
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
-    console.log(data);
 
     const [paymentStatus, setPaymentStatus] = useState<Status>(Status.COMPLETED);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
+    if (isLoading || !isSuccess || !data) return <></>;
+
+    console.log(data);
 
     const total_today = data.today[paymentStatus]?.datasets.reduce((count, amount) => count += amount);
     const total_yesterday = data.yesterday[paymentStatus]?.datasets.reduce((count, amount) => count += amount);
