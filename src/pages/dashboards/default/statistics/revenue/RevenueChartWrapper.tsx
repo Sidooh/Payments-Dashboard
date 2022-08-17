@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
-import RevenueChart from './RevenueChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { useGetDashboardRevenueDataQuery } from 'features/payments/paymentsAPI';
 import CountUp from 'react-countup';
-import { ComponentLoader, Flex, SectionError, Status } from '@nabcellent/sui-react';
+import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
+
+const RevenueChart = lazy(() => import('./RevenueChart'))
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
@@ -21,7 +22,8 @@ const RevenueChartWrapper = () => {
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
-            <Card.Body className="bg-line-chart-gradient" as={Flex} justifyContent="between" direction="column">
+            <Card.Body style={{backgroundImage: 'linear-gradient(-45deg, #414ba7, #198019)'}}
+                       className="d-flex flex-column justify-content-between">
                 <Row className="align-items-center g-0">
                     <Col className="light">
                         <h4 className="text-white mb-0">

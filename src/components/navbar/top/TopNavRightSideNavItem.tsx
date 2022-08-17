@@ -27,7 +27,7 @@ const TopNavRightSideNavItem = () => {
                 </Nav.Link>
             </Nav.Item>
 
-            <Waffle waffleLinks={[
+            <Waffle links={[
                 {
                     avatarText: 'A',
                     title: 'Accounts',

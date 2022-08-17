@@ -1,12 +1,5 @@
-import { RouteType } from "utils/types";
-import {
-    faWrench,
-    faPieChart,
-    faGlobe,
-    faMoneyCheckDollar,
-    faHandHoldingDollar,
-    faSackDollar
-} from '@fortawesome/free-solid-svg-icons';
+import { RouteType } from "@nabcellent/sui-react";
+import { faHandHoldingDollar, faMoneyCheckDollar, faPieChart, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 
 export const dashboardRoutes: RouteType = {
     label: 'Dashboard',
@@ -40,19 +33,21 @@ export const appRoutes: RouteType = {
         {
             name: 'MPESA',
             icon: faMoneyCheckDollar,
+            active:true,
             children: [
-                {name: 'STK', to: '/mpesa/stk',},
-                {name: 'C2B', to: '/mpesa/c2b',},
-                {name: 'B2C', to: '/mpesa/b2c',},
+                {name: 'STK', to: '/mpesa/stk', active: true},
+                {name: 'C2B', to: '/mpesa/c2b', active: true},
+                {name: 'B2C', to: '/mpesa/b2c', active: true},
             ]
         },
         {
             name: 'Vouchers',
             icon: faHandHoldingDollar,
             to: '/payments',
+            active:true,
             children: [
-                {name: 'Vouchers', to: '/vouchers',},
-                {name: 'Transactions', to: '/voucher/transactions',},
+                {name: 'Vouchers', to: '/vouchers', active: true},
+                {name: 'Transactions', to: '/voucher/transactions', active: true},
             ]
         },
     ]

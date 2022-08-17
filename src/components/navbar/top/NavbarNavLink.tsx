@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { setTheme } from 'features/theme/themeSlice';
-import { RouteChildType } from 'utils/types';
+import { RouteChildType } from '@nabcellent/sui-react';
 
 type NavbarNavLinkType = {
     title?: string,

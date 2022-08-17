@@ -1,7 +1,8 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { Payment } from 'utils/types';
 import { DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { ReadMore } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
     return (
@@ -47,7 +48,9 @@ const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: P
                     {
                         id: 'actions',
                         header: '',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
+                        cell: ({row}: any) => (
+                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                        )
                     }
                 ]} data={payments}/>
             </Card.Body>

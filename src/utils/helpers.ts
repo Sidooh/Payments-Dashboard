@@ -1,5 +1,3 @@
-export const isIterableArray = (array: any) => Array.isArray(array) && !!array.length;
-
 export const camelize = (str: string) => {
     return str.replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
         if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
@@ -40,3 +38,8 @@ export const getFlattenedRoutes = (children: any) => children.reduce(
     },
     {unTitled: []}
 );
+
+export const getColor = function getColor(name: string) {
+    let dom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document.documentElement;
+    return getComputedStyle(dom).getPropertyValue("--sidooh-".concat(name)).trim();
+};

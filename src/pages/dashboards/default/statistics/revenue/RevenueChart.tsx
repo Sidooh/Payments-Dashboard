@@ -4,7 +4,8 @@ import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/compon
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';
-import { getColor, rgbaColor, Status } from '@nabcellent/sui-react';
+import { rgbaColor, Status } from '@nabcellent/sui-react';
+import { getColor } from 'utils/helpers';
 
 type PaymentChartType = {
     data: any
@@ -22,8 +23,8 @@ const getOptions = (labels: string[], data: any, status: string | Status, isDark
             type: 'cross'
         },
         padding: [7, 10],
-        backgroundColor: getColor('100'),
-        borderColor: getColor('300'),
+        backgroundColor: '#f9fafd',
+        borderColor: '#d8e2ef',
         borderWidth: 1,
         transitionDuration: 0,
         textStyle: {
@@ -62,7 +63,7 @@ const getOptions = (labels: string[], data: any, status: string | Status, isDark
             }
         },
         axisLabel: {
-            color: getColor('400'),
+            color: '#b6c1d2',
             fontWeight: 600,
             fontSize: 10,
             margin: 15,
@@ -91,12 +92,12 @@ const getOptions = (labels: string[], data: any, status: string | Status, isDark
             data: data.yesterday[status]?.datasets ?? Array(data.yesterday["ALL"].datasets.length).fill(0),
             symbol: 'emptyCircle',
             itemStyle: {
-                color: isDark ? getColor('primary') : getColor('red')
+                color: isDark ? '#0f1b4c' : '#f42e00'
             },
             lineStyle: {
                 color: isDark
-                    ? rgbaColor(getColor('primary'), 0.8)
-                    : rgbaColor(getColor('red'), 0.8)
+                    ? rgbaColor('#0f1b4c', 0.8)
+                    : rgbaColor('#f42e00', 0.8)
             },
         },
         {
@@ -105,12 +106,12 @@ const getOptions = (labels: string[], data: any, status: string | Status, isDark
             data: data.today[status]?.datasets ?? Array(data.today["ALL"].datasets.length).fill(0),
             symbol: 'emptyCircle',
             itemStyle: {
-                color: isDark ? getColor('primary') : getColor('white')
+                color: isDark ? '#0f1b4c' : '#fff'
             },
             lineStyle: {
                 color: isDark
-                    ? rgbaColor(getColor('primary'), 0.8)
-                    : rgbaColor(getColor('white'), 0.8)
+                    ? rgbaColor('#0f1b4c', 0.8)
+                    : rgbaColor('#fff', 0.8)
             },
             areaStyle: {
                 color: {
@@ -123,13 +124,13 @@ const getOptions = (labels: string[], data: any, status: string | Status, isDark
                         {
                             offset: 0,
                             color: isDark
-                                ? rgbaColor(getColor('primary'), 0.5)
+                                ? rgbaColor('#0f1b4c', 0.5)
                                 : rgbaColor('#fff', 0.5)
                         },
                         {
                             offset: 1,
                             color: isDark
-                                ? rgbaColor(getColor('primary'), 0)
+                                ? rgbaColor('#0f1b4c', 0)
                                 : rgbaColor('#fff', 0)
                         }
                     ]

@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { ApiResponse, Payment } from 'utils/types';
-import { Status } from '@nabcellent/sui-react';
+import { Payment } from 'utils/types';
+import { ApiResponse, Status } from '@nabcellent/sui-react';
 
 type ChartData = {
     labels: string[],
@@ -47,6 +47,7 @@ export const paymentsAPI = createApi({
         }),
         getDashboardRevenueData: builder.query<RevenueData, void>({
             query: () => '/dashboard/revenue-chart',
+            transformResponse: (response: ApiResponse<RevenueData>) => response.data
         }),
         payments: builder.query<Payment[], Status | void>({
             query: (status?: Status) => {

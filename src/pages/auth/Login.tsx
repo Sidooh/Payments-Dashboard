@@ -5,11 +5,10 @@ import { useAuth } from 'hooks/useAuth';
 import { useAppDispatch } from 'app/hooks';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { toast, TextField } from '@nabcellent/sui-react';
+import { toast, TextField, LoadingButton } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
-
-const LoadingButton = lazy(() => import('@mui/lab/LoadingButton'));
-const LoginSharp = lazy(() => import('@mui/icons-material/LoginSharp'));
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faKey, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 
 const validationSchema = yup.object({
     email: yup.string().email('Must be a valid email').max(100).required('Email is required.'),
@@ -38,7 +37,7 @@ const Login = () => {
     return (
         <>
             <div className="row flex-between-center mb-2">
-                <div className="col-auto"><h5>Sign In</h5></div>
+                <div className="col-auto"><h5><FontAwesomeIcon icon={faKey}/> Sign In</h5></div>
             </div>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
@@ -57,9 +56,9 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="mb-3">
-                    <LoadingButton size="small" color="primary" loading={isLoading} type={'submit'}
+                    <LoadingButton size="sm" color="primary" loading={isLoading} type={'submit'}
                                    loadingPosition="end" className="w-100 mt-3" onClick={() => formik.submitForm()}
-                                   endIcon={<LoginSharp/>} variant="contained">
+                                   endIcon={<FontAwesomeIcon icon={faUnlockKeyhole}/>}>
                         Sign In
                     </LoadingButton>
                 </div>

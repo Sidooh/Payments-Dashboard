@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Col, Nav, Row } from 'react-bootstrap';
 import { getFlattenedRoutes } from 'utils/helpers';
 import NavbarNavLink from './NavbarNavLink';
-import { RouteChildType } from 'utils/types';
+import { RouteChildType } from '@nabcellent/sui-react';
 
 type NavbarDropdownAppType = {
     items: RouteChildType[]

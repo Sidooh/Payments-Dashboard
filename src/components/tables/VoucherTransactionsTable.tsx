@@ -1,7 +1,8 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { VoucherTransaction } from 'utils/types';
+import { ReadMore } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
     return (
@@ -29,7 +30,11 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.payment?.id} entity={'payment'}/>
+                        cell: ({row}: any) => (
+                            <Link to={`/voucher-transactions/${row.original?.payment?.id}`}>
+                                <ReadMore fontSize={'small'}/>
+                            </Link>
+                        )
                     }
                 ]} data={transactions}/>
             </Card.Body>

@@ -5,7 +5,7 @@ import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
-import { RouteChildType } from 'utils/types';
+import { RouteChildType } from '@nabcellent/sui-react';
 
 type CollapseItemsType = {
     route: RouteChildType

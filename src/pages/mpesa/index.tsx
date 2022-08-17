@@ -1,8 +1,8 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
 import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { ReadMore } from '@mui/icons-material';
 
 const Payments = () => {
     const {subType} = useParams();
@@ -34,7 +34,9 @@ const Payments = () => {
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
+                        cell: ({row}: any) => (
+                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                        )
                     }
                 ]} data={payments}/>
             </Card.Body>

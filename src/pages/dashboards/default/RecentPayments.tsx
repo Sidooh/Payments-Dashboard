@@ -1,8 +1,8 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { Payment } from 'utils/types';
 import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ReadMore } from '@mui/icons-material';
 
 const RecentPayments = ({payments}: { payments: Payment[] }) => {
     const navigate = useNavigate();
@@ -36,7 +36,9 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
+                        cell: ({row}: any) => (
+                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                        )
                     }
                 ]} data={payments} onViewAll={() => navigate('/payments')}/>
             </Card.Body>
