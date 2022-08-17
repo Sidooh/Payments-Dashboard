@@ -4,9 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { useGetDashboardRevenueDataQuery } from 'features/payments/paymentsAPI';
 import CountUp from 'react-countup';
-import { SectionError, Status } from '@nabcellent/sui-react';
-
-const RevenueChart = lazy(() => import('./RevenueChart'))
+import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
+import RevenueChart from './RevenueChart';
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
@@ -14,7 +13,7 @@ const RevenueChartWrapper = () => {
     const [paymentStatus, setPaymentStatus] = useState<Status>(Status.COMPLETED);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <></>;
+    if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
 
     console.log(data);
 

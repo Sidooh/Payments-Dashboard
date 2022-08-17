@@ -8,7 +8,7 @@ const PaymentSummaries = () => {
     const {data:stats, isError, error, isLoading, isSuccess} = useGetDashboardSummariesQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !stats) return <></>;
+    if (isLoading || !isSuccess || !stats) return <ComponentLoader/>;
 
     console.log(stats);
 
