@@ -4,6 +4,7 @@ on:
     branches:
     - main
     - develop
+    - red.dev
     paths:
     - .github/workflows/semgrep.yml
   schedule:
