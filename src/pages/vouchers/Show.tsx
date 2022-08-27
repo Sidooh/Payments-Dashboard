@@ -29,13 +29,13 @@ const Show = () => {
                     <h5>Account: #{account?.id}</h5>
                     <h6 className="mb-2">
                         <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
-                           target={'_blank'}>
+                           target={'_blank'} rel={'noreferrer noopener'}>
                             {account?.user?.name}
                         </a>
                     </h6>
                     <p className="mb-0 fs--1">
                         <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
-                           target={'_blank'}>
+                           target={'_blank'} rel={'noreferrer noopener'}>
                             {account?.phone}
                         </a>
                     </p>
