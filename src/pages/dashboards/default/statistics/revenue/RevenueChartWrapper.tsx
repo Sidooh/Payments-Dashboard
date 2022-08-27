@@ -1,30 +1,29 @@
-import {useState} from 'react';
-import {Card, Col, Form, Row} from 'react-bootstrap';
-import Flex from 'components/common/Flex';
-import RevenueChart from './RevenueChart';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSync} from '@fortawesome/free-solid-svg-icons';
-import {Status} from 'utils/enums';
-import {useGetDashboardRevenueDataQuery} from 'features/payments/paymentsAPI';
-import {SectionError} from 'components/common/Error';
-import {ComponentLoader} from 'components/common/Loader';
+import { lazy, useState } from 'react';
+import { Card, Col, Form, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { useGetDashboardRevenueDataQuery } from 'features/payments/paymentsAPI';
 import CountUp from 'react-countup';
+import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
+import RevenueChart from './RevenueChart';
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
-    console.log(data);
 
     const [paymentStatus, setPaymentStatus] = useState<Status>(Status.COMPLETED);
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
 
+    console.log(data);
+
     const total_today = data.today[paymentStatus]?.datasets.reduce((count, amount) => count += amount);
     const total_yesterday = data.yesterday[paymentStatus]?.datasets.reduce((count, amount) => count += amount);
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
-            <Card.Body className="bg-line-chart-gradient" as={Flex} justifyContent="between" direction="column">
+            <Card.Body style={{backgroundImage: 'linear-gradient(-45deg, #414ba7, #198019)'}}
+                       className="d-flex flex-column justify-content-between">
                 <Row className="align-items-center g-0">
                     <Col className="light">
                         <h4 className="text-white mb-0">

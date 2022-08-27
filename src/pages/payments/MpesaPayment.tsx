@@ -1,8 +1,7 @@
-import {Card, Table} from 'react-bootstrap';
-import {Payment, StkRequest} from 'utils/types';
-import {currencyFormat, parsePhone} from 'utils/helpers';
+import { Card, Table } from 'react-bootstrap';
+import { Payment, StkRequest } from 'utils/types';
 import moment from 'moment';
-import StatusChip from '../../components/chips/StatusChip';
+import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     const provider: StkRequest = payment.provider as StkRequest;
@@ -29,13 +28,13 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                     <tr className="border-200">
                         <td className="align-middle">
                             <h6 className="mb-0 text-nowrap">{provider?.reference}</h6>
-                            <p className="mb-0">{parsePhone(provider?.phone)}</p>
+                            <p className="mb-0">{provider?.phone}</p>
                         </td>
                         <td className="align-middle">{currencyFormat(provider?.amount)}</td>
                         <td className="align-middle">{provider.response?.result_desc}</td>
-                        <td className="align-middle">{provider.response?.mpesa_receipt_number}</td>
+                        <td className="align-middle">{provider.response?.mpesa_receipt_number || 'N/A'}</td>
                         <td className="align-middle text-center">
-                            <StatusChip status={provider?.status} entity={'payment'} entityId={provider.id} bg={false}/>
+                            <StatusChip status={provider?.status} bg={false}/>
                         </td>
                         <td className="text-end">
                             {moment(provider?.response?.created_at || provider?.created_at).format('MMM D, Y')}<br/>

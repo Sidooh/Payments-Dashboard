@@ -1,4 +1,4 @@
-import {lazy} from 'react';
+import { lazy } from 'react';
 
 const DashboardStatistics = lazy(() => import('./statistics/DashboardStatistics'));
 const DashboardPayments = lazy(() => import('./payments/DashboardPayments'));

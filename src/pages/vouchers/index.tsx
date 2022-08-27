@@ -1,21 +1,17 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
-import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
 import { useVouchersQuery } from '../../features/vouchers/vouchersAPI';
-import { currencyFormat } from '../../utils/helpers';
-import PhoneChip from '../../components/chips/PhoneChip';
+import { currencyFormat, DataTable, PhoneChip, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { ReadMore } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import SidoohAccount from 'components/common/SidoohAccount';
 
 const Vouchers = () => {
-    let { data, isLoading, isSuccess, isError, error } = useVouchersQuery();
-    let vouchers = data?.data
+    let {data: vouchers, isLoading, isSuccess, isError, error} = useVouchersQuery();
 
-    console.log(data);
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !vouchers) return <SectionLoader/>;
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !vouchers) return <SectionLoader />;
+    console.log(vouchers);
 
     return (
         <Card className={'mb-3'}>
@@ -24,7 +20,7 @@ const Vouchers = () => {
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
-                        cell: ({ row }: any) => <PhoneChip phone={row.original.account.phone} />
+                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
                         accessorKey: 'type',
@@ -33,18 +29,20 @@ const Vouchers = () => {
                     {
                         accessorKey: 'balance',
                         header: 'Balance',
-                        cell: ({ row }: any) => currencyFormat(row.original.balance)
+                        cell: ({row}: any) => currencyFormat(row.original.balance)
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Last Updated At',
-                        cell: ({ row }: any) => <TableDate date={row.original.updated_at} />
+                        header: 'Updated At',
+                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
                         id: 'Actions',
-                        cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'voucher'} />
+                        cell: ({row}: any) => (
+                            <Link to={`/vouchers/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                        )
                     }
-                ]} data={vouchers} />
+                ]} data={vouchers}/>
             </Card.Body>
         </Card>
     );

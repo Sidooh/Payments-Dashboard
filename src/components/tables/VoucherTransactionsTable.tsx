@@ -1,23 +1,17 @@
 import { Card } from 'react-bootstrap';
-import { Payment } from 'utils/types';
 import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { VoucherTransaction } from 'utils/types';
 import { ReadMore } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
-const RecentPayments = ({payments}: { payments: Payment[] }) => {
-    const navigate = useNavigate();
-
+const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={'Recent Payments'} columns={[
+                <DataTable title={`Voucher Transactions`} columns={[
                     {
-                        accessorKey: 'id',
-                        header: '#'
-                    },
-                    {
-                        accessorKey: 'subtype',
-                        header: 'Sub Type'
+                        accessorKey: 'type',
+                        header: 'Type',
                     },
                     {
                         accessorKey: 'amount',
@@ -27,23 +21,25 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.payment?.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at ?? row.original.created_at}/>
+                        header: 'Transaction Date',
+                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
                         id: 'Actions',
                         cell: ({row}: any) => (
-                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                            <Link to={`/voucher-transactions/${row.original?.payment?.id}`}>
+                                <ReadMore fontSize={'small'}/>
+                            </Link>
                         )
                     }
-                ]} data={payments} onViewAll={() => navigate('/payments')}/>
+                ]} data={transactions}/>
             </Card.Body>
         </Card>
     );
 };
 
-export default RecentPayments;
+export default VoucherTransactionsTable;

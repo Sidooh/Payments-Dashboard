@@ -2,12 +2,11 @@ import { memo, Suspense, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
-import Footer from 'components/Footer';
+import classNames from 'classnames';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { SectionError } from 'components/common/Error';
-import { SectionLoader } from 'components/common/Loader';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, Footer, SectionError, SectionLoader } from '@nabcellent/sui-react';
+import { CONFIG } from '../config';
 
 const MainLayout = () => {
     const {hash, pathname} = useLocation();
@@ -33,17 +32,16 @@ const MainLayout = () => {
 
     return (
         <div className={isFluid ? 'container-fluid' : 'container'}>
-            {(navbarPosition === 'vertical' || navbarPosition === 'combo') && (
-                <NavbarVertical/>
-            )}
-            <div className={`content ${isKanban && 'pb-0'}`}>
+            {(navbarPosition === 'vertical' || navbarPosition === 'combo') && <NavbarVertical/>}
+
+            <div className={classNames('content', {'pb-0': isKanban})}>
                 <NavbarTop/>
                 {/*------ Main Routes ------*/}
                 <ErrorBoundary FallbackComponent={SectionError} onReset={() => window.location.reload()}>
                     <Suspense fallback={<SectionLoader/>}><Outlet/></Suspense>
                 </ErrorBoundary>
 
-                {!isKanban && <Footer/>}
+                {!isKanban && <Footer serviceName={'Products'} version={CONFIG.sidooh.version}/>}
             </div>
         </div>
     );

@@ -1,11 +1,10 @@
-import {Card} from 'react-bootstrap';
-import DataTable from 'components/common/datatable';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
-import TableActions from 'components/common/TableActions';
-import {Payment} from 'utils/types';
+import { Card } from 'react-bootstrap';
+import { Payment } from 'utils/types';
+import { DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { ReadMore } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
-const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
+const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -13,7 +12,6 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
                     {
                         accessorKey: 'id',
                         header: '#',
-                        // cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
                         accessorKey: 'description',
@@ -40,8 +38,7 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'payment'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
@@ -51,7 +48,9 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
                     {
                         id: 'actions',
                         header: '',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'payment'}/>
+                        cell: ({row}: any) => (
+                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                        )
                     }
                 ]} data={payments}/>
             </Card.Body>
@@ -59,4 +58,4 @@ const Payments = ({tableTitle, payments}: { tableTitle: string, payments: Paymen
     );
 };
 
-export default Payments;
+export default PaymentsTable;
