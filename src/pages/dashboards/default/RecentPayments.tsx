@@ -2,7 +2,8 @@ import { Card } from 'react-bootstrap';
 import { Payment } from 'utils/types';
 import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ReadMore } from '@mui/icons-material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 const RecentPayments = ({payments}: { payments: Payment[] }) => {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         id: 'Actions',
                         cell: ({row}: any) => (
-                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
                         )
                     }
                 ]} data={payments} onViewAll={() => navigate('/payments')}/>

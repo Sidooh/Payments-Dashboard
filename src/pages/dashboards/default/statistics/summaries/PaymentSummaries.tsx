@@ -3,6 +3,7 @@ import { useGetDashboardSummariesQuery } from "features/payments/paymentsAPI";
 import CardBgCorner from 'components/CardBgCorner';
 import CountUp from 'react-countup';
 import { Badge, ComponentLoader, SectionError } from "@nabcellent/sui-react";
+import { logger } from 'utils/logger';
 
 const PaymentSummaries = () => {
     const {data:stats, isError, error, isLoading, isSuccess} = useGetDashboardSummariesQuery();
@@ -10,7 +11,7 @@ const PaymentSummaries = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !stats) return <ComponentLoader/>;
 
-    console.log(stats);
+    logger.log(stats);
 
     return (
         <>

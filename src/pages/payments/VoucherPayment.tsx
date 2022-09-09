@@ -2,9 +2,10 @@ import { Card, Table } from 'react-bootstrap';
 import { Payment, VoucherTransaction } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
-    console.log(payment);
+    logger.log(payment);
 
     return (
         <Card className="mb-3">

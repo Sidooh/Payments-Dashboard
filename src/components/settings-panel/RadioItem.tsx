@@ -11,7 +11,7 @@ type RadioItemType = {
 };
 
 const RadioItem = ({name, label, active = false, onChange, image}: RadioItemType) => {
-    console.log(image);
+    logger.log(image);
     return (
         <Button variant="theme-default" className={classNames({active: active})}>
             <Form.Label htmlFor={`${name}-${label}`} className="cursor-pointer hover-overlay">

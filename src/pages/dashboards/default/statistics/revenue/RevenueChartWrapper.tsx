@@ -6,6 +6,7 @@ import { useGetDashboardRevenueDataQuery } from 'features/payments/paymentsAPI';
 import CountUp from 'react-countup';
 import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 import RevenueChart from './RevenueChart';
+import { logger } from 'utils/logger';
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
@@ -15,7 +16,7 @@ const RevenueChartWrapper = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
 
-    console.log(data);
+    logger.log(data);
 
     const total_today = data.today[paymentStatus]?.datasets.reduce((count, amount) => count += amount);
     const total_yesterday = data.yesterday[paymentStatus]?.datasets.reduce((count, amount) => count += amount);
