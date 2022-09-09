@@ -8,7 +8,7 @@ import { useFormik } from 'formik';
 import { LoadingButton, TextField, toast } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 
 const validationSchema = yup.object({
     email: yup.string().email('Must be a valid email').max(100).required('Email is required.'),

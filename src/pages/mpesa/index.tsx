@@ -2,13 +2,15 @@ import { Card } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
 import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { ReadMore } from '@mui/icons-material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { logger } from 'utils/logger';
 
 const Payments = () => {
-    const {subType} = useParams();
+    const { subType } = useParams();
 
-    let {data: payments, isLoading, isSuccess, isError, error} = useMpesaPaymentsQuery(String(subType));
-    console.log(payments);
+    let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery(String(subType));
+    logger.log(payments);
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !payments) return <SectionLoader/>;
@@ -20,22 +22,22 @@ const Payments = () => {
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.amount)
+                        cell: ({ row }: any) => currencyFormat(row.original.amount)
                     },
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                        cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
                         header: 'Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => (
-                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                        cell: ({ row }: any) => (
+                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
                         )
                     }
                 ]} data={payments}/>

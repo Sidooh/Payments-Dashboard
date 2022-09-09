@@ -7,6 +7,7 @@ import { Card } from 'react-bootstrap';
 import MpesaPayment from './MpesaPayment';
 import VoucherPayment from './VoucherPayment';
 import { Flex, SectionError, SectionLoader, StatusChip } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const Show = () => {
     const {id} = useParams();
@@ -15,7 +16,7 @@ const Show = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !payment) return <SectionLoader/>;
 
-    console.log('Payment:', payment);
+    logger.log('Payment:', payment);
 
     return (
         <>

@@ -1,8 +1,9 @@
 import { Card } from 'react-bootstrap';
 import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { VoucherTransaction } from 'utils/types';
-import { ReadMore } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
     return (
@@ -32,7 +33,7 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
                         id: 'Actions',
                         cell: ({row}: any) => (
                             <Link to={`/voucher-transactions/${row.original?.payment?.id}`}>
-                                <ReadMore fontSize={'small'}/>
+                                <FontAwesomeIcon icon={faEye}/>
                             </Link>
                         )
                     }
