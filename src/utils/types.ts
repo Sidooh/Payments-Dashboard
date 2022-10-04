@@ -39,3 +39,17 @@ export interface Payment extends Model {
     status: Status;
     provider?: StkRequest | VoucherTransaction;
 }
+
+export interface FloatAccount extends Model {
+    balance: number;
+    floatable_type: string;
+    floatable_id: string;
+}
+
+export interface FloatAccountTransaction extends Model {
+    type: string;
+    amount: number;
+    description: string;
+    float_account_id: number;
+    float_account?: FloatAccount;
+}
