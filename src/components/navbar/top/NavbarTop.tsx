@@ -2,7 +2,6 @@ import { memo, useEffect, useState } from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import classNames from 'classnames';
 import SearchBox from './SearchBox';
-import NavbarTopDropDownMenus from './NavbarTopDropDownMenus';
 import TopNavRightSideNavItem from './TopNavRightSideNavItem';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -64,7 +63,7 @@ const NavbarTop = () => {
             {navbarPosition === 'top' || navbarPosition === 'combo' ? (
                 <Navbar.Collapse in={navbarCollapsed} className="scrollbar pb-3 pb-lg-0">
                     <Nav navbar>
-                        <NavbarTopDropDownMenus/>
+                        {/*<NavbarTopDropDownMenus/>*/}
                     </Nav>
                 </Navbar.Collapse>
             ) : (
