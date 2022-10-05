@@ -25,9 +25,9 @@ const FloatAccountTransactionsTable = ({transactions}: { transactions: VoucherTr
                         cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
-                        accessorKey: 'updated_at',
+                        accessorKey: 'created_at',
                         header: 'Transaction Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
                         id: 'Actions',
