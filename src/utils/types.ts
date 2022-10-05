@@ -42,8 +42,10 @@ export interface Payment extends Model {
 
 export interface FloatAccount extends Model {
     balance: number;
+    account?: Account;
     floatable_type: string;
     floatable_id: string;
+    float_account_transactions?: VoucherTransaction[];
 }
 
 export interface FloatAccountTransaction extends Model {

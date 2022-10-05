@@ -65,8 +65,8 @@ const routes: RouteType[] = [
                 icon: faGhost,
                 active: false,
                 children: [
-                    {name: 'Accounts', to: '/float-accounts-accounts', active: false},
-                    {name: 'Transactions', to: '/float-accounts-accounts/transactions', active: false},
+                    {name: 'Accounts', to: '/float-accounts', active: false},
+                    {name: 'Transactions', to: '/float-accounts/transactions', active: false},
                 ]
             },
         ]

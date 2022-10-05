@@ -1,6 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { useVouchersQuery } from '../../features/vouchers/vouchersAPI';
-import { currencyFormat, DataTable, PhoneChip, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,13 +20,9 @@ const FloatAccounts = () => {
             <Card.Body>
                 <DataTable title={`Float Accounts`} columns={[
                     {
-                        accessorKey: 'customer',
-                        header: 'Customer',
-                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
-                    },
-                    {
-                        accessorKey: 'type',
-                        header: 'Type',
+                        accessorKey: 'floatable',
+                        header: 'Floatable',
+                        cell: ({row}: any) => row.original.floatable_type
                     },
                     {
                         accessorKey: 'balance',

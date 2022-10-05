@@ -19,6 +19,9 @@ const Mpesa = lazy(() => import('pages/mpesa'));
 const Vouchers = lazy(() => import('pages/vouchers'));
 const ShowVoucher = lazy(() => import('pages/vouchers/Show'));
 const VoucherTransactions = lazy(() => import('pages/vouchers/Transactions'));
+const FloatAccounts = lazy(() => import('pages/float-accounts'));
+const ShowFloatAccount = lazy(() => import('pages/float-accounts/Show'));
+const FloatAccountsTransactions = lazy(() => import('pages/float-accounts/Transactions'));
 
 function App() {
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -29,8 +32,8 @@ function App() {
         if (is.firefox()) HTMLClassList.add('firefox');
     }, [HTMLClassList]);
 
-    const { isDark } = useAppSelector((state: RootState) => state.theme);
-    const { isLoaded } = useTheme(isDark);
+    const {isDark} = useAppSelector((state: RootState) => state.theme);
+    const {isLoaded} = useTheme(isDark);
 
     if (!isLoaded) return <PageLoader isDark={isDark}/>;
 
@@ -54,6 +57,10 @@ function App() {
                     <Route path={'/vouchers'} element={<Vouchers/>}/>
                     <Route path={'/vouchers/:id'} element={<ShowVoucher/>}/>
                     <Route path={'/voucher/transactions'} element={<VoucherTransactions/>}/>
+
+                    <Route path={'/float-accounts'} element={<FloatAccounts/>}/>
+                    <Route path={'/float-accounts/:id'} element={<ShowFloatAccount/>}/>
+                    <Route path={'/float-accounts/transactions'} element={<FloatAccountsTransactions/>}/>
 
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>
