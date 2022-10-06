@@ -20,9 +20,8 @@ const FloatAccountTransactionsTable = ({transactions}: { transactions: VoucherTr
                         cell: ({row}: any) => currencyFormat(row.original.amount)
                     },
                     {
-                        accessorKey: 'status',
-                        header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                        accessorKey: 'description',
+                        header: 'Description',
                     },
                     {
                         accessorKey: 'created_at',
@@ -32,9 +31,7 @@ const FloatAccountTransactionsTable = ({transactions}: { transactions: VoucherTr
                     {
                         id: 'Actions',
                         cell: ({row}: any) => (
-                            <Link to={`/voucher-transactions/${row.original?.payment?.id}`}>
-                                <FontAwesomeIcon icon={faEye}/>
-                            </Link>
+                            <Link to={`/payments/${row.original?.payment?.id}`}><FontAwesomeIcon icon={faEye}/></Link>
                         )
                     }
                 ]} data={transactions}/>

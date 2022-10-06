@@ -20,21 +20,18 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
                         cell: ({row}: any) => currencyFormat(row.original.amount)
                     },
                     {
-                        accessorKey: 'status',
-                        header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.payment?.status}/>
+                        accessorKey: 'description',
+                        header: 'Description',
                     },
                     {
-                        accessorKey: 'updated_at',
+                        accessorKey: 'created_at',
                         header: 'Transaction Date',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
                         id: 'Actions',
                         cell: ({row}: any) => (
-                            <Link to={`/voucher-transactions/${row.original?.payment?.id}`}>
-                                <FontAwesomeIcon icon={faEye}/>
-                            </Link>
+                            <Link to={`/payments/${row.original?.payment?.id}`}><FontAwesomeIcon icon={faEye}/></Link>
                         )
                     }
                 ]} data={transactions}/>

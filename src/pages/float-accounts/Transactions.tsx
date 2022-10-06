@@ -1,7 +1,7 @@
 import { SectionError, SectionLoader } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
-import { useFloatAccountsTransactionsQuery } from "../../features/float-accounts/floatAccountsApi";
-import FloatAccountTransactionsTable from "../../components/tables/FloatAccountTransactionsTable";
+import { useFloatAccountsTransactionsQuery } from "features/float-accounts/floatAccountsApi";
+import FloatAccountTransactionsTable from "components/tables/FloatAccountTransactionsTable";
 
 const VoucherTransactions = () => {
     let {data: transactions, isLoading, isSuccess, isError, error} = useFloatAccountsTransactionsQuery();

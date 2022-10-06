@@ -27,7 +27,7 @@ export const floatAccountsApi = createApi({
             transformResponse: (response: ApiResponse<FloatAccount>) => response.data
         }),
         floatAccountsTransactions: builder.query<VoucherTransaction[], void>({
-            query: () => `/float-accounts/transactions?with=payment`,
+            query: () => `/float-accounts/transactions`,
             transformResponse: (response: ApiResponse<VoucherTransaction[]>) => response.data
         })
     })
