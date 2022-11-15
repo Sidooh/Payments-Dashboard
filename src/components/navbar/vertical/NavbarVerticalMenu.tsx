@@ -11,11 +11,12 @@ type CollapseItemsType = {
     route: RouteChildType
 };
 
-const CollapseItems = ({route}: CollapseItemsType) => {
-    const {pathname} = useLocation();
+const CollapseItems = ({ route }: CollapseItemsType) => {
+    const { pathname } = useLocation();
 
     const openCollapse = (childrens: RouteChildType[] | undefined) => {
-        if (!childrens) return;
+        if (!childrens) return false;
+
         const checkLink = (children: RouteChildType) => {
             if (children.to === pathname) return true;
 
@@ -33,7 +34,7 @@ const CollapseItems = ({route}: CollapseItemsType) => {
     return (
         <Nav.Item as="li">
             <Nav.Link onClick={() => setOpen(!open)}
-                      className={classNames('dropdown-indicator cursor-pointer', {'text-500': !route.active})}
+                      className={classNames('dropdown-indicator cursor-pointer', { 'text-500': !route.active })}
                       aria-expanded={open}>
                 <NavbarVerticalMenuItem route={route}/>
             </Nav.Link>
@@ -50,12 +51,12 @@ type NavbarVerticalMenuType = {
     routes: RouteChildType[]
 };
 
-const NavbarVerticalMenu = ({routes}: NavbarVerticalMenuType) => {
+const NavbarVerticalMenu = ({ routes }: NavbarVerticalMenuType) => {
     const dispatch = useAppDispatch()
-    const {showBurgerMenu} = useAppSelector((state) =>state.theme);
+    const { showBurgerMenu } = useAppSelector((state) => state.theme);
 
     const handleNavItemClick = () => {
-        if (showBurgerMenu) dispatch(setTheme({key: 'showBurgerMenu', value: !showBurgerMenu}));
+        if (showBurgerMenu) dispatch(setTheme({ key: 'showBurgerMenu', value: !showBurgerMenu }));
     };
 
     return (
@@ -68,11 +69,8 @@ const NavbarVerticalMenu = ({routes}: NavbarVerticalMenuType) => {
                                 <NavLink
                                     end={route.exact}
                                     to={String(route.to)}
-                                    state={{open: route.to === '/authentication-modal'}}
-                                    className={({isActive}) =>
-                                        isActive ? 'active nav-link' : 'nav-link'
-                                    }
-                                >
+                                    state={{ open: route.to === '/authentication-modal' }}
+                                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
                                     <NavbarVerticalMenuItem route={route}/>
                                 </NavLink>
                             </Nav.Item>
