@@ -58,7 +58,7 @@ const routes: RouteType[] = [
                             { name: 'Transactions', to: '/float-accounts/transactions', active: false },
                         ]
                     },
-                    { name: 'B2B', to: '/sidooh/b2c', active: false }
+                    { name: 'B2B', to: '/sidooh/b2b', active: false }
                 ]
             },
             {
