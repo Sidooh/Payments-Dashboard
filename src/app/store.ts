@@ -4,6 +4,7 @@ import themeReducer from 'features/theme/themeSlice';
 import { paymentsAPI } from 'features/payments/paymentsAPI';
 import { mpesaAPI } from 'features/mpesa/mpesaAPI';
 import { vouchersAPI } from 'features/vouchers/vouchersAPI';
+import { floatAccountsApi } from 'features/float-accounts/floatAccountsApi';
 
 export const store = configureStore({
     reducer: {
@@ -13,9 +14,10 @@ export const store = configureStore({
         [paymentsAPI.reducerPath]: paymentsAPI.reducer,
         [mpesaAPI.reducerPath]: mpesaAPI.reducer,
         [vouchersAPI.reducerPath]: vouchersAPI.reducer,
+        [floatAccountsApi.reducerPath]: floatAccountsApi.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-        .concat(paymentsAPI.middleware, mpesaAPI.middleware, vouchersAPI.middleware)
+        .concat(paymentsAPI.middleware, mpesaAPI.middleware, vouchersAPI.middleware, floatAccountsApi.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;

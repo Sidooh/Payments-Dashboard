@@ -33,8 +33,12 @@ const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: P
                         })).format(row.original.amount)
                     },
                     {
-                        accessorKey: 'type',
-                        header: 'Type',
+                        accessorKey: 'subtype',
+                        header: 'Source',
+                    },
+                    {
+                        accessorKey: 'destination_subtype',
+                        header: 'Destination',
                     },
                     {
                         accessorKey: 'status',

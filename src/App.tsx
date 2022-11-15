@@ -15,10 +15,18 @@ const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));
 const Payments = lazy(() => import('pages/payments'));
 const ShowPayment = lazy(() => import('pages/payments/Show'));
-const Mpesa = lazy(() => import('pages/mpesa'));
+
+const STKPayments = lazy(() => import('pages/mpesa/STKPayments'));
+const C2BPayments = lazy(() => import('pages/mpesa/C2BPayments'));
+const B2CPayments = lazy(() => import('pages/mpesa/B2CPayments'));
+const B2BPayments = lazy(() => import('pages/sidooh/B2BPayments'));
+
 const Vouchers = lazy(() => import('pages/vouchers'));
 const ShowVoucher = lazy(() => import('pages/vouchers/Show'));
 const VoucherTransactions = lazy(() => import('pages/vouchers/Transactions'));
+const FloatAccounts = lazy(() => import('pages/float-accounts'));
+const ShowFloatAccount = lazy(() => import('pages/float-accounts/Show'));
+const FloatAccountsTransactions = lazy(() => import('pages/float-accounts/Transactions'));
 
 function App() {
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -29,8 +37,8 @@ function App() {
         if (is.firefox()) HTMLClassList.add('firefox');
     }, [HTMLClassList]);
 
-    const { isDark } = useAppSelector((state: RootState) => state.theme);
-    const { isLoaded } = useTheme(isDark);
+    const {isDark} = useAppSelector((state: RootState) => state.theme);
+    const {isLoaded} = useTheme(isDark);
 
     if (!isLoaded) return <PageLoader isDark={isDark}/>;
 
@@ -49,11 +57,19 @@ function App() {
                     <Route path={'/payments'} element={<Payments/>}/>
                     <Route path={'/payments/:id'} element={<ShowPayment/>}/>
 
-                    <Route path={'/mpesa/:subType'} element={<Mpesa/>}/>
+                    <Route path={'/mpesa/stk'} element={<STKPayments/>}/>
+                    <Route path={'/mpesa/c2b'} element={<C2BPayments/>}/>
+                    <Route path={'/mpesa/b2c'} element={<B2CPayments/>}/>
+
+                    <Route path={'/sidooh/b2c'} element={<B2BPayments/>}/>
 
                     <Route path={'/vouchers'} element={<Vouchers/>}/>
                     <Route path={'/vouchers/:id'} element={<ShowVoucher/>}/>
                     <Route path={'/voucher/transactions'} element={<VoucherTransactions/>}/>
+
+                    <Route path={'/float-accounts'} element={<FloatAccounts/>}/>
+                    <Route path={'/float-accounts/:id'} element={<ShowFloatAccount/>}/>
+                    <Route path={'/float-accounts/transactions'} element={<FloatAccountsTransactions/>}/>
 
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>
