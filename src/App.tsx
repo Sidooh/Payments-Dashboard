@@ -61,7 +61,7 @@ function App() {
                     <Route path={'/mpesa/c2b'} element={<C2BPayments/>}/>
                     <Route path={'/mpesa/b2c'} element={<B2CPayments/>}/>
 
-                    <Route path={'/sidooh/b2c'} element={<B2BPayments/>}/>
+                    <Route path={'/sidooh/b2b'} element={<B2BPayments/>}/>
 
                     <Route path={'/vouchers'} element={<Vouchers/>}/>
                     <Route path={'/vouchers/:id'} element={<ShowVoucher/>}/>
