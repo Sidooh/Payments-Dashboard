@@ -1,15 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Collapse, Nav } from 'react-bootstrap';
-import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
-import { RouteChildType } from '@nabcellent/sui-react';
+import { Flex, RouteChildType } from '@nabcellent/sui-react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type CollapseItemsType = {
     route: RouteChildType
 };
+
+type NavbarVerticalMenuItemType = {
+    route: RouteChildType
+};
+
+const NavbarVerticalMenuItem = ({route}: NavbarVerticalMenuItemType) => (
+    <Flex alignItems="center">
+        {route.icon && <span className="nav-link-icon"><FontAwesomeIcon icon={route.icon}/></span>}
+        <span className="nav-link-text ps-1">{route.name}</span>
+    </Flex>
+);
 
 const CollapseItems = ({ route }: CollapseItemsType) => {
     const { pathname } = useLocation();
