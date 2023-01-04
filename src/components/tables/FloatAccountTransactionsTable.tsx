@@ -1,11 +1,11 @@
 import { Card } from 'react-bootstrap';
-import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { VoucherTransaction } from 'utils/types';
+import { currencyFormat, DataTable, TableDate } from '@nabcellent/sui-react';
+import { FloatAccountTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
-const FloatAccountTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
+const FloatAccountTransactionsTable = ({transactions}: { transactions: FloatAccountTransaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>

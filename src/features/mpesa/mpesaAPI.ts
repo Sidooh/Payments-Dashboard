@@ -19,7 +19,7 @@ export const mpesaAPI = createApi({
     }),
     endpoints: (builder) => ({
         mpesaPayments: builder.query<Payment[], { type: string, sub_type: string }>({
-            query: ({ type, sub_type }) => `/payments/${type}/${sub_type}`,
+            query: ({ type, sub_type }) => `/payments/providers/${type}/${sub_type}`,
             transformResponse: (response: ApiResponse<Payment[]>) => response.data
         }),
     })

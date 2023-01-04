@@ -6,6 +6,7 @@ import SidoohAccount from 'components/common/SidoohAccount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
+import { Voucher } from "../../utils/types";
 
 const Vouchers = () => {
     let { data: vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();
@@ -26,6 +27,7 @@ const Vouchers = () => {
                     },
                     {
                         accessorKey: 'type',
+                        accessorFn: (r: Voucher) => r.voucher_type?.name,
                         header: 'Type',
                     },
                     {

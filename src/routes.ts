@@ -1,11 +1,5 @@
 import { RouteType } from "@nabcellent/sui-react";
-import {
-    faHandHoldingDollar,
-    faMoneyCheckDollar,
-    faPieChart,
-    faSackDollar,
-    faGhost
-} from '@fortawesome/free-solid-svg-icons';
+import { faDollarSign, faMoneyCheckDollar, faPieChart, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 
 const routes: RouteType[] = [
     {
@@ -43,7 +37,7 @@ const routes: RouteType[] = [
         children: [
             {
                 name: 'SIDOOH',
-                icon: faMoneyCheckDollar,
+                icon: faDollarSign,
                 active: false,
                 children: [
                     {

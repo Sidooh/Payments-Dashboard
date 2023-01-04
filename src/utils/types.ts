@@ -21,6 +21,7 @@ export interface Voucher extends Model {
     balance: number;
     account_id: number;
     voucher_transactions?: VoucherTransaction[];
+    voucher_type?: VoucherType;
     account?: Account;
 }
 
@@ -30,6 +31,10 @@ export interface VoucherTransaction extends Model {
     description: string;
     voucher_id: number;
     voucher?: Voucher;
+}
+
+export interface VoucherType extends Model {
+    name: string
 }
 
 export interface Payment extends Model {

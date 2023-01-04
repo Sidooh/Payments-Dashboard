@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { FloatAccount, Voucher, VoucherTransaction } from 'utils/types';
+import { FloatAccount, FloatAccountTransaction } from 'utils/types';
 import { ApiResponse } from '@nabcellent/sui-react';
 
 export const floatAccountsApi = createApi({
@@ -26,9 +26,9 @@ export const floatAccountsApi = createApi({
             query: id => `/float-accounts/${id}?with=account,transactions`,
             transformResponse: (response: ApiResponse<FloatAccount>) => response.data
         }),
-        floatAccountsTransactions: builder.query<VoucherTransaction[], void>({
-            query: () => `/float-accounts/transactions`,
-            transformResponse: (response: ApiResponse<VoucherTransaction[]>) => response.data
+        floatAccountsTransactions: builder.query<FloatAccountTransaction[], void>({
+            query: () => `/float-account-transactions`,
+            transformResponse: (response: ApiResponse<FloatAccountTransaction[]>) => response.data
         })
     })
 });
