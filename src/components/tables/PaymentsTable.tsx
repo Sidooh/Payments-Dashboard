@@ -1,8 +1,9 @@
 import { Card } from 'react-bootstrap';
 import { Payment } from 'utils/types';
 import { DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { ReadMore } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: Payment[] }) => {
     return (
@@ -32,8 +33,12 @@ const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: P
                         })).format(row.original.amount)
                     },
                     {
-                        accessorKey: 'type',
-                        header: 'Type',
+                        accessorKey: 'subtype',
+                        header: 'Source',
+                    },
+                    {
+                        accessorKey: 'destination_subtype',
+                        header: 'Destination',
                     },
                     {
                         accessorKey: 'status',
@@ -49,7 +54,7 @@ const PaymentsTable = ({tableTitle, payments}: { tableTitle: string, payments: P
                         id: 'actions',
                         header: '',
                         cell: ({row}: any) => (
-                            <Link to={`/payments/${row.original.id}`}><ReadMore fontSize={'small'}/></Link>
+                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
                         )
                     }
                 ]} data={payments}/>

@@ -9,7 +9,7 @@ export const mpesaAPI = createApi({
     keepUnusedDataFor: 60 * 5, // Five minutes
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
-        prepareHeaders: (headers, {getState}) => {
+        prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.auth?.token;
 
             if (token) headers.set('authorization', `Bearer ${token}`);
@@ -18,8 +18,8 @@ export const mpesaAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        mpesaPayments: builder.query<Payment[], string>({
-            query: (subType) => `/mpesa/${subType}/payments`,
+        mpesaPayments: builder.query<Payment[], { type: string, sub_type: string }>({
+            query: ({ type, sub_type }) => `/payments/${type}/${sub_type}`,
             transformResponse: (response: ApiResponse<Payment[]>) => response.data
         }),
     })

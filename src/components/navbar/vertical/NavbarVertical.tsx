@@ -3,7 +3,6 @@ import { Col, Nav, Navbar, Row } from 'react-bootstrap';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes';
-import NavbarTopDropDownMenus from 'components/navbar/top/NavbarTopDropDownMenus';
 import { IMAGES } from 'constants/images';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
@@ -91,7 +90,7 @@ const NavbarVertical = () => {
                                     <hr className="navbar-vertical-hr my-2"/>
                                 </div>
                                 <Nav navbar>
-                                    <NavbarTopDropDownMenus/>
+                                    {/*<NavbarTopDropDownMenus/>*/}
                                 </Nav>
                             </div>
                         )}

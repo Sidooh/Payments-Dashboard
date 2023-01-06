@@ -1,25 +1,25 @@
 import { useParams } from 'react-router-dom';
-import { useVoucherQuery } from 'features/vouchers/vouchersAPI';
 import { SectionError, SectionLoader } from '@nabcellent/sui-react';
-import VoucherTransactionsTable from '../../components/tables/VoucherTransactionsTable';
-import CardHeader from '../../components/common/CardHeader';
+import CardHeader from 'components/common/CardHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons/faInfo';
 import { Card, Col, Row } from 'react-bootstrap';
 import CardBgCorner from 'components/CardBgCorner';
-import { CONFIG } from '../../config';
+import { CONFIG } from 'config';
 import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
+import { useFloatAccountQuery } from "features/float-accounts/floatAccountsApi";
+import FloatAccountTransactionsTable from "components/tables/FloatAccountTransactionsTable";
 
 const Show = () => {
     const { id } = useParams();
-    const { data: voucher, isError, error, isLoading, isSuccess } = useVoucherQuery(Number(id));
+    const { data: floatAccount, isError, error, isLoading, isSuccess } = useFloatAccountQuery(Number(id));
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !voucher) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !floatAccount) return <SectionLoader/>;
 
-    logger.log('Voucher:', voucher);
-    const account = voucher.account;
+    logger.log(floatAccount);
+    const account = floatAccount.account;
 
     return (
         <>
@@ -48,17 +48,17 @@ const Show = () => {
                         <Card.Header className={'bg-transparent light'}>
                             <h6 className="text-white">BALANCE</h6>
                             <h4 className="text-white m-0">
-                                <CountUp end={voucher.balance} prefix={'KES '} separator=","/>
+                                <CountUp end={floatAccount.balance} prefix={'KES '} separator=","/>
                             </h4>
                         </Card.Header>
                     </Card>
                 </Col>
             </Row>
 
-            {voucher?.voucher_transactions?.length ?
-                <VoucherTransactionsTable transactions={voucher.voucher_transactions}/> : (
+            {floatAccount?.float_account_transactions?.length ?
+                <FloatAccountTransactionsTable transactions={floatAccount.float_account_transactions}/> : (
                     <Card className={'mb-3 bg-soft-primary'}>
-                        <CardHeader title={'No Voucher Transactions Made'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
+                        <CardHeader title={'No Float Transactions Made Yet.'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
                     </Card>
                 )}
         </>

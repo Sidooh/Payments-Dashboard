@@ -1,6 +1,7 @@
 # build stage
 FROM node:lts-alpine as build-stage
 
+ARG VITE_LOG_LEVEL
 ARG VITE_ACCOUNTS_API_URL
 ARG VITE_PAYMENTS_API_URL
 ARG VITE_ACCOUNTS_DASHBOARD_URL
@@ -11,7 +12,11 @@ ARG VITE_SAVINGS_DASHBOARD_URL
 
 WORKDIR /app
 
+RUN ["yarn", "set", "version", "berry"]
+RUN ["yarn", "plugin", "import", "typescript"]
+
 COPY ["package.json", "yarn.lock", "./"]
+COPY [".yarnrc.yml", "."]
 
 RUN ["yarn", "install"]
 

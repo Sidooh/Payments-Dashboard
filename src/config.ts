@@ -1,4 +1,7 @@
 export const CONFIG = {
+    logging: {
+        level: import.meta.env.VITE_LOG_LEVEL
+    },
     sidooh: {
         services: {
             accounts: {

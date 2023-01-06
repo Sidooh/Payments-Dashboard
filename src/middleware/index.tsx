@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useAuth } from '../hooks/useAuth';
 import { logout } from '../features/auth/authSlice';
 import { JWT } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 export const Middleware = {
     Guest: ({component}: { component: JSX.Element }) => {
@@ -28,7 +29,7 @@ export const Middleware = {
         const user = JWT.decode(auth.token)
         const expiresIn = moment.unix(user.exp).diff(moment(), 'minutes');
 
-        console.log(`Session expires in: ${expiresIn} minutes`);
+        logger.log(`Session expires in: ${expiresIn} minutes`);
 
         if (moment.unix(user.exp).isBefore(moment())) {
             dispatch(logout());

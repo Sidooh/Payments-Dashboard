@@ -7,8 +7,7 @@ import { RootState } from 'app/store';
 import { resetTheme, setTheme } from 'features/theme/themeSlice';
 import { CONFIG } from 'config';
 import { faPalette, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
-import { Chip } from '@mui/material';
-import { Flex } from '@nabcellent/sui-react';
+import { Badge, Flex } from '@nabcellent/sui-react';
 
 const SettingsPanel = () => {
     const {
@@ -127,7 +126,7 @@ const SettingsPanel = () => {
                     <div>
                         <Flex alignItems="center" tag="h5" className="fs-0">
                             Navigation Position
-                            <Chip label="New" color={'success'} className={'fs--2 ms-2'}/>
+                            <Badge bg={'success'} pill className={'fs--2 ms-2'}>New</Badge>
                         </Flex>
                         <p className="fs--1 mb-2">
                             Select a suitable navigation system for your web application

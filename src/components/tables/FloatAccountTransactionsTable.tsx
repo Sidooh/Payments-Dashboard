@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
-const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
+const FloatAccountTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={`Voucher Transactions`} columns={[
+                <DataTable title={`Float Account Transactions`} columns={[
                     {
                         accessorKey: 'type',
                         header: 'Type',
@@ -40,4 +40,4 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
     );
 };
 
-export default VoucherTransactionsTable;
+export default FloatAccountTransactionsTable;

@@ -2,11 +2,12 @@ import { Card, Table } from 'react-bootstrap';
 import { Payment, StkRequest } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     const provider: StkRequest = payment.provider as StkRequest;
 
-    console.log(payment);
+    logger.log(payment);
 
     return (
         <Card className="mb-3">
