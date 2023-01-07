@@ -42,7 +42,15 @@ export interface Payment extends Model {
     type: string;
     subtype: string;
     status: Status;
-    provider?: StkRequest | VoucherTransaction;
+    description: string;
+    destination_type: string;
+    destination_subtype: string;
+    destination_data: {
+        payment_id?: number,
+    };
+    account?: Account
+    provider?: StkRequest | VoucherTransaction
+    destination_provider: FloatAccountTransaction | VoucherTransaction
 }
 
 export interface FloatAccount extends Model {

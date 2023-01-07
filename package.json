@@ -25,6 +25,7 @@
     "react-router-dom": "^6.6.1",
     "simplebar-react": "^2.4.3",
     "size-sensor": "^1.0.1",
+    "sweetalert2": "^11.6.16",
     "yup": "^0.32.11"
   },
   "devDependencies": {

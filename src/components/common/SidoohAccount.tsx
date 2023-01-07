@@ -2,6 +2,8 @@ import { Account, PhoneChip } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
 
 const SidoohAccount = ({account}: { account: Account }) => {
+    if(!account) return <>-</>
+
     return (
         <span>
             {account?.user?.name} <br/>

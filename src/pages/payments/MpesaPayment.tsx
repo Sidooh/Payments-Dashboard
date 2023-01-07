@@ -2,16 +2,15 @@ import { Card, Table } from 'react-bootstrap';
 import { Payment, StkRequest } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
-import { logger } from 'utils/logger';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     const provider: StkRequest = payment.provider as StkRequest;
 
-    logger.log(payment);
-
     return (
         <Card className="mb-3">
-            <Card.Header className="pb-0"><h5 className="fs-0">Provider - {payment.type}</h5></Card.Header>
+            <Card.Header className="pb-0">
+                <h5 className="fs-0">Source - <i className={'text-secondary'}>{payment.subtype}</i></h5>
+            </Card.Header>
             <div className="card-body">
                 <Table striped responsive className="border-bottom fs--1">
                     <thead className="bg-200 text-900">
@@ -21,7 +20,7 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                         <th className="border-0">Result</th>
                         <th className="border-0">Receipt</th>
                         <th className="border-0 text-center">Status</th>
-                        <th className="border-0">Date</th>
+                        <th className="border-0 text-end">Date</th>
                     </tr>
                     </thead>
                     <tbody>

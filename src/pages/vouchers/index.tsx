@@ -21,8 +21,8 @@ const Vouchers = () => {
             <Card.Body>
                 <DataTable title={`Vouchers`} columns={[
                     {
-                        accessorKey: 'customer',
-                        header: 'Customer',
+                        accessorKey: 'account',
+                        header: 'Account',
                         cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
