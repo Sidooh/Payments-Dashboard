@@ -21,6 +21,7 @@ export interface Voucher extends Model {
     balance: number;
     account_id: number;
     voucher_transactions?: VoucherTransaction[];
+    voucher_type?: VoucherType;
     account?: Account;
 }
 
@@ -32,20 +33,24 @@ export interface VoucherTransaction extends Model {
     voucher?: Voucher;
 }
 
+export interface VoucherType extends Model {
+    name: string
+}
+
 export interface Payment extends Model {
     amount: number;
     type: string;
     subtype: string;
     status: Status;
-    provider?: StkRequest | VoucherTransaction;
-}
-
-export interface FloatAccount extends Model {
-    balance: number;
-    account?: Account;
-    floatable_type: string;
-    floatable_id: string;
-    float_account_transactions?: VoucherTransaction[];
+    description: string;
+    destination_type: string;
+    destination_subtype: string;
+    destination_data: {
+        payment_id?: number,
+    };
+    account?: Account
+    provider?: StkRequest | VoucherTransaction
+    destination_provider: FloatAccountTransaction | VoucherTransaction
 }
 
 export interface FloatAccountTransaction extends Model {
@@ -54,4 +59,12 @@ export interface FloatAccountTransaction extends Model {
     description: string;
     float_account_id: number;
     float_account?: FloatAccount;
+}
+
+export interface FloatAccount extends Model {
+    balance: number;
+    account?: Account;
+    floatable_type: string;
+    floatable_id: string;
+    float_account_transactions?: FloatAccountTransaction[];
 }

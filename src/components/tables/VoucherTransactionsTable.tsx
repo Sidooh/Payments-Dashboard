@@ -25,7 +25,7 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
                     },
                     {
                         accessorKey: 'created_at',
-                        header: 'Transaction Date',
+                        header: 'Created',
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
