@@ -5,8 +5,7 @@ import { store } from 'app/store';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-import '@nabcellent/sui-react/dist/css/theme.css'
-import '@nabcellent/sui-react/dist/css/user.css'
+import '@nabcellent/sui-react/dist/style.min.css'
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

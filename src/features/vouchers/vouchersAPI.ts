@@ -27,7 +27,7 @@ export const vouchersAPI = createApi({
             transformResponse: (response: ApiResponse<Voucher>) => response.data
         }),
         voucherTransactions: builder.query<VoucherTransaction[], void>({
-            query: () => `/vouchers/transactions`,
+            query: () => `/voucher-transactions?with=payment`,
             transformResponse: (response: ApiResponse<VoucherTransaction[]>) => response.data
         })
     })

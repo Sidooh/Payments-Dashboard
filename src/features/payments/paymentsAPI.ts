@@ -64,7 +64,39 @@ export const paymentsAPI = createApi({
             query: id => `/payments/${id}`,
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             providesTags: ['Payment']
-        })
+        }),
+        checkPayment: builder.mutation<Payment, number>({
+            query: id => ({
+                url: `/payments/${id}/check-payment`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            invalidatesTags: ['Payment']
+        }),
+        reversePayment: builder.mutation<Payment, number>({
+            query: id => ({
+                url: `/payments/${id}/reverse`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            invalidatesTags: ['Payment']
+        }),
+        completePayment: builder.mutation<Payment, number>({
+            query: id => ({
+                url: `/payments/${id}/complete`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            invalidatesTags: ['Payment']
+        }),
+        failPayment: builder.mutation<Payment, number>({
+            query: id => ({
+                url: `/payments/${id}/fail`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            invalidatesTags: ['Payment']
+        }),
     })
 });
 
@@ -72,5 +104,9 @@ export const {
     useGetDashboardSummariesQuery,
     useGetDashboardRevenueDataQuery,
     usePaymentsQuery,
-    usePaymentQuery
+    usePaymentQuery,
+    useCheckPaymentMutation,
+    useReversePaymentMutation,
+    useCompletePaymentMutation,
+    useFailPaymentMutation,
 } = paymentsAPI;
