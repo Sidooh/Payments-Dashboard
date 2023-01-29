@@ -3,7 +3,9 @@ import {
     useCheckPaymentMutation,
     useCompletePaymentMutation,
     useFailPaymentMutation,
-    usePaymentQuery, useReversePaymentMutation
+    usePaymentQuery,
+    useRetryPurchaseMutation,
+    useReversePaymentMutation
 } from 'features/payments/paymentsAPI';
 import CardBgCorner from 'components/CardBgCorner';
 import moment from 'moment';
@@ -19,14 +21,15 @@ import {
     Status,
     StatusChip,
     Sweet,
-    toast, Tooltip
+    toast,
+    Tooltip
 } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowRotateLeft,
+    faArrowRotateRight,
     faArrowsRotate,
-    faBars,
     faClockRotateLeft,
     faCrosshairs
 } from "@fortawesome/free-solid-svg-icons";
@@ -41,6 +44,7 @@ const Show = () => {
 
     const [checkPayment] = useCheckPaymentMutation();
     const [reversePayment] = useReversePaymentMutation();
+    const [retryPurchase] = useRetryPurchaseMutation();
     const [completePayment] = useCompletePaymentMutation();
     const [failPayment] = useFailPaymentMutation();
 
@@ -49,9 +53,7 @@ const Show = () => {
 
     logger.log('Payment:', payment);
 
-    const status = payment.status;
-
-    const queryPayment = async (action: 'reverse' | 'check-payment') => {
+    const queryPayment = async (action: 'reverse' | 'check-payment' | 'retry-purchase') => {
         let options: SweetAlertOptions = {
             backdrop: `rgba(0, 0, 150, 0.4)`,
             showLoaderOnConfirm: true,
@@ -89,6 +91,17 @@ const Show = () => {
                 if (res?.error) await queryErrorAlert(res, 'Payment Reversal Error!');
             };
         }
+        if (action === 'retry-purchase') {
+            options.title = 'Retry Purchase';
+            options.text = 'Are you sure you want to retry the purchase for this payment?';
+            options.preConfirm = async () => {
+                const res = await retryPurchase(payment.id) as any;
+                logger.log(res);
+
+                if (res?.data?.id) toast({ titleText: 'Purchase Retry Complete!' });
+                if (res?.error) await queryErrorAlert(res, 'Purchase Retry Error!');
+            };
+        }
 
         await Sweet.fire(options);
     }
@@ -103,8 +116,13 @@ const Show = () => {
     }
     if (payment?.status === Status.COMPLETED) {
         paymentDropdownItems.push(
+            <Dropdown.Item as="button" onClick={() => queryPayment('retry-purchase')}>
+                <FontAwesomeIcon icon={faArrowRotateRight}/>&nbsp; Retry Purchase
+            </Dropdown.Item>
+        );
+        paymentDropdownItems.push(
             <Dropdown.Item as="button" onClick={() => queryPayment('reverse')}>
-                <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Reverse
+                <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Reverse Payment
             </Dropdown.Item>
         );
     }

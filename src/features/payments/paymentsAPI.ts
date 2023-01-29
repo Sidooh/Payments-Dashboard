@@ -73,6 +73,14 @@ export const paymentsAPI = createApi({
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             invalidatesTags: ['Payment']
         }),
+        retryPurchase: builder.mutation<Payment, number>({
+            query: id => ({
+                url: `/payments/${id}/retry-purchase`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            invalidatesTags: ['Payment']
+        }),
         reversePayment: builder.mutation<Payment, number>({
             query: id => ({
                 url: `/payments/${id}/reverse`,
@@ -106,6 +114,7 @@ export const {
     usePaymentsQuery,
     usePaymentQuery,
     useCheckPaymentMutation,
+    useRetryPurchaseMutation,
     useReversePaymentMutation,
     useCompletePaymentMutation,
     useFailPaymentMutation,
