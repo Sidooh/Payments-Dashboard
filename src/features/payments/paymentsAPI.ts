@@ -75,7 +75,7 @@ export const paymentsAPI = createApi({
         }),
         retryPurchase: builder.mutation<Payment, number>({
             query: id => ({
-                url: `/payments/${id}/retry-callback`,
+                url: `/payments/${id}/retry-purchase`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
