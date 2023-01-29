@@ -37,7 +37,17 @@ export interface VoucherType extends Model {
     name: string
 }
 
-export interface Payment extends Model {
+export interface MpesaC2BCallback extends Model {
+    transaction_type: string
+    trans_id: string
+    trans_amount: number
+    first_name: string
+    middle_name: string
+    last_name: string
+    msisdn: string
+}
+
+export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback> extends Model {
     amount: number;
     type: string;
     subtype: string;
@@ -49,7 +59,7 @@ export interface Payment extends Model {
         payment_id?: number,
     };
     account?: Account
-    provider?: StkRequest | VoucherTransaction
+    provider?: P
     destination_provider: FloatAccountTransaction | VoucherTransaction
 }
 
