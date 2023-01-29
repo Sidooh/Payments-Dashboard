@@ -230,9 +230,6 @@ const Show = () => {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col lg={4} className="mb-4 mb-lg-0">
-
-                        </Col>
                     </Row>
                 </Card.Body>
             </Card>
