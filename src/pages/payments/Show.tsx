@@ -37,6 +37,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { Fragment } from "react";
 import { CONFIG } from "../../config";
 import DestinationProvider from "./DestinationProvider";
+import { Payment, VoucherTransaction } from "../../utils/types";
 
 const Show = () => {
     const { id } = useParams();
@@ -237,7 +238,7 @@ const Show = () => {
             </Card>
 
             {payment?.type === PaymentType.MPESA && <MpesaPayment payment={payment}/>}
-            {payment?.type === PaymentType.SIDOOH && <VoucherPayment payment={payment}/>}
+            {payment?.type === PaymentType.SIDOOH && <VoucherPayment payment={payment as Payment<VoucherTransaction>}/>}
             <DestinationProvider payment={payment}/>
         </>
     );

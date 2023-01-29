@@ -2,9 +2,8 @@ import { Card, Table } from 'react-bootstrap';
 import { Payment, VoucherTransaction } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat } from '@nabcellent/sui-react';
-import { logger } from 'utils/logger';
 
-const VoucherPayment = ({payment}: { payment: Payment }) => (
+const VoucherPayment = ({ payment }: { payment: Payment<VoucherTransaction> }) => (
     <Card className="mb-3">
         <Card.Header className="pb-0">
             <h5 className="fs-0">Source - <i className={'text-secondary'}>{payment.subtype}</i></h5>
@@ -22,8 +21,8 @@ const VoucherPayment = ({payment}: { payment: Payment }) => (
                 <tbody>
 
                 <tr className="border-200">
-                    <td><h6 className="mb-0 text-nowrap">{(payment.provider as VoucherTransaction)?.type}</h6></td>
-                    <td>{(payment.provider as VoucherTransaction)?.description}</td>
+                    <td><h6 className="mb-0 text-nowrap">{payment.provider?.type}</h6></td>
+                    <td>{payment.provider?.description}</td>
                     <td>{currencyFormat(payment.provider?.amount)}</td>
                     <td className="text-end">
                         {moment(payment.provider?.created_at).format('MMM D, Y')}<br/>
