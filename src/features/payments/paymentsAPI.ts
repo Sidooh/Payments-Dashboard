@@ -89,6 +89,11 @@ export const paymentsAPI = createApi({
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             invalidatesTags: ['Payment']
         }),
+        querySTKStatus: builder.mutation<Payment, void>({
+            query: () => `/payments/mpesa/status/query`,
+            transformResponse: (response: ApiResponse<Payment>) => response.data,
+            invalidatesTags: ['Payment']
+        }),
         completePayment: builder.mutation<Payment, number>({
             query: id => ({
                 url: `/payments/${id}/complete`,
@@ -116,6 +121,7 @@ export const {
     useCheckPaymentMutation,
     useRetryPurchaseMutation,
     useReversePaymentMutation,
+    useQuerySTKStatusMutation,
     useCompletePaymentMutation,
     useFailPaymentMutation,
 } = paymentsAPI;

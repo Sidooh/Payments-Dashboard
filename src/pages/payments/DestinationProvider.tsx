@@ -3,7 +3,7 @@ import { Payment } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat } from '@nabcellent/sui-react';
 
-const MpesaPayment = ({payment}: { payment: Payment }) => {
+const DestinationProvider = ({payment}: { payment: Payment }) => {
     const destination = payment.destination_provider
 
     return (
@@ -39,4 +39,4 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
     );
 };
 
-export default MpesaPayment;
+export default DestinationProvider;

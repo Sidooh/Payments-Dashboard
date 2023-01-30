@@ -4,12 +4,13 @@ import {
     useCompletePaymentMutation,
     useFailPaymentMutation,
     usePaymentQuery,
+    useQuerySTKStatusMutation,
     useRetryPurchaseMutation,
     useReversePaymentMutation
 } from 'features/payments/paymentsAPI';
 import CardBgCorner from 'components/CardBgCorner';
 import moment from 'moment';
-import { PaymentType } from 'utils/enums';
+import { PaymentSubType, PaymentType } from 'utils/enums';
 import { Card, Col, Dropdown, Row } from 'react-bootstrap';
 import MpesaPayment from './MpesaPayment';
 import VoucherPayment from './VoucherPayment';
@@ -31,13 +32,14 @@ import {
     faArrowRotateRight,
     faArrowsRotate,
     faClockRotateLeft,
-    faCrosshairs
+    faCrosshairs,
+    faRepeat
 } from "@fortawesome/free-solid-svg-icons";
 import { SweetAlertOptions } from 'sweetalert2';
 import { Fragment } from "react";
 import { CONFIG } from "../../config";
 import DestinationProvider from "./DestinationProvider";
-import { Payment, VoucherTransaction } from "../../utils/types";
+import { Payment, StkRequest, VoucherTransaction } from "../../utils/types";
 
 const Show = () => {
     const { id } = useParams();
@@ -46,6 +48,7 @@ const Show = () => {
     const [checkPayment] = useCheckPaymentMutation();
     const [reversePayment] = useReversePaymentMutation();
     const [retryPurchase] = useRetryPurchaseMutation();
+    const [querySTKStatus] = useQuerySTKStatusMutation();
     const [completePayment] = useCompletePaymentMutation();
     const [failPayment] = useFailPaymentMutation();
 
@@ -54,7 +57,7 @@ const Show = () => {
 
     logger.log('Payment:', payment);
 
-    const queryPayment = async (action: 'reverse' | 'check-payment' | 'retry-purchase') => {
+    const queryPayment = async (action: 'reverse' | 'check-payment' | 'retry-purchase' | 'query-status') => {
         let options: SweetAlertOptions = {
             backdrop: `rgba(0, 0, 150, 0.4)`,
             showLoaderOnConfirm: true,
@@ -66,7 +69,7 @@ const Show = () => {
 
         const queryErrorAlert = (res: any, titleText: string) => toast({
             titleText,
-            text: res?.error?.data?.message || res?.error.error,
+            text: res?.error?.data?.message || res?.error?.error,
             icon: 'error',
         });
 
@@ -103,6 +106,20 @@ const Show = () => {
                 if (res?.error) await queryErrorAlert(res, 'Purchase Retry Error!');
             };
         }
+        if (action === 'query-status') {
+            options.title = 'Query STK Status';
+            options.text = 'Are you sure you want to query STK transactions?';
+            options.preConfirm = async () => {
+                const res = await querySTKStatus() as any;
+                logger.log(res);
+
+                if (res?.data?.status === 0) {
+                    toast({ titleText: 'STK Status Query Complete!' })
+                } else {
+                    await queryErrorAlert(res, 'Something went wrong!');
+                }
+            };
+        }
 
         await Sweet.fire(options);
     }
@@ -114,6 +131,14 @@ const Show = () => {
                 <FontAwesomeIcon icon={faArrowsRotate}/>&nbsp; Check Payment
             </Dropdown.Item>
         );
+
+        if (payment.subtype === PaymentSubType.STK && (payment.provider as StkRequest)?.status !== Status.PAID) {
+            paymentDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryPayment('query-status')}>
+                    <FontAwesomeIcon icon={faRepeat}/>&nbsp; Query Status
+                </Dropdown.Item>
+            )
+        }
     }
     if (payment?.status === Status.COMPLETED) {
         paymentDropdownItems.push(
