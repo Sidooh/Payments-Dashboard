@@ -1,13 +1,25 @@
 import { Card } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
-import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
+import {
+    currencyFormat,
+    DataTable,
+    getRelativeDateAndTime,
+    SectionError,
+    SectionLoader,
+    StatusChip,
+    TableDate
+} from '@nabcellent/sui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
+import { Payment } from "../../utils/types";
 
 const STKPayments = () => {
-    let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({ type: 'mpesa', sub_type: 'stk' });
+    let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({
+        type: 'mpesa',
+        sub_type: 'stk'
+    });
     logger.log(payments);
 
     if (isError) return <SectionError error={error}/>;
@@ -29,7 +41,8 @@ const STKPayments = () => {
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Date',
+                        header: 'Updated',
+                        accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {

@@ -1,9 +1,11 @@
 import { Card } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
 import {
     currencyFormat,
-    DataTable, PhoneChip,
+    DataTable,
+    getRelativeDateAndTime,
+    PhoneChip,
     SectionError,
     SectionLoader,
     StatusChip,
@@ -13,7 +15,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
-import { CONFIG } from "../../config";
 import { MpesaC2BCallback, Payment } from "../../utils/types";
 
 const STKPayments = () => {
@@ -32,7 +33,7 @@ const STKPayments = () => {
                     <DataTable title={`C2B Payments`} columns={[
                         {
                             accessorKey: 'user',
-                            accessorFn:(p:Payment<MpesaC2BCallback>) => {
+                            accessorFn: (p: Payment<MpesaC2BCallback>) => {
                                 const name = Str.headline(`${p.provider?.first_name} ${p.provider?.middle_name} ${p.provider?.last_name}`)
                                 return `${name}: ${p.provider?.msisdn}`
                             },
@@ -65,8 +66,9 @@ const STKPayments = () => {
                             cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                         },
                         {
-                            accessorKey: 'updated_at',
+                            accessorKey: 'created_at',
                             header: 'Created',
+                            accessorFn: (row: Payment) => getRelativeDateAndTime(row.created_at).toString(),
                             cell: ({ row }: any) => <TableDate date={row.original.created_at}/>
                         },
                         {

@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { Payment } from 'utils/types';
-import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, getRelativeDateAndTime, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
@@ -33,6 +33,7 @@ const RecentPayments = ({payments}: { payments: Payment[] }) => {
                     {
                         accessorKey: 'updated_at',
                         header: 'Date',
+                        accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
                         cell: ({row}: any) => <TableDate date={row.original.updated_at ?? row.original.created_at}/>
                     },
                     {

@@ -6,7 +6,7 @@ import SidoohAccount from 'components/common/SidoohAccount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
-import { Voucher } from "../../utils/types";
+import { FloatAccount, Voucher } from "../../utils/types";
 
 const Vouchers = () => {
     let { data: vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();
@@ -23,6 +23,7 @@ const Vouchers = () => {
                     {
                         accessorKey: 'account',
                         header: 'Account',
+                        accessorFn: (row: Voucher) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
                         cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
