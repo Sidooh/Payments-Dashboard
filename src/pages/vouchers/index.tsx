@@ -1,12 +1,12 @@
 import { Card } from 'react-bootstrap';
 import { useVouchersQuery } from '../../features/vouchers/vouchersAPI';
-import { currencyFormat, DataTable, PhoneChip, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
-import { FloatAccount, Voucher } from "../../utils/types";
+import { Voucher } from "../../utils/types";
 
 const Vouchers = () => {
     let { data: vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();
