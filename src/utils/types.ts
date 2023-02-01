@@ -60,7 +60,24 @@ export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback>
     };
     account?: Account
     provider?: P
-    destination_provider: FloatAccountTransaction | VoucherTransaction
+    destination_provider: SidoohTransaction | BulkPaymentRequest|TendePayRequest
+}
+
+export interface BulkPaymentRequest extends Model {
+    amount: number
+    command_id: string
+    conversation_id: string
+    phone: string
+    remarks: string
+    response: BulkPaymentResponse
+}
+
+export interface BulkPaymentResponse extends Model {
+    result_type: number
+    result_code: number
+    result_desc: string
+    originator_conversation_id: string
+    conversation_id: string
 }
 
 export interface FloatAccountTransaction extends Model {
@@ -78,3 +95,38 @@ export interface FloatAccount extends Model {
     floatable_id: string;
     float_account_transactions?: FloatAccountTransaction[];
 }
+
+export type TendePayRequest = Model & {
+    service: string
+    unique_reference: string
+    transaction_reference: string
+    text: {
+        account_number: number
+        amount: number
+        pay_bill_number: number
+        source_paybill: number
+    }
+    msisdn: string
+    timestamp: Date
+    response_code: string
+    response_message: string
+    successful: boolean
+    status: string
+
+    callback?: TendePayCallback
+}
+
+export type TendePayCallback = Model & {
+    initiator_reference: string
+    response_code: string
+    status: string
+    status_description: string
+    amount: number
+    account_reference: string
+    confirmation_code: string
+    msisdn: string
+    receiver_party_name: string
+    date: Date
+}
+
+export type SidoohTransaction = FloatAccountTransaction | VoucherTransaction

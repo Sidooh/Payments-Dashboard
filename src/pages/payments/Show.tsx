@@ -13,7 +13,7 @@ import moment from 'moment';
 import { PaymentSubType, PaymentType } from 'utils/enums';
 import { Card, Col, Dropdown, Row } from 'react-bootstrap';
 import MpesaPayment from './MpesaPayment';
-import VoucherPayment from './VoucherPayment';
+import SourceProvider from './SourceProvider';
 import {
     currencyFormat,
     Flex,
@@ -39,7 +39,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { Fragment } from "react";
 import { CONFIG } from "../../config";
 import DestinationProvider from "./DestinationProvider";
-import { Payment, StkRequest, VoucherTransaction } from "../../utils/types";
+import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from "../../utils/types";
 
 const Show = () => {
     const { id } = useParams();
@@ -260,7 +260,8 @@ const Show = () => {
             </Card>
 
             {payment?.type === PaymentType.MPESA && <MpesaPayment payment={payment}/>}
-            {payment?.type === PaymentType.SIDOOH && <VoucherPayment payment={payment as Payment<VoucherTransaction>}/>}
+            {payment?.type === PaymentType.SIDOOH &&
+                <SourceProvider payment={payment as Payment<FloatAccountTransaction | VoucherTransaction>}/>}
             <DestinationProvider payment={payment}/>
         </>
     );

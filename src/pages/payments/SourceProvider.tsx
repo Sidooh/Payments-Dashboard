@@ -1,9 +1,9 @@
 import { Card, Table } from 'react-bootstrap';
-import { Payment, VoucherTransaction } from 'utils/types';
+import { FloatAccountTransaction, Payment, VoucherTransaction } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat } from '@nabcellent/sui-react';
 
-const VoucherPayment = ({ payment }: { payment: Payment<VoucherTransaction> }) => (
+const SourceProvider = ({ payment }: { payment: Payment<FloatAccountTransaction | VoucherTransaction> }) => (
     <Card className="mb-3">
         <Card.Header className="pb-0">
             <h5 className="fs-0">Source - <i className={'text-secondary'}>{payment.subtype}</i></h5>
@@ -15,7 +15,7 @@ const VoucherPayment = ({ payment }: { payment: Payment<VoucherTransaction> }) =
                     <th className="border-0">Type</th>
                     <th className="border-0">Description</th>
                     <th className="border-0">Amount</th>
-                    <th className="border-0 text-end">Date</th>
+                    <th className="border-0 text-end">Created</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,4 +35,4 @@ const VoucherPayment = ({ payment }: { payment: Payment<VoucherTransaction> }) =
     </Card>
 );
 
-export default VoucherPayment;
+export default SourceProvider;
