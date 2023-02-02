@@ -60,7 +60,7 @@ export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback>
     };
     account?: Account
     provider?: P
-    destination_provider: SidoohTransaction | BulkPaymentRequest|TendePayRequest
+    destination_provider?: SidoohTransaction | BulkPaymentRequest|TendePayRequest
 }
 
 export interface BulkPaymentRequest extends Model {
