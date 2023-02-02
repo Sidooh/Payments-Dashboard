@@ -2,7 +2,7 @@ import { Card, Table } from 'react-bootstrap';
 import { BulkPaymentRequest, Payment, SidoohTransaction, TendePayRequest } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat, PhoneChip } from '@nabcellent/sui-react';
-import { PaymentSubType, PaymentType } from "../../utils/enums";
+import { PaymentSubType, PaymentType } from "utils/enums";
 
 const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
     <Table striped responsive className="border-bottom fs--1">

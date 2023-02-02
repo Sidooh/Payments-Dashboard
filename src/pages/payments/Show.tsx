@@ -198,7 +198,7 @@ const Show = () => {
                                         });
                                     }}/>
                         <Flex alignItems={'center'}>
-                            {payment.description.toLowerCase().includes('reversal') && (
+                            {payment?.description?.toLowerCase().includes('reversal') && (
                                 <Tooltip title={'Previous Payment'} placement={'left'}>
                                     <Link to={`/payments/${payment.destination_data.payment_id}`}
                                           className={'btn btn-secondary py-1 px-2 rounded-circle'}>
