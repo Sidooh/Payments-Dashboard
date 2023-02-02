@@ -49,9 +49,9 @@ const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
             <tr className="border-200">
                 <td>{destination?.transaction_reference}</td>
                 <td>{destination?.service}</td>
-                <td>{currencyFormat(destination?.text.amount)}</td>
-                <td><PhoneChip phone={destination.msisdn}/></td>
-                <td>{destination.status}</td>
+                <td>{currencyFormat(destination?.text?.amount)}</td>
+                <td><PhoneChip phone={destination?.msisdn}/></td>
+                <td>{destination?.status}</td>
                 <td colSpan={2} className="text-end">
                     {moment(destination?.created_at).format('MMM D, Y')}<br/>
                     <small>{moment(destination?.created_at).format('hh:mm A')}</small>
@@ -73,8 +73,8 @@ const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
             </thead>
             <tbody>
             <tr className="border-200">
-                <td>{destination.callback?.initiator_reference}</td>
-                <td>{destination.callback?.receiver_party_name}</td>
+                <td>{destination?.callback?.initiator_reference}</td>
+                <td>{destination?.callback?.receiver_party_name}</td>
                 <td>{destination?.callback?.account_reference}</td>
                 <td>{currencyFormat(destination?.callback?.amount)}</td>
                 <td>{destination?.callback?.confirmation_code}</td>
@@ -120,7 +120,8 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0">
-                <h5 className="fs-0">Destination - <i className={'text-secondary'}>{payment.destination_subtype}</i>
+                <h5 className="fs-0">
+                    Destination - <i className={'text-secondary'}>{payment.destination_subtype}</i>
                 </h5>
             </Card.Header>
             <div className="card-body">
