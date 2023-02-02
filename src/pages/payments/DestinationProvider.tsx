@@ -48,7 +48,7 @@ const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
             <tbody>
             <tr className="border-200">
                 <td>{destination?.transaction_reference}</td>
-                <td>{destination.service}</td>
+                <td>{destination?.service}</td>
                 <td>{currencyFormat(destination?.text.amount)}</td>
                 <td><PhoneChip phone={destination.msisdn}/></td>
                 <td>{destination.status}</td>
