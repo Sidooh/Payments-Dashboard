@@ -18,13 +18,13 @@ const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
 
         <tbody>
         <tr className="border-200">
-            <td><h6>{destination?.command_id}</h6><h6>{destination?.conversation_id}</h6></td>
+            <td><h6>{destination.command_id}</h6><h6>{destination.conversation_id}</h6></td>
             <td><PhoneChip phone={destination.phone}/></td>
-            <td>{currencyFormat(destination?.amount)}</td>
-            <td>{destination?.response.result_desc}</td>
+            <td>{currencyFormat(destination.amount)}</td>
+            <td>{destination.response.result_desc}</td>
             <td className="text-end">
-                {moment(destination?.created_at).format('MMM D, Y')}<br/>
-                <small>{moment(destination?.created_at).format('hh:mm A')}</small>
+                {moment(destination.created_at).format('MMM D, Y')}<br/>
+                <small>{moment(destination.created_at).format('hh:mm A')}</small>
             </td>
         </tr>
         </tbody>
@@ -47,14 +47,14 @@ const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
 
             <tbody>
             <tr className="border-200">
-                <td>{destination?.transaction_reference}</td>
-                <td>{destination?.service}</td>
-                <td>{currencyFormat(destination?.text?.amount)}</td>
-                <td><PhoneChip phone={destination?.msisdn}/></td>
-                <td>{destination?.status}</td>
+                <td>{destination.transaction_reference}</td>
+                <td>{destination.service}</td>
+                <td>{currencyFormat(destination.text?.amount)}</td>
+                <td><PhoneChip phone={destination.msisdn}/></td>
+                <td>{destination.status}</td>
                 <td colSpan={2} className="text-end">
-                    {moment(destination?.created_at).format('MMM D, Y')}<br/>
-                    <small>{moment(destination?.created_at).format('hh:mm A')}</small>
+                    {moment(destination.created_at).format('MMM D, Y')}<br/>
+                    <small>{moment(destination.created_at).format('hh:mm A')}</small>
                 </td>
             </tr>
             </tbody>
@@ -73,15 +73,15 @@ const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
             </thead>
             <tbody>
             <tr className="border-200">
-                <td>{destination?.callback?.initiator_reference}</td>
-                <td>{destination?.callback?.receiver_party_name}</td>
-                <td>{destination?.callback?.account_reference}</td>
-                <td>{currencyFormat(destination?.callback?.amount)}</td>
-                <td>{destination?.callback?.confirmation_code}</td>
+                <td>{destination.callback?.initiator_reference}</td>
+                <td>{destination.callback?.receiver_party_name}</td>
+                <td>{destination.callback?.account_reference}</td>
+                <td>{currencyFormat(destination.callback?.amount)}</td>
+                <td>{destination.callback?.confirmation_code}</td>
                 <td>{destination.callback?.status_description}</td>
                 <td colSpan={2} className="text-end">
-                    {moment(destination?.callback?.created_at).format('MMM D, Y')}<br/>
-                    <small>{moment(destination?.callback?.created_at).format('hh:mm A')}</small>
+                    {moment(destination.callback?.created_at).format('MMM D, Y')}<br/>
+                    <small>{moment(destination.callback?.created_at).format('hh:mm A')}</small>
                 </td>
             </tr>
             </tbody>
@@ -102,12 +102,12 @@ const FloatOrVoucherTable = ({ destination }: { destination: SidoohTransaction }
 
         <tbody>
         <tr className="border-200">
-            <td><h6 className="mb-0 text-nowrap">{destination?.type}</h6></td>
-            <td>{destination?.description}</td>
-            <td>{currencyFormat(destination?.amount)}</td>
+            <td><h6 className="mb-0 text-nowrap">{destination.type}</h6></td>
+            <td>{destination.description}</td>
+            <td>{currencyFormat(destination.amount)}</td>
             <td className="text-end">
-                {moment(destination?.created_at).format('MMM D, Y')}<br/>
-                <small>{moment(destination?.created_at).format('hh:mm A')}</small>
+                {moment(destination.created_at).format('MMM D, Y')}<br/>
+                <small>{moment(destination.created_at).format('hh:mm A')}</small>
             </td>
         </tr>
         </tbody>
@@ -125,11 +125,11 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
                 </h5>
             </Card.Header>
             <div className="card-body">
-                {payment.destination_type === PaymentType.SIDOOH &&
+                {payment.destination_type === PaymentType.SIDOOH && destination &&
                     <FloatOrVoucherTable destination={destination as (SidoohTransaction)}/>}
-                {payment.destination_subtype === PaymentSubType.B2C &&
+                {payment.destination_subtype === PaymentSubType.B2C && destination &&
                     <B2CTable destination={destination as BulkPaymentRequest}/>}
-                {payment.destination_subtype === PaymentSubType.B2B &&
+                {payment.destination_subtype === PaymentSubType.B2B && destination &&
                     <B2BTable destination={destination as TendePayRequest}/>}
             </div>
         </Card>
