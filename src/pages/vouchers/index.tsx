@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useVouchersQuery } from '../../features/vouchers/vouchersAPI';
-import { currencyFormat, DataTable, PhoneChip, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,7 @@ const Vouchers = () => {
                     {
                         accessorKey: 'account',
                         header: 'Account',
+                        accessorFn: (row: Voucher) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
                         cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {

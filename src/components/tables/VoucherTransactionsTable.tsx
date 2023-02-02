@@ -1,11 +1,11 @@
 import { Card } from 'react-bootstrap';
-import { currencyFormat, DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, getRelativeDateAndTime, TableDate } from '@nabcellent/sui-react';
 import { VoucherTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
-const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransaction[] }) => {
+const VoucherTransactionsTable = ({ transactions }: { transactions: VoucherTransaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -17,7 +17,7 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.amount)
+                        cell: ({ row }: any) => currencyFormat(row.original.amount)
                     },
                     {
                         accessorKey: 'description',
@@ -26,11 +26,12 @@ const VoucherTransactionsTable = ({transactions}: { transactions: VoucherTransac
                     {
                         accessorKey: 'created_at',
                         header: 'Created',
-                        cell: ({row}: any) => <TableDate date={row.original.created_at}/>
+                        accessorFn: (row: VoucherTransaction) => getRelativeDateAndTime(row.created_at).toString(),
+                        cell: ({ row }: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
                         id: 'Actions',
-                        cell: ({row}: any) => (
+                        cell: ({ row }: any) => (
                             <Link to={`/payments/${row.original?.payment?.id}`}><FontAwesomeIcon icon={faEye}/></Link>
                         )
                     }

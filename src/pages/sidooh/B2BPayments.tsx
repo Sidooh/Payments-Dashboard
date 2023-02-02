@@ -1,10 +1,19 @@
 import { Card } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
-import { currencyFormat, DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
+import {
+    currencyFormat,
+    DataTable,
+    getRelativeDateAndTime,
+    SectionError,
+    SectionLoader,
+    StatusChip,
+    TableDate
+} from '@nabcellent/sui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
+import { Payment } from "../../utils/types";
 
 const B2BPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({
@@ -36,7 +45,8 @@ const B2BPayments = () => {
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Date',
+                        header: 'Updated',
+                        accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
