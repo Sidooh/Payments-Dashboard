@@ -4,6 +4,7 @@ import { DataTable, getRelativeDateAndTime, StatusChip, TableDate } from '@nabce
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import SidoohAccount from "../common/SidoohAccount";
 
 const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments: Payment[] }) => {
     return (
@@ -11,8 +12,10 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments:
             <Card.Body>
                 <DataTable title={tableTitle} columns={[
                     {
-                        accessorKey: 'id',
-                        header: '#',
+                        accessorKey: 'account',
+                        header: 'Account',
+                        cell: ({ row }: { row: { original: Payment } }) => <SidoohAccount
+                            account={row.original.account}/>
                     },
                     {
                         accessorKey: 'description',
