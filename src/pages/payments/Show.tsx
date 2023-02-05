@@ -229,16 +229,20 @@ const Show = () => {
                     <Row>
                         <Col lg={4} className="mb-4 mb-lg-0">
                             <h5 className="mb-3 fs-0">Account</h5>
-                            <h6 className="mb-2">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${payment.account?.user_id}`}
-                                   target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.user?.name}
-                                </a>
-                            </h6>
-                            <p className="mb-0 fs--1">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${payment.account?.id}`}
-                                   target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.phone}
-                                </a>
-                            </p>
+                            {payment.account ? (
+                                <>
+                                    <h6 className="mb-2">
+                                        <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${payment.account?.user_id}`}
+                                           target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.user?.name}
+                                        </a>
+                                    </h6>
+                                    <p className="mb-0 fs--1">
+                                        <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${payment.account?.id}`}
+                                           target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.phone}
+                                        </a>
+                                    </p>
+                                </>
+                            ) : 'N / A'}
                         </Col>
                         <Col lg={8} className="mb-4 mb-lg-0">
                             <h5 className="mb-3 fs-0">Details</h5>
