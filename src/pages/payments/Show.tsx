@@ -245,7 +245,12 @@ const Show = () => {
                             <Row>
                                 <Col>
                                     <p className="mb-0 fs--1"><b>Description: </b>{payment.description}</p>
-                                    <div className="fs--1"><b>Amount: </b>({currencyFormat(payment.amount)})</div>
+                                    <p className="mb-0 fs--1"><b>Amount: </b>({currencyFormat(payment.amount)})</p>
+                                    {payment.charge > 0 && (
+                                        <p className="mb-0 fs--1">
+                                            <b>Charge: </b>({currencyFormat(payment.charge)})
+                                        </p>
+                                    )}
                                 </Col>
                                 <Col>
                                     <p className="mb-0 fs--1"><b>Source: </b>{payment.type} ~ {payment.subtype}</p>

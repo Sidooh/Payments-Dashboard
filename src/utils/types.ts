@@ -49,6 +49,7 @@ export interface MpesaC2BCallback extends Model {
 
 export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback> extends Model {
     amount: number;
+    charge: number;
     type: string;
     subtype: string;
     status: Status;
