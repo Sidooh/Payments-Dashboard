@@ -11,9 +11,3 @@ export enum PaymentSubType {
     VOUCHER = 'VOUCHER',
     FLOAT = 'FLOAT',
 }
-
-export enum TransactionType {
-    CREDIT = 'CREDIT',
-    DEBIT = 'DEBIT',
-    CHARGE = 'CHARGE',
-}

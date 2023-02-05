@@ -1,10 +1,15 @@
 import { Card } from 'react-bootstrap';
-import { currencyFormat, DataTable, getRelativeDateAndTime, TableDate } from '@nabcellent/sui-react';
+import {
+    currencyFormat,
+    DataTable,
+    getRelativeDateAndTime,
+    TableDate,
+    TransactionTypeChip
+} from '@nabcellent/sui-react';
 import { FloatAccountTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { TransactionType } from "../../utils/enums";
 
 type FloatAccountTransactionsTableProps = { transactions: FloatAccountTransaction[], showAccountColumn?: boolean }
 
@@ -16,16 +21,8 @@ const FloatAccountTransactionsTable = ({
         {
             accessorKey: 'type',
             header: 'Type',
-            cell: ({ row: { original } }: { row: { original: FloatAccountTransaction } }) => {
-                let color = 'secondary'
-                if (original.type === TransactionType.CREDIT) {
-                    color = 'success'
-                } else if (original.type === TransactionType.DEBIT) {
-                    color = 'danger'
-                }
-
-                return <b className={`text-${color}`}>{original.type}</b>
-            }
+            cell: ({ row }: { row: { original: FloatAccountTransaction } }) => <TransactionTypeChip
+                type={row.original.type}/>
         },
         {
             accessorKey: 'amount',
