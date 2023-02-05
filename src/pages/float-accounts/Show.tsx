@@ -26,7 +26,12 @@ const Show = () => {
             <Card className={'mb-3'}>
                 <CardBgCorner corner={3}/>
                 <Card.Body className="position-relative">
-                    <h5>Account: #{account?.id}</h5>
+                    <h5>
+                        {floatAccount.id === 1 && 'Payments'}{' '}
+                        {floatAccount.id === 2 && 'Savings'}{' '}
+                        Float Account: #{floatAccount.id}
+                    </h5>
+                    <h6>Account: #{account?.id}</h6>
                     <h6 className="mb-2">
                         <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
                            target={'_blank'} rel={'noreferrer noopener'}>
@@ -55,10 +60,11 @@ const Show = () => {
                 </Col>
             </Row>
 
-            {floatAccount?.float_account_transactions?.length ?
-                <FloatAccountTransactionsTable transactions={floatAccount.float_account_transactions}/> : (
+            {floatAccount?.transactions?.length ?
+                <FloatAccountTransactionsTable transactions={floatAccount.transactions}/> : (
                     <Card className={'mb-3 bg-soft-primary'}>
-                        <CardHeader title={'No Float Transactions Made Yet.'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
+                        <CardHeader title={'No Float Transactions Made Yet.'}><FontAwesomeIcon
+                            icon={faInfo}/></CardHeader>
                     </Card>
                 )}
         </>

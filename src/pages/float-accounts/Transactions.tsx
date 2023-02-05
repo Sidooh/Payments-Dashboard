@@ -11,7 +11,7 @@ const FloatAccountsTransactions = () => {
 
     logger.log(transactions);
 
-    return <FloatAccountTransactionsTable transactions={transactions}/>
+    return <FloatAccountTransactionsTable transactions={transactions} showAccountColumn/>
 };
 
 export default FloatAccountsTransactions;

@@ -93,7 +93,7 @@ export interface FloatAccount extends Model {
     account?: Account;
     floatable_type: string;
     floatable_id: string;
-    float_account_transactions?: FloatAccountTransaction[];
+    transactions?: FloatAccountTransaction[];
 }
 
 export type TendePayRequest = Model & {
