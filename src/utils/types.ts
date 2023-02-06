@@ -26,7 +26,7 @@ export interface Voucher extends Model {
 }
 
 export interface VoucherTransaction extends Model {
-    type: string;
+    type: TransactionType;
     amount: number;
     description: string;
     voucher_id: number;
