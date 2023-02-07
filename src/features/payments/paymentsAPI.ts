@@ -51,9 +51,9 @@ export const paymentsAPI = createApi({
         }),
         payments: builder.query<Payment[], Status | void>({
             query: (status?: Status) => {
-                let url = '/payments';
+                let url = '/payments?with=account';
 
-                if (status) url += `?status=${status}`;
+                if (status) url += `&status=${status}`;
 
                 return url;
             },

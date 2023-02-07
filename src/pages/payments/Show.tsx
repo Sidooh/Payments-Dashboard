@@ -198,7 +198,7 @@ const Show = () => {
                                         });
                                     }}/>
                         <Flex alignItems={'center'}>
-                            {payment.description.toLowerCase().includes('reversal') && (
+                            {payment?.description?.toLowerCase().includes('reversal') && (
                                 <Tooltip title={'Previous Payment'} placement={'left'}>
                                     <Link to={`/payments/${payment.destination_data.payment_id}`}
                                           className={'btn btn-secondary py-1 px-2 rounded-circle'}>
@@ -229,23 +229,32 @@ const Show = () => {
                     <Row>
                         <Col lg={4} className="mb-4 mb-lg-0">
                             <h5 className="mb-3 fs-0">Account</h5>
-                            <h6 className="mb-2">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${payment.account?.user_id}`}
-                                   target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.user?.name}
-                                </a>
-                            </h6>
-                            <p className="mb-0 fs--1">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${payment.account?.id}`}
-                                   target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.phone}
-                                </a>
-                            </p>
+                            {payment.account ? (
+                                <>
+                                    <h6 className="mb-2">
+                                        <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${payment.account?.user_id}`}
+                                           target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.user?.name}
+                                        </a>
+                                    </h6>
+                                    <p className="mb-0 fs--1">
+                                        <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${payment.account?.id}`}
+                                           target={'_blank'} rel={'noreferrer noopener'}>{payment.account?.phone}
+                                        </a>
+                                    </p>
+                                </>
+                            ) : 'N / A'}
                         </Col>
                         <Col lg={8} className="mb-4 mb-lg-0">
                             <h5 className="mb-3 fs-0">Details</h5>
                             <Row>
                                 <Col>
                                     <p className="mb-0 fs--1"><b>Description: </b>{payment.description}</p>
-                                    <div className="fs--1"><b>Amount: </b>({currencyFormat(payment.amount)})</div>
+                                    <p className="mb-0 fs--1"><b>Amount: </b>({currencyFormat(payment.amount)})</p>
+                                    {payment.charge > 0 && (
+                                        <p className="mb-0 fs--1">
+                                            <b>Charge: </b>({currencyFormat(payment.charge)})
+                                        </p>
+                                    )}
                                 </Col>
                                 <Col>
                                     <p className="mb-0 fs--1"><b>Source: </b>{payment.type} ~ {payment.subtype}</p>

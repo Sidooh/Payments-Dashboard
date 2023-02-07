@@ -17,15 +17,16 @@ export const authAPI = {
             body: JSON.stringify(userData)
         });
 
-        let {access_token: token, errors} = await response.json();
+        let { access_token: token, errors } = await response.json();
+        if (errors) throw new Error(errors[0]?.message)
 
         if (token) {
-            localStorage.setItem('auth', JSON.stringify({token}));
+            localStorage.setItem('auth', JSON.stringify({ token }));
         } else {
-            console.error(errors);
+            throw new Error("Something went wrong.");
         }
 
-        return {token};
+        return { token };
     },
     logout: () => localStorage.removeItem('auth')
 };

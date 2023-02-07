@@ -3,12 +3,12 @@ import { useAppDispatch } from '../app/hooks';
 import moment from 'moment';
 import { useAuth } from '../hooks/useAuth';
 import { logout } from '../features/auth/authSlice';
-import { JWT } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
+import { JWT } from '@nabcellent/sui-react';
 
 export const Middleware = {
-    Guest: ({component}: { component: JSX.Element }) => {
-        const {auth} = useAuth();
+    Guest: ({ component }: { component: JSX.Element }) => {
+        const { auth } = useAuth();
         const location = useLocation();
 
         if (auth) {
@@ -19,12 +19,12 @@ export const Middleware = {
 
         return component;
     },
-    Auth : ({component}: { component: JSX.Element }) => {
-        const {auth} = useAuth();
+    Auth: ({ component }: { component: JSX.Element }) => {
+        const { auth } = useAuth();
         const location = useLocation();
         const dispatch = useAppDispatch();
 
-        if (!auth) return <Navigate to="/login" state={{from: location}} replace/>;
+        if (!auth) return <Navigate to="/login" state={{ from: location }} replace/>;
 
         const user = JWT.decode(auth.token)
         const expiresIn = moment.unix(user.exp).diff(moment(), 'minutes');
@@ -34,7 +34,7 @@ export const Middleware = {
         if (moment.unix(user.exp).isBefore(moment())) {
             dispatch(logout());
 
-            return <Navigate to="/login" state={{from: location}} replace/>
+            return <Navigate to="/login" state={{ from: location }} replace/>
         }
 
         return component;

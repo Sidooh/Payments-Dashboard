@@ -1,4 +1,4 @@
-import { Account, Model, Status } from '@nabcellent/sui-react';
+import { Account, Model, Status, TransactionType } from '@nabcellent/sui-react';
 
 export interface StkCallback extends Model {
     amount: number;
@@ -26,7 +26,7 @@ export interface Voucher extends Model {
 }
 
 export interface VoucherTransaction extends Model {
-    type: string;
+    type: TransactionType;
     amount: number;
     description: string;
     voucher_id: number;
@@ -49,6 +49,7 @@ export interface MpesaC2BCallback extends Model {
 
 export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback> extends Model {
     amount: number;
+    charge: number;
     type: string;
     subtype: string;
     status: Status;
@@ -60,7 +61,7 @@ export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback>
     };
     account?: Account
     provider?: P
-    destination_provider?: SidoohTransaction | BulkPaymentRequest|TendePayRequest
+    destination_provider?: SidoohTransaction | BulkPaymentRequest | TendePayRequest
 }
 
 export interface BulkPaymentRequest extends Model {
@@ -81,7 +82,7 @@ export interface BulkPaymentResponse extends Model {
 }
 
 export interface FloatAccountTransaction extends Model {
-    type: string;
+    type: TransactionType;
     amount: number;
     description: string;
     float_account_id: number;
@@ -93,7 +94,7 @@ export interface FloatAccount extends Model {
     account?: Account;
     floatable_type: string;
     floatable_id: string;
-    float_account_transactions?: FloatAccountTransaction[];
+    transactions?: FloatAccountTransaction[];
 }
 
 export type TendePayRequest = Model & {

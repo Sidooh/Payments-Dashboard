@@ -2,7 +2,10 @@ import { Card, Table } from 'react-bootstrap';
 import { BulkPaymentRequest, Payment, SidoohTransaction, TendePayRequest } from 'utils/types';
 import moment from 'moment';
 import { currencyFormat, PhoneChip } from '@nabcellent/sui-react';
-import { PaymentSubType, PaymentType } from "../../utils/enums";
+import { PaymentSubType, PaymentType } from "utils/enums";
+import CardHeader from "../../components/common/CardHeader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfo } from "@fortawesome/free-solid-svg-icons/faInfo";
 
 const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
     <Table striped responsive className="border-bottom fs--1">
@@ -21,7 +24,7 @@ const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
             <td><h6>{destination.command_id}</h6><h6>{destination.conversation_id}</h6></td>
             <td><PhoneChip phone={destination.phone}/></td>
             <td>{currencyFormat(destination.amount)}</td>
-            <td>{destination.response.result_desc}</td>
+            <td>{destination.response?.result_desc}</td>
             <td className="text-end">
                 {moment(destination.created_at).format('MMM D, Y')}<br/>
                 <small>{moment(destination.created_at).format('hh:mm A')}</small>
@@ -117,6 +120,12 @@ const FloatOrVoucherTable = ({ destination }: { destination: SidoohTransaction }
 const DestinationProvider = ({ payment }: { payment: Payment }) => {
     const destination = payment.destination_provider
 
+    if (!destination) return (
+        <Card className={'mb-3 bg-soft-primary'}>
+            <CardHeader title={'Destination Not Found.'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
+        </Card>
+    )
+
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0">
@@ -125,11 +134,11 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
                 </h5>
             </Card.Header>
             <div className="card-body">
-                {payment.destination_type === PaymentType.SIDOOH && destination &&
+                {payment.destination_type === PaymentType.SIDOOH &&
                     <FloatOrVoucherTable destination={destination as (SidoohTransaction)}/>}
-                {payment.destination_subtype === PaymentSubType.B2C && destination &&
+                {payment.destination_subtype === PaymentSubType.B2C &&
                     <B2CTable destination={destination as BulkPaymentRequest}/>}
-                {payment.destination_subtype === PaymentSubType.B2B && destination &&
+                {payment.destination_subtype === PaymentSubType.B2B &&
                     <B2BTable destination={destination as TendePayRequest}/>}
             </div>
         </Card>

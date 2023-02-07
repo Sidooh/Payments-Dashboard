@@ -1,5 +1,11 @@
 import { Card } from 'react-bootstrap';
-import { currencyFormat, DataTable, getRelativeDateAndTime, TableDate } from '@nabcellent/sui-react';
+import {
+    currencyFormat,
+    DataTable,
+    getRelativeDateAndTime,
+    TableDate,
+    TransactionTypeChip
+} from '@nabcellent/sui-react';
 import { VoucherTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +19,8 @@ const VoucherTransactionsTable = ({ transactions }: { transactions: VoucherTrans
                     {
                         accessorKey: 'type',
                         header: 'Type',
+                        cell: ({ row }: { row: { original: VoucherTransaction } }) => <TransactionTypeChip
+                            type={row.original.type}/>
                     },
                     {
                         accessorKey: 'amount',
