@@ -36,7 +36,7 @@ export const getFlattenedRoutes = (children: any) => children.reduce(
             };
         }
     },
-    {unTitled: []}
+    { unTitled: [] }
 );
 
 export const getColor = function getColor(name: string) {
