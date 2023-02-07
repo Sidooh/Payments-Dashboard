@@ -1,6 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useVoucherQuery } from 'features/vouchers/vouchersAPI';
-import { SectionError, SectionLoader } from '@nabcellent/sui-react';
+import {
+    useActivateVoucherMutation,
+    useDeactivateVoucherMutation,
+    useVoucherQuery
+} from 'features/vouchers/vouchersAPI';
+import { SectionError, SectionLoader, Status, StatusChip, Sweet, toast } from '@nabcellent/sui-react';
 import VoucherTransactionsTable from '../../components/tables/VoucherTransactionsTable';
 import CardHeader from '../../components/common/CardHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +18,9 @@ import { logger } from 'utils/logger';
 const Show = () => {
     const { id } = useParams();
     const { data: voucher, isError, error, isLoading, isSuccess } = useVoucherQuery(Number(id));
+
+    const [activateVoucher] = useActivateVoucherMutation();
+    const [deactivateVoucher] = useDeactivateVoucherMutation();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !voucher) return <SectionLoader/>;
@@ -39,6 +46,42 @@ const Show = () => {
                             {account?.phone}
                         </a>
                     </p>
+                    <StatusChip status={voucher.status} statuses={[Status.ACTIVE, Status.INACTIVE]}
+                                onStatusChange={async status => {
+                                    await Sweet.fire({
+                                        backdrop: `rgba(0, 0, 150, 0.4)`,
+                                        showLoaderOnConfirm: true,
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Proceed',
+                                        title: 'Update Status',
+                                        html: `Are you sure you want to 
+                                            <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
+                                                ${status === Status.ACTIVE ? 'ACTIVATE' : 'DEACTIVATE'}
+                                            </b>
+                                            this voucher?`,
+                                        allowOutsideClick: () => !Sweet.isLoading(),
+                                        preConfirm: async () => {
+                                            let res;
+                                            if (status === Status.ACTIVE) {
+                                                res = await activateVoucher(voucher.id) as any;
+                                            } else if (status === Status.INACTIVE) {
+                                                res = await deactivateVoucher(voucher.id) as any;
+                                            } else return
+
+                                            if (res?.data?.id) await toast({
+                                                html: `Voucher <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
+                                                    ${status === Status.ACTIVE ? 'Activated' : 'Deactivated'}
+                                                </b>`
+                                            });
+                                            if (res?.error?.data?.message) await toast({
+                                                titleText: res?.error.data.message,
+                                                icon: 'error',
+                                                timer: 7
+                                            });
+                                        }
+                                    });
+                                }}/>
                 </Card.Body>
             </Card>
 
@@ -55,8 +98,8 @@ const Show = () => {
                 </Col>
             </Row>
 
-            {voucher?.voucher_transactions?.length ?
-                <VoucherTransactionsTable transactions={voucher.voucher_transactions}/> : (
+            {voucher?.transactions?.length ?
+                <VoucherTransactionsTable transactions={voucher.transactions}/> : (
                     <Card className={'mb-3 bg-soft-primary'}>
                         <CardHeader title={'No Voucher Transactions Made'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
                     </Card>

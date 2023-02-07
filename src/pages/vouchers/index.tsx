@@ -78,9 +78,13 @@ const Vouchers = () => {
                                                         res = await activateVoucher(original.id) as any;
                                                     } else if (status === Status.INACTIVE) {
                                                         res = await deactivateVoucher(original.id) as any;
-                                                    }
+                                                    } else return
 
-                                                    if (res?.data?.id) await toast({ titleText: 'Voucher status updated!' });
+                                                    if (res?.data?.id) await toast({
+                                                        html: `Voucher <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
+                                                                    ${status === Status.ACTIVE ? 'Activated' : 'Deactivated'}
+                                                                </b>`
+                                                    });
                                                     if (res?.error?.data?.message) await toast({
                                                         titleText: res?.error.data.message,
                                                         icon: 'error',
@@ -93,7 +97,7 @@ const Vouchers = () => {
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Updated At',
+                        header: 'Updated',
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {

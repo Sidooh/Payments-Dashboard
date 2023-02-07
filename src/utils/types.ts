@@ -21,7 +21,7 @@ export interface Voucher extends Model {
     balance: number;
     status: Status;
     account_id: number;
-    voucher_transactions?: VoucherTransaction[];
+    transactions?: VoucherTransaction[];
     voucher_type?: VoucherType;
     account?: Account;
 }

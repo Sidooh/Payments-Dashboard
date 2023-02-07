@@ -186,7 +186,7 @@ const Show = () => {
                                                     res = await completePayment(payment.id) as any;
                                                 } else if (status === Status.FAILED) {
                                                     res = await failPayment(payment.id) as any;
-                                                }
+                                                } else return
 
                                                 if (res?.data?.id) await toast({ titleText: 'Payment status updated!' });
                                                 if (res?.error?.data?.message) await toast({
