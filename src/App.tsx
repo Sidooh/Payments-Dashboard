@@ -9,10 +9,11 @@ import SettingsPanel from './components/settings-panel/SettingsPanel';
 import { useAppSelector } from './app/hooks';
 import { RootState } from './app/store';
 import useTheme from './hooks/useTheme';
+import Login from 'pages/auth/Login';
 
-const Login = lazy(() => import('pages/auth/Login'));
 const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));
+
 const Payments = lazy(() => import('pages/payments'));
 const ShowPayment = lazy(() => import('pages/payments/Show'));
 

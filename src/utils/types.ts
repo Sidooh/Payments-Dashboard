@@ -19,8 +19,9 @@ export interface StkRequest extends Model {
 export interface Voucher extends Model {
     type: string;
     balance: number;
+    status: Status;
     account_id: number;
-    voucher_transactions?: VoucherTransaction[];
+    transactions?: VoucherTransaction[];
     voucher_type?: VoucherType;
     account?: Account;
 }
