@@ -97,7 +97,9 @@ const Show = () => {
                             <StatusChip status={voucher.status} statuses={[Status.ACTIVE, Status.INACTIVE]}
                                         onStatusChange={handleStatusChange}/>
                         </div>
-                        <i className="fs--1"><b>CREATED:</b> {moment(voucher?.created_at).format('MMM Do, Y, hh:mm A')}</i>
+                        <i className="fs--1">
+                            <b>CREATED:</b> {moment(voucher?.created_at).format('MMM Do, Y, hh:mm A')}
+                        </i>
                     </Flex>
                 </Card.Body>
             </Card>
