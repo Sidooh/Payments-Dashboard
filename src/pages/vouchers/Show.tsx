@@ -6,7 +6,7 @@ import {
     useDebitVoucherMutation,
     useVoucherQuery
 } from 'features/vouchers/vouchersAPI';
-import { SectionError, SectionLoader, Status, StatusChip, Sweet, toast, Tooltip } from '@nabcellent/sui-react';
+import { Flex, SectionError, SectionLoader, Status, StatusChip, Sweet, toast, Tooltip } from '@nabcellent/sui-react';
 import VoucherTransactionsTable from '../../components/tables/VoucherTransactionsTable';
 import CardHeader from '../../components/common/CardHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,7 @@ import { CONFIG } from '../../config';
 import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
 import { queryVoucher } from "../../utils/helpers";
+import moment from "moment/moment";
 
 const Show = () => {
     const { id } = useParams();
@@ -37,60 +38,67 @@ const Show = () => {
         await queryVoucher(action, voucher.id, creditVoucher, debitVoucher)
     }
 
+    const handleStatusChange = async (status: Status) => {
+        await Sweet.fire({
+            backdrop: `rgba(0, 0, 150, 0.4)`,
+            showLoaderOnConfirm: true,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Proceed',
+            title: 'Update Status',
+            html: `Are you sure you want to 
+                <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
+                    ${status === Status.ACTIVE ? 'ACTIVATE' : 'DEACTIVATE'}
+                </b>
+                this voucher?`,
+            allowOutsideClick: () => !Sweet.isLoading(),
+            preConfirm: async () => {
+                let res;
+                if (status === Status.ACTIVE) {
+                    res = await activateVoucher(voucher.id) as any;
+                } else if (status === Status.INACTIVE) {
+                    res = await deactivateVoucher(voucher.id) as any;
+                } else return
+
+                if (res?.data?.id) await toast({
+                    html: `Voucher <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
+                        ${status === Status.ACTIVE ? 'Activated' : 'Deactivated'}
+                    </b>`
+                });
+                if (res?.error?.data?.message) await toast({
+                    titleText: res?.error.data.message,
+                    icon: 'error',
+                    timer: 7
+                });
+            }
+        });
+    }
+
     return (
         <>
             <Card className={'mb-3'}>
                 <CardBgCorner corner={3}/>
                 <Card.Body className="position-relative">
-                    <h5>Account: #{account?.id}</h5>
-                    <h6 className="mb-2">
-                        <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
-                           target={'_blank'} rel={'noreferrer noopener'}>
-                            {account?.user?.name}
-                        </a>
-                    </h6>
-                    <p className="mb-0 fs--1">
-                        <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
-                           target={'_blank'} rel={'noreferrer noopener'}>
-                            {account?.phone}
-                        </a>
-                    </p>
-                    <StatusChip status={voucher.status} statuses={[Status.ACTIVE, Status.INACTIVE]}
-                                onStatusChange={async status => {
-                                    await Sweet.fire({
-                                        backdrop: `rgba(0, 0, 150, 0.4)`,
-                                        showLoaderOnConfirm: true,
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonText: 'Proceed',
-                                        title: 'Update Status',
-                                        html: `Are you sure you want to 
-                                            <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
-                                                ${status === Status.ACTIVE ? 'ACTIVATE' : 'DEACTIVATE'}
-                                            </b>
-                                            this voucher?`,
-                                        allowOutsideClick: () => !Sweet.isLoading(),
-                                        preConfirm: async () => {
-                                            let res;
-                                            if (status === Status.ACTIVE) {
-                                                res = await activateVoucher(voucher.id) as any;
-                                            } else if (status === Status.INACTIVE) {
-                                                res = await deactivateVoucher(voucher.id) as any;
-                                            } else return
-
-                                            if (res?.data?.id) await toast({
-                                                html: `Voucher <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
-                                                    ${status === Status.ACTIVE ? 'Activated' : 'Deactivated'}
-                                                </b>`
-                                            });
-                                            if (res?.error?.data?.message) await toast({
-                                                titleText: res?.error.data.message,
-                                                icon: 'error',
-                                                timer: 7
-                                            });
-                                        }
-                                    });
-                                }}/>
+                    <Flex justifyContent={'between'} alignItems={'start'}>
+                        <div>
+                            <h5>Account: #{account?.id}</h5>
+                            <h6 className="mb-2">
+                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
+                                   target={'_blank'} rel={'noreferrer noopener'}>
+                                    {account?.user?.name}
+                                </a>
+                            </h6>
+                            <p className="mb-0 fs--1">
+                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
+                                   target={'_blank'} rel={'noreferrer noopener'}>
+                                    {account?.phone}
+                                </a>
+                            </p>
+                            <StatusChip status={voucher.status} statuses={[Status.ACTIVE, Status.INACTIVE]}
+                                        onStatusChange={handleStatusChange}/>
+                        </div>
+                        <i className="fs--1"><b>CREATED:</b> {moment(voucher?.created_at).format('MMM Do, Y, hh:mm A')}</i>
+                    </Flex>
                 </Card.Body>
             </Card>
 
