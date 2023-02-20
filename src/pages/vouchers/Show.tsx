@@ -16,6 +16,7 @@ import CardBgCorner from 'components/CardBgCorner';
 import { CONFIG } from '../../config';
 import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
+import { queryVoucher } from "../../utils/helpers";
 
 const Show = () => {
     const { id } = useParams();
@@ -32,37 +33,8 @@ const Show = () => {
     logger.log('Voucher:', voucher);
     const account = voucher.account;
 
-    const queryVoucher = async (action: 'credit' | 'debit') => {
-        await Sweet.fire({
-            title: `Voucher ${action === 'credit' ? 'Credit' : 'Debit'}`,
-            backdrop: `rgba(0, 0, 150, 0.4)`,
-            showLoaderOnConfirm: true,
-            input: 'number',
-            inputAttributes: { placeholder: 'Enter Amount' },
-            showCancelButton: true,
-            confirmButtonText: 'Proceed',
-            allowOutsideClick: () => !Sweet.isLoading(),
-            preConfirm: async (amount: number) => {
-                if (!amount) return Sweet.showValidationMessage('Amount is required.');
-                if (amount <= 0) return Sweet.showValidationMessage('Amount must be greater than 0.');
-
-                let res;
-                if (action === 'credit') {
-                    res = await creditVoucher({ id: voucher.id, amount }) as any;
-                } else if (action === 'debit') {
-                    res = await debitVoucher({ id: voucher.id, amount }) as any;
-                } else return
-
-                logger.log(res);
-
-                if (res?.data?.id) await toast({
-                    html: `Voucher <b class="text-${action === 'credit' ? 'success' : 'danger'}">
-                        ${action === 'credit' ? 'Credited' : 'Debited'}
-                    </b>`
-                });
-                if (res?.error?.data?.message) return Sweet.showValidationMessage(res?.error.data.message);
-            }
-        });
+    const handleQueryVoucher = async (action: 'credit' | 'debit') => {
+        await queryVoucher(action, voucher.id, creditVoucher, debitVoucher)
     }
 
     return (
@@ -136,14 +108,14 @@ const Show = () => {
 
                             <div className="row gx-2 fw-bolder">
                                 <button className="col-auto btn btn-sm btn-light py-0 rounded-end-0"
-                                        onClick={() => queryVoucher('debit')}
+                                        onClick={() => handleQueryVoucher('debit')}
                                         style={{ borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
                                     <Tooltip title={'Debit'} placement={'top'}>
                                         <FontAwesomeIcon color={'red'} icon={faMinus}/>
                                     </Tooltip>
                                 </button>
                                 <button className="col-auto btn btn-sm btn-light py-0 rounded-start-0"
-                                        onClick={() => queryVoucher('credit')}
+                                        onClick={() => handleQueryVoucher('credit')}
                                         style={{ borderTopRightRadius: 20, borderBottomRightRadius: 20 }}>
                                     <Tooltip title={'Credit'} placement={'top'}>
                                         <FontAwesomeIcon color={'green'} icon={faAdd}/>
