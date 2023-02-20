@@ -38,8 +38,8 @@ function App() {
         if (is.firefox()) HTMLClassList.add('firefox');
     }, [HTMLClassList]);
 
-    const {isDark} = useAppSelector((state: RootState) => state.theme);
-    const {isLoaded} = useTheme(isDark);
+    const { isDark } = useAppSelector((state: RootState) => state.theme);
+    const { isLoaded } = useTheme(isDark);
 
     if (!isLoaded) return <PageLoader isDark={isDark}/>;
 
