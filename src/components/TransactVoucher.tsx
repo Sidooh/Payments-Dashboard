@@ -25,7 +25,7 @@ export const transactVoucher = async (action: Action, voucher: Voucher, credit: 
         html: (
             <Formik<FormValues>
                 innerRef={ref => formikRef = ref}
-                initialValues={{ account_id: voucher.account_id, amount: 100, float_account_id: 1, reason: '' }}
+                initialValues={{ account_id: voucher.account_id, amount: 20, float_account_id: 1, reason: '' }}
                 validationSchema={yup.object().shape({
                     float_account_id: yup.number().oneOf([1, 2], 'Invalid Float Account.').required(),
                     amount: yup.number().label('Amount').min(10).required(),
