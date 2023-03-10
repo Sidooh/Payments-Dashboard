@@ -611,13 +611,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabcellent/sui-react@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@nabcellent/sui-react@npm:3.4.0"
+"@nabcellent/sui-react@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "@nabcellent/sui-react@npm:3.4.1"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 3fca8370d175875e27695e6183a2c35a19c39ed790d18e71714015d4f4369784d75c0f5fef59d82e74b3a5cc70096085c1e2be08f48ebbe12c35f4311864dde6
+  checksum: 3a0a6b020fc24d944fdd3b8363f83f0da6c034f7f04b44cce8a614e96644a2b124c67f4e7c6e70b626c89a908f5c2d0cc1032f9d3ab37bbe6d5bac09d9aa1f4c
   languageName: node
   linkType: hard
 
@@ -1975,7 +1975,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^6.3.0
     "@fortawesome/free-solid-svg-icons": ^6.3.0
     "@fortawesome/react-fontawesome": ^0.2.0
-    "@nabcellent/sui-react": ^3.4.0
+    "@nabcellent/sui-react": ^3.4.1
     "@reduxjs/toolkit": ^1.9.2
     "@types/echarts": ^4.9.16
     "@types/lodash.merge": ^4

@@ -35,7 +35,7 @@ const Show = () => {
     const account = voucher.account;
 
     const handleQueryVoucher = async (action: 'credit' | 'debit') => {
-        await queryVoucher(action, voucher.id, creditVoucher, debitVoucher)
+        await queryVoucher(action, voucher, creditVoucher, debitVoucher)
     }
 
     const handleStatusChange = async (status: Status) => {
