@@ -32,23 +32,21 @@ export const transactVoucher = async (action: Action, voucher: Voucher, credit: 
                     reason: yup.string(),
                 })}
                 onSubmit={() => {}}>
-                {() => (
-                    <>
-                        <FloatingLabel label={'Float Account'} className={'text-start'}>
-                            <Field as="select" className="form-select mb-2" name="float_account_id"
-                                   placeholder={'Float Account'}>
-                                <option value="1">PAYMENT'S</option>
-                                <option value="2">SAVING'S</option>
-                            </Field>
-                        </FloatingLabel>
-                        <FloatingLabel label={'Amount'} className={'text-start'}>
-                            <Field type="number" className="form-control mb-2" name="amount" placeholder={'Amount'}/>
-                        </FloatingLabel>
-                        <FloatingLabel label={'Reason'} className={'text-start'}>
-                            <Field className="form-control mb-2" name="reason" placeholder={'Reason'}/>
-                        </FloatingLabel>
-                    </>
-                )}
+                <>
+                    <FloatingLabel label={'Float Account'} className={'text-start'}>
+                        <Field as="select" className="form-select mb-2" name="float_account_id"
+                               placeholder={'Float Account'}>
+                            <option value="1">PAYMENT'S</option>
+                            <option value="2">SAVING'S</option>
+                        </Field>
+                    </FloatingLabel>
+                    <FloatingLabel label={'Amount'} className={'text-start'}>
+                        <Field type="number" className="form-control mb-2" name="amount" placeholder={'Amount'}/>
+                    </FloatingLabel>
+                    <FloatingLabel label={'Reason'} className={'text-start'}>
+                        <Field className="form-control mb-2" name="reason" placeholder={'Reason'}/>
+                    </FloatingLabel>
+                </>
             </Formik>
         ),
         backdrop: `rgba(0, 0, 150, 0.4)`,
