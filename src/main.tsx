@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import '@nabcellent/sui-react/dist/style.min.css'
 
+
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 

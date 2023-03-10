@@ -1,5 +1,5 @@
 import {CSSProperties, memo} from 'react';
-import _ from 'lodash';
+import merge from 'lodash.merge';
 import BaseECharts from './BaseECharts';
 import { getColor } from '@nabcellent/sui-react';
 
@@ -45,7 +45,7 @@ const ECharts = ({echarts, options, ...rest}: BasicEChartsType) => {
     return (
         <BaseECharts
             echarts={echarts}
-            options={_.merge(getOption(), options)}
+            options={merge(getOption(), options)}
             {...rest}
         />
     );

@@ -1,19 +1,19 @@
 import { Card } from 'react-bootstrap';
 import {
-    useActivateVoucherMutation,
-    useDeactivateVoucherMutation,
+    useActivateVoucherMutation, useCreditVoucherMutation,
+    useDeactivateVoucherMutation, useDebitVoucherMutation,
     useVouchersQuery
 } from '../../features/vouchers/vouchersAPI';
 import {
     currencyFormat,
-    DataTable,
+    DataTable, Flex,
     SectionError,
     SectionLoader,
     Status,
     StatusChip,
     Sweet,
     TableDate,
-    toast
+    toast, Tooltip
 } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
 import SidoohAccount from 'components/common/SidoohAccount';
@@ -21,10 +21,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
 import { Voucher } from "../../utils/types";
+import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { transactVoucher } from "../../components/TransactVoucher";
 
 const Vouchers = () => {
     let { data: vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();
 
+    const [creditVoucher] = useCreditVoucherMutation();
+    const [debitVoucher] = useDebitVoucherMutation();
     const [activateVoucher] = useActivateVoucherMutation();
     const [deactivateVoucher] = useDeactivateVoucherMutation();
 
@@ -32,6 +36,10 @@ const Vouchers = () => {
     if (isLoading || !isSuccess || !vouchers) return <SectionLoader/>;
 
     logger.log(vouchers);
+
+    const handleQueryVoucher = async (voucher: Voucher, action: 'credit' | 'debit') => {
+        await transactVoucher(action, voucher, creditVoucher, debitVoucher)
+    }
 
     return (
         <Card className={'mb-3'}>
@@ -102,8 +110,20 @@ const Vouchers = () => {
                     },
                     {
                         id: 'Actions',
-                        cell: ({ row }: any) => (
-                            <Link to={`/vouchers/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                        cell: ({ row: { original: voucher } }: any) => (
+                            <Flex justifyContent={'between'}>
+                                <Tooltip title={'Debit'} placement={'top'}>
+                                    <FontAwesomeIcon color={'red'} icon={faMinus} className={'cursor-pointer'}
+                                                     onClick={() => handleQueryVoucher(voucher, 'debit')}/>
+                                </Tooltip>
+                                <Tooltip title={'Credit'} placement={'top'}>
+                                    <FontAwesomeIcon color={'green'} icon={faAdd} className={'cursor-pointer'}
+                                                     onClick={() => handleQueryVoucher(voucher, 'credit')}/>
+                                </Tooltip>
+                                <Tooltip title={'View'} placement={'top'}>
+                                    <Link to={`/vouchers/${voucher.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                                </Tooltip>
+                            </Flex>
                         )
                     }
                 ]} data={vouchers}/>

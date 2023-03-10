@@ -4,8 +4,7 @@ import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/compon
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';
-import { rgbaColor, Status } from '@nabcellent/sui-react';
-import { getColor } from 'utils/helpers';
+import { rgbaColor, getColor, Status } from '@nabcellent/sui-react';
 
 type PaymentChartType = {
     data: any

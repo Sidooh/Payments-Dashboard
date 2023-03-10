@@ -33,6 +33,24 @@ export const vouchersAPI = createApi({
             query: () => `/voucher-transactions?with=payment`,
             transformResponse: (response: ApiResponse<VoucherTransaction[]>) => response.data
         }),
+        creditVoucher: builder.mutation<Voucher, { id: number, amount: number }>({
+            query: ({ id, ...patch }) => ({
+                url: `/vouchers/${id}/credit`,
+                method: 'PUT',
+                body: patch
+            }),
+            transformResponse: (response: ApiResponse<Voucher>) => response.data,
+            invalidatesTags: ['Voucher']
+        }),
+        debitVoucher: builder.mutation<Voucher, { id: number, amount: number }>({
+            query: ({ id, ...patch }) => ({
+                url: `/vouchers/${id}/debit`,
+                method: 'PUT',
+                body: patch
+            }),
+            transformResponse: (response: ApiResponse<Voucher>) => response.data,
+            invalidatesTags: ['Voucher']
+        }),
         activateVoucher: builder.mutation<Voucher, number>({
             query: id => ({
                 url: `/vouchers/${id}/activate`,
@@ -56,6 +74,8 @@ export const {
     useVouchersQuery,
     useVoucherQuery,
     useVoucherTransactionsQuery,
+    useCreditVoucherMutation,
+    useDebitVoucherMutation,
     useActivateVoucherMutation,
     useDeactivateVoucherMutation,
 } = vouchersAPI;
