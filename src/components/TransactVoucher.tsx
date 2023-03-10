@@ -29,10 +29,9 @@ export const transactVoucher = async (action: Action, voucher: Voucher, credit: 
                 validationSchema={yup.object().shape({
                     float_account_id: yup.number().oneOf([1, 2], 'Invalid Float Account.').required(),
                     amount: yup.number().label('Amount').min(10).required(),
-                    reason: yup.string().label('Reason').required(),
+                    reason: yup.string(),
                 })}
-                onSubmit={() => {
-                }}>
+                onSubmit={() => {}}>
                 {() => (
                     <>
                         <FloatingLabel label={'Float Account'} className={'text-start'}>

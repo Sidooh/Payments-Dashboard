@@ -7,8 +7,8 @@ import {
     useVoucherQuery
 } from 'features/vouchers/vouchersAPI';
 import { Flex, SectionError, SectionLoader, Status, StatusChip, Sweet, toast, Tooltip } from '@nabcellent/sui-react';
-import VoucherTransactionsTable from '../../components/tables/VoucherTransactionsTable';
-import CardHeader from '../../components/common/CardHeader';
+import VoucherTransactionsTable from 'components/tables/VoucherTransactionsTable';
+import CardHeader from 'components/common/CardHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd, faInfo, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { Card, Col, Row } from 'react-bootstrap';
@@ -16,8 +16,8 @@ import CardBgCorner from 'components/CardBgCorner';
 import { CONFIG } from '../../config';
 import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
-import { queryVoucher } from "../../utils/helpers";
 import moment from "moment/moment";
+import { transactVoucher } from "components/TransactVoucher";
 
 const Show = () => {
     const { id } = useParams();
@@ -35,7 +35,7 @@ const Show = () => {
     const account = voucher.account;
 
     const handleQueryVoucher = async (action: 'credit' | 'debit') => {
-        await queryVoucher(action, voucher, creditVoucher, debitVoucher)
+        await transactVoucher(action, voucher, creditVoucher, debitVoucher)
     }
 
     const handleStatusChange = async (status: Status) => {
