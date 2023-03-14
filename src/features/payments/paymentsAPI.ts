@@ -23,7 +23,7 @@ type DashboardData = {
     total_payments_today: number
     total_revenue: number
     total_revenue_today: number
-    recent_payments: Payment[];
+    org_balance: number
 }
 
 export const paymentsAPI = createApi({
