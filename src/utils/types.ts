@@ -1,4 +1,4 @@
-import { Account, Model, Status, TransactionType } from '@nabcellent/sui-react';
+import {Account, Model, Status, TransactionType} from '@nabcellent/sui-react';
 
 export interface StkCallback extends Model {
     amount: number;
@@ -93,6 +93,7 @@ export interface FloatAccountTransaction extends Model {
 export interface FloatAccount extends Model {
     balance: number;
     account?: Account;
+    description: string;
     floatable_type: string;
     floatable_id: string;
     transactions?: FloatAccountTransaction[];
