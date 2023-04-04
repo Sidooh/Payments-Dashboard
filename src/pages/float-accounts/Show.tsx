@@ -1,14 +1,14 @@
-import { useParams } from 'react-router-dom';
-import { SectionError, SectionLoader } from '@nabcellent/sui-react';
+import {useParams} from 'react-router-dom';
+import {SectionError, SectionLoader} from '@nabcellent/sui-react';
 import CardHeader from 'components/common/CardHeader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo } from '@fortawesome/free-solid-svg-icons/faInfo';
-import { Card, Col, Row } from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faInfo} from '@fortawesome/free-solid-svg-icons/faInfo';
+import {Card, Col, Row} from 'react-bootstrap';
 import CardBgCorner from 'components/CardBgCorner';
-import { CONFIG } from 'config';
+import {CONFIG} from 'config';
 import CountUp from 'react-countup';
-import { logger } from 'utils/logger';
-import { useFloatAccountQuery } from "features/float-accounts/floatAccountsApi";
+import {logger} from 'utils/logger';
+import {useFloatAccountQuery} from "features/float-accounts/floatAccountsApi";
 import FloatAccountTransactionsTable from "components/tables/FloatAccountTransactionsTable";
 
 const Show = () => {
@@ -27,9 +27,7 @@ const Show = () => {
                 <CardBgCorner corner={3}/>
                 <Card.Body className="position-relative">
                     <h5>
-                        {floatAccount.id === 1 && 'Payments'}{' '}
-                        {floatAccount.id === 2 && 'Savings'}{' '}
-                        Float Account: #{floatAccount.id}
+                        Float Account: {floatAccount.description}
                     </h5>
                     <h6>Account: #{account?.id}</h6>
                     <h6 className="mb-2">
