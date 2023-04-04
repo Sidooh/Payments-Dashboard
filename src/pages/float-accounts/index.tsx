@@ -1,4 +1,4 @@
-import { Card } from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import {
     currencyFormat,
     DataTable,
@@ -7,13 +7,12 @@ import {
     SectionLoader,
     TableDate
 } from '@nabcellent/sui-react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { logger } from 'utils/logger';
-import { useFloatAccountsQuery } from "../../features/float-accounts/floatAccountsApi";
-import { FloatAccount } from "../../utils/types";
-import SidoohAccount from 'components/common/SidoohAccount';
+import {Link} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faEye} from '@fortawesome/free-regular-svg-icons';
+import {logger} from 'utils/logger';
+import {useFloatAccountsQuery} from "../../features/float-accounts/floatAccountsApi";
+import {FloatAccount} from "../../utils/types";
 
 const FloatAccounts = () => {
     let { data: floatAccounts, isLoading, isSuccess, isError, error } = useFloatAccountsQuery();
@@ -27,21 +26,26 @@ const FloatAccounts = () => {
         <Card className={'mb-3'}>
             <Card.Body>
                 <DataTable title={`Float Accounts`} columns={[
+                    // {
+                    //     accessorKey: 'account',
+                    //     accessorFn: (row: FloatAccount) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
+                    //     header: 'Account',
+                    //     cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
+                    // },
+                    // {
+                    //     accessorKey: 'floatable',
+                    //     header: 'Floatable',
+                    //     cell: ({ row }: any) => row.original.floatable_type
+                    // },
                     {
-                        accessorKey: 'account',
-                        accessorFn: (row: FloatAccount) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
-                        header: 'Account',
-                        cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
-                    },
-                    {
-                        accessorKey: 'floatable',
-                        header: 'Floatable',
-                        cell: ({ row }: any) => row.original.floatable_type
+                        accessorKey: 'description',
+                        header: 'Description',
+                        cell: ({row}: any) => row.original.description
                     },
                     {
                         accessorKey: 'balance',
                         header: 'Balance',
-                        cell: ({ row }: any) => currencyFormat(row.original.balance)
+                        cell: ({row}: any) => currencyFormat(row.original.balance)
                     },
                     {
                         accessorKey: 'updated_at',
