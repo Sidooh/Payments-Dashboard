@@ -133,3 +133,10 @@ export type TendePayCallback = Model & {
 }
 
 export type SidoohTransaction = FloatAccountTransaction | VoucherTransaction
+
+export type AnalyticsChartData = {
+    status: Status,
+    date: number
+    amount: number
+    count: number
+}
