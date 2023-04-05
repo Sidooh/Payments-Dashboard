@@ -1,51 +1,19 @@
-import { Card } from 'react-bootstrap';
+import { usePaymentsQuery } from 'features/payments/paymentsAPI';
+import PaymentsTable from 'components/tables/PaymentsTable';
 import { Payment } from 'utils/types';
-import { currencyFormat, DataTable, getRelativeDateAndTime, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
-const RecentPayments = ({ payments }: { payments: Payment[] }) => {
-    const navigate = useNavigate();
+const RecentPayments = () => {
+    let {data: payments, isLoading, isSuccess, isError, error} = usePaymentsQuery();
 
-    return (
-        <Card className={'mb-3'}>
-            <Card.Body>
-                <DataTable title={'Recent Payments'} columns={[
-                    {
-                        accessorKey: 'id',
-                        header: '#'
-                    },
-                    {
-                        accessorKey: 'subtype',
-                        header: 'Sub Type'
-                    },
-                    {
-                        accessorKey: 'amount',
-                        header: 'Amount',
-                        cell: ({ row }: any) => currencyFormat(row.original.amount)
-                    },
-                    {
-                        accessorKey: 'status',
-                        header: 'Status',
-                        cell: ({ row }: any) => <StatusChip status={row.original.status}/>
-                    },
-                    {
-                        accessorKey: 'updated_at',
-                        header: 'Date',
-                        accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
-                        cell: ({ row }: any) => <TableDate date={row.original.updated_at ?? row.original.created_at}/>
-                    },
-                    {
-                        id: 'Actions',
-                        cell: ({ row }: any) => (
-                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
-                        )
-                    }
-                ]} data={payments} onViewAll={() => navigate('/payments')}/>
-            </Card.Body>
-        </Card>
-    );
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !payments) return <ComponentLoader/>;
+
+    payments = payments.filter((t: Payment) => t.status !== Status.PENDING);
+    logger.log('Recent Payments', payments);
+
+    return <PaymentsTable tableTitle={'Recent Payments'} payments={payments}/>;
 };
 
 export default RecentPayments;

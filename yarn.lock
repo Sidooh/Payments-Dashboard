@@ -611,13 +611,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabcellent/sui-react@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "@nabcellent/sui-react@npm:3.4.1"
+"@kurkle/color@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@kurkle/color@npm:0.3.2"
+  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
+  languageName: node
+  linkType: hard
+
+"@nabcellent/sui-react@npm:^3.5.26":
+  version: 3.5.26
+  resolution: "@nabcellent/sui-react@npm:3.5.26"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 3a0a6b020fc24d944fdd3b8363f83f0da6c034f7f04b44cce8a614e96644a2b124c67f4e7c6e70b626c89a908f5c2d0cc1032f9d3ab37bbe6d5bac09d9aa1f4c
+  checksum: 5e1f0bb45c10469d51f04a586187eee94ea80420d0c6bd9c66fa2bc210ef974343834227d8201c124467c78a63e744e3ad3b87890d4b3e03afd18766a6b8a52f
   languageName: node
   linkType: hard
 
@@ -1056,6 +1063,15 @@ __metadata:
     escape-string-regexp: ^1.0.5
     supports-color: ^5.3.0
   checksum: ec3661d38fe77f681200f878edbd9448821924e0f93a9cefc0e26a33b145f1027a2084bf19967160d11e1f03bfe4eaffcabf5493b89098b2782c3fe0b03d80c2
+  languageName: node
+  linkType: hard
+
+"chart.js@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "chart.js@npm:4.2.1"
+  dependencies:
+    "@kurkle/color": ^0.3.0
+  checksum: 7319fdfd1e29812e87bbc07737e8c9072ff659bbc09ade8dd262f83424cd7e48f89afe5220e11e002c9f236883fae3f3adb8adc16acb4682b0ddcc0b661c3af9
   languageName: node
   linkType: hard
 
@@ -1975,7 +1991,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^6.3.0
     "@fortawesome/free-solid-svg-icons": ^6.3.0
     "@fortawesome/react-fontawesome": ^0.2.0
-    "@nabcellent/sui-react": ^3.4.1
+    "@nabcellent/sui-react": ^3.5.26
     "@reduxjs/toolkit": ^1.9.2
     "@types/echarts": ^4.9.16
     "@types/lodash.merge": ^4
@@ -1983,12 +1999,14 @@ __metadata:
     "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.11
     "@vitejs/plugin-react": ^3.1.0
+    chart.js: ^4.2.1
     echarts: ^5.4.1
     formik: ^2.2.9
     lodash.merge: ^4.6.2
     moment: ^2.29.4
     react: ^18.2.0
     react-bootstrap: ^2.7.2
+    react-chartjs-2: ^5.2.0
     react-countup: ^6.4.1
     react-dom: ^18.2.0
     react-redux: ^8.0.5
@@ -2098,6 +2116,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 656c0c5e44cadf8037a387b489e3928342d71ecd6b3b1aae80e7dc367d88cbe64af0cbba656f07391b9d4a22779a93bb2ff87682de6e5b3ff3e660293e17d27a
+  languageName: node
+  linkType: hard
+
+"react-chartjs-2@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "react-chartjs-2@npm:5.2.0"
+  peerDependencies:
+    chart.js: ^4.1.1
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: ace702185be1450e5888a8bcd8b5fc1995067e3b11d236764a67f5567a3d7c32ff16923b8d48d3d39bda6e45135da6c044c9b43fbe8e1978f95aca9d2c0ce348
   languageName: node
   linkType: hard
 

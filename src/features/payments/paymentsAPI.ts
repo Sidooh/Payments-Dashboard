@@ -31,7 +31,7 @@ export const paymentsAPI = createApi({
     keepUnusedDataFor: 60 * 5, // Five minutes
     tagTypes: ['Payment'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
+        baseUrl: `${CONFIG.sidooh.services.payments.api.url}/payments`,
         prepareHeaders: (headers, {getState}) => {
             const token = (getState() as RootState).auth.auth?.token;
 
@@ -41,17 +41,9 @@ export const paymentsAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboardSummaries: builder.query<DashboardData, void>({
-            query: () => '/dashboard',
-            transformResponse: (response: ApiResponse<DashboardData>) => response.data
-        }),
-        getDashboardRevenueData: builder.query<RevenueData, void>({
-            query: () => '/dashboard/revenue-chart',
-            transformResponse: (response: ApiResponse<RevenueData>) => response.data
-        }),
         payments: builder.query<Payment[], Status | void>({
             query: (status?: Status) => {
-                let url = '/payments?with=account';
+                let url = '?with=account';
 
                 if (status) url += `&status=${status}`;
 
@@ -61,13 +53,13 @@ export const paymentsAPI = createApi({
             providesTags: ['Payment']
         }),
         payment: builder.query<Payment, number>({
-            query: id => `/payments/${id}`,
+            query: id => `/${id}`,
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             providesTags: ['Payment']
         }),
         checkPayment: builder.mutation<Payment, number>({
             query: id => ({
-                url: `/payments/${id}/check-payment`,
+                url: `/${id}/check-payment`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
@@ -75,7 +67,7 @@ export const paymentsAPI = createApi({
         }),
         retryPurchase: builder.mutation<Payment, number>({
             query: id => ({
-                url: `/payments/${id}/retry-purchase`,
+                url: `/${id}/retry-purchase`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
@@ -83,20 +75,20 @@ export const paymentsAPI = createApi({
         }),
         reversePayment: builder.mutation<Payment, number>({
             query: id => ({
-                url: `/payments/${id}/reverse`,
+                url: `/${id}/reverse`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             invalidatesTags: ['Payment']
         }),
         querySTKStatus: builder.mutation<Payment, void>({
-            query: () => `/payments/mpesa/status/query`,
+            query: () => `/mpesa/status/query`,
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             invalidatesTags: ['Payment']
         }),
         completePayment: builder.mutation<Payment, number>({
             query: id => ({
-                url: `/payments/${id}/complete`,
+                url: `/${id}/complete`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
@@ -104,7 +96,7 @@ export const paymentsAPI = createApi({
         }),
         failPayment: builder.mutation<Payment, number>({
             query: id => ({
-                url: `/payments/${id}/fail`,
+                url: `/${id}/fail`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
@@ -114,8 +106,6 @@ export const paymentsAPI = createApi({
 });
 
 export const {
-    useGetDashboardSummariesQuery,
-    useGetDashboardRevenueDataQuery,
     usePaymentsQuery,
     usePaymentQuery,
     useCheckPaymentMutation,

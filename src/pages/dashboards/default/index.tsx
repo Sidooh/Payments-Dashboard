@@ -1,14 +1,21 @@
-import { lazy } from 'react';
-
-const DashboardStatistics = lazy(() => import('./statistics/DashboardStatistics'));
-const DashboardPayments = lazy(() => import('./payments/DashboardPayments'));
+import PendingPayments from "./PendingPayments";
+import RecentPayments from "./RecentPayments";
+import { Col, Row } from "react-bootstrap";
+import PaymentSummaries from "./PaymentSummaries";
+import DashboardChart from "./Chart";
+import ProviderBalances from "./ProviderBalances";
 
 const Dashboard = () => {
     return (
         <>
-            <DashboardStatistics/>
+            <Row className="g-3 mb-3">
+                <Col xxl={9}><DashboardChart/></Col>
+                <Col><PaymentSummaries/></Col>
+            </Row>
 
-            <DashboardPayments/>
+            <PendingPayments/>
+            <RecentPayments/>
+            <ProviderBalances/>
         </>
     );
 };
