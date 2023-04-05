@@ -26,9 +26,7 @@ const Show = () => {
             <Card className={'mb-3'}>
                 <CardBgCorner corner={3}/>
                 <Card.Body className="position-relative">
-                    <h5>
-                        Float Account: {floatAccount.description}
-                    </h5>
+                    <h5>Float Account: {floatAccount.description}</h5>
                     <h6>Account: #{account?.id}</h6>
                     <h6 className="mb-2">
                         <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
