@@ -51,7 +51,7 @@ const PaymentsSLOs = () => {
 
                         return (
                             <Fragment key={`year-${year}`}>
-                                <h5 className={'text-secondary text-decoration-underline'}>{year}</h5>
+                                <h5 className={'text-primary text-decoration-underline'}>{year}</h5>
                                 <Row className={`g-2 ${i + 1 < years.length && 'mb-5'}`}>
                                     {data.map((slo, i) => (
                                         <Col key={`slo-${year + i}`} lg={4} className={`text-center border-bottom`}>
