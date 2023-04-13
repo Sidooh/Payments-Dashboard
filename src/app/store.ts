@@ -6,6 +6,7 @@ import { mpesaAPI } from 'features/mpesa/mpesaAPI';
 import { vouchersAPI } from 'features/vouchers/vouchersAPI';
 import { floatAccountsApi } from 'features/float-accounts/floatAccountsApi';
 import { dashboardApi } from "../features/dashboard/dashboard.api";
+import { analyticsApi } from "../features/analytics/analyticsApi";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         theme: themeReducer,
 
         [dashboardApi.reducerPath]: dashboardApi.reducer,
+        [analyticsApi.reducerPath]: analyticsApi.reducer,
         [paymentsAPI.reducerPath]: paymentsAPI.reducer,
         [mpesaAPI.reducerPath]: mpesaAPI.reducer,
         [vouchersAPI.reducerPath]: vouchersAPI.reducer,
@@ -21,6 +23,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
         .concat(
             dashboardApi.middleware,
+            analyticsApi.middleware,
             paymentsAPI.middleware,
             mpesaAPI.middleware,
             vouchersAPI.middleware,

@@ -13,8 +13,6 @@ const PendingPayments = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !payments) return <ComponentLoader/>;
 
-    logger.log('Pending Payments', payments);
-
     return payments.length ? <PaymentsTable tableTitle={'Pending Payments'} payments={payments}/> : (
         <Card className={'mb-3 bg-soft-primary'}>
             <CardHeader title={'No Pending Payments'}>

@@ -19,7 +19,7 @@ import { Line } from "react-chartjs-2";
 import {
     CategoryScale,
     Chart,
-    ChartData,
+    ChartData, ChartDataset,
     ChartOptions,
     Legend,
     LinearScale,
@@ -45,22 +45,23 @@ const DashboardChart = () => {
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
     const [labels, setLabels] = useState<string[]>([])
-    const [datasets, setDatasets] = useState<Dataset[]>([])
+    const [datasets, setDatasets] = useState<ChartDataset<'line'>[]>([])
     const [checkedPeriods, setCheckedPeriods] = useState<(string)[]>([])
 
     useEffect(() => {
         if (data) {
             const property = txStatus === 'ALL' ? 'date' : 'status'
-            let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, property)
+            let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, property),
+                rawAnalytics: RawAnalytics[];
 
-            let rawAnalytics: RawAnalytics[];
             if (txStatus === 'ALL') {
                 rawAnalytics = Object.keys(groupedData).map(date => {
                     return groupedData[date].reduce((prev, curr) => ({
                         date,
                         amount: prev.amount + Number(curr.amount),
-                    }), { date: '', amount: 0 })
-                }) as RawAnalytics[]
+                        count: prev.count + curr.count,
+                    }), { date: '', count: 0, amount: 0 })
+                })
             } else {
                 rawAnalytics = groupedData[txStatus] ?? []
             }
@@ -76,16 +77,16 @@ const DashboardChart = () => {
                 return { labels, dataset }
             }
 
-            let datasets: Dataset[] = [];
+            let datasets: ChartDataset<'line'>[] = [];
             ['count', 'amount'].forEach((a, i) => {
-                const { labels, dataset } = aggregate(a as 'count' | 'amount')
+                const { labels, dataset: data } = aggregate(a as 'count' | 'amount')
 
                 if (i === 0) setLabels(labels)
 
                 datasets.push({
-                    dataset,
+                    data,
                     label: Str.headline(a),
-                    color: Str.headline(a) === 'Amount' ? '#fff' : '#911'
+                    borderColor: Str.headline(a) === 'Amount' ? '#900' : '#fff'
                 })
             })
 
@@ -154,8 +155,8 @@ const DashboardChart = () => {
         labels,
         datasets: datasets.map(d => ({
             label: d.label,
-            data: d.dataset,
-            borderColor: d.color,
+            data: d.data,
+            borderColor: d.borderColor,
             backgroundColor: '#0F1B4C',
             borderWidth: 2,
             tension: 0.3,
