@@ -17,7 +17,7 @@ import { defaultLineChartOptions } from "utils/helpers";
 import LineChart from "components/LineChart";
 import { AnalyticsChartData } from "../../../utils/types";
 
-type Agg = 'count'|'amount'
+type Agg = 'count' | 'amount'
 
 const Payments = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetPaymentsQuery();
@@ -30,7 +30,7 @@ const Payments = () => {
     const [datasets, setDatasets] = useState<ChartDataset<'line'>[]>([])
     const [checkedAgg, setCheckedAgg] = useState<Agg[]>(['count', 'amount'])
 
-    const getAggColor = (agg:Agg) => {
+    const getAggColor = (agg: Agg) => {
         return agg.toLowerCase() === 'count' ? [15, 27, 76] : [100, 250, 50]
     }
 
@@ -86,6 +86,9 @@ const Payments = () => {
         plugins: {
             title: {
                 text: 'Payments',
+                padding: {
+                    bottom: 45
+                }
             },
             tooltip: {
                 callbacks: {
@@ -138,8 +141,9 @@ const Payments = () => {
                 chartFreqOpt={chartFreqOpt} setChartFreqOpt={setChartFreqOpt}
                 extraModifiers={['amount', 'count'].sort().map((agg, i) => (
                     <Form.Check key={`agg-${i}`} className={`px-2 me-2 ms-3`} id={`agg-tx-${i}`} value={agg}
-                                style={{ color: `rgb(${getAggColor(agg as Agg).join(',')})`}}
-                                type={'checkbox'} label={<b>{Str.headline(agg)}</b>} checked={checkedAgg.includes(agg as Agg)}
+                                style={{ color: `rgb(${getAggColor(agg as Agg).join(',')})` }}
+                                type={'checkbox'} label={<b>{Str.headline(agg)}</b>}
+                                checked={checkedAgg.includes(agg as Agg)}
                                 onChange={handleCheckedAgg}/>
                 ))}
             />
