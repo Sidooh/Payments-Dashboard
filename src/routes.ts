@@ -8,15 +8,11 @@ const routes: RouteType[] = [
         children: [
             {
                 name: 'Dashboard',
-                active: false,
+                active: true,
                 icon: faPieChart,
                 children: [
-                    {
-                        name: 'Home',
-                        to: '/',
-                        exact: true,
-                        active: false
-                    },
+                    { name: 'Home', to: '/', },
+                    { name: 'Analytics', to: '/dashboard/analytics', },
                 ]
             }
         ]

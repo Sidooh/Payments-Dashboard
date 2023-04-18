@@ -11,7 +11,6 @@ const RecentPayments = () => {
     if (isLoading || !isSuccess || !payments) return <ComponentLoader/>;
 
     payments = payments.filter((t: Payment) => t.status !== Status.PENDING);
-    logger.log('Recent Payments', payments);
 
     return <PaymentsTable tableTitle={'Recent Payments'} payments={payments}/>;
 };

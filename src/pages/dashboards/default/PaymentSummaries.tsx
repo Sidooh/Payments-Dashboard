@@ -3,15 +3,12 @@ import { useGetDashboardSummariesQuery } from "features/dashboard/dashboard.api"
 import CardBgCorner from 'components/CardBgCorner';
 import CountUp from 'react-countup';
 import { Badge, ComponentLoader, SectionError } from "@nabcellent/sui-react";
-import { logger } from 'utils/logger';
 
 const PaymentSummaries = () => {
     const { data: stats, isError, error, isLoading, isSuccess } = useGetDashboardSummariesQuery();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !stats) return <ComponentLoader/>;
-
-    logger.log(stats);
 
     return (
         <Row className="g-3 g-xxl-0 h-100">
