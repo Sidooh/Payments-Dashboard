@@ -42,7 +42,7 @@ const VendorsSLOs = () => {
                             else if(slo < 90) color = 'warning'
 
                             return (
-                                <Col key={product} md={4} lg={3} xl={2} className={`text-center border-bottom`}>
+                                <Col key={product} md={4} lg={3} className={`text-center border-bottom`}>
                                     <div className="py-3">
                                         <div className={`icon-circle icon-circle-${color} fw-bold`}>
                                             <CountUp end={data[product as keyof typeof data]} className="me-1 fs-2"/>
