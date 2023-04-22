@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import SidoohAccount from "../common/SidoohAccount";
+import moment from "moment";
+import Latency from "../Latency";
+import { BsArrowRight, FaArrowRight } from "react-icons/all";
 
 const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments: Payment[] }) => {
     return (
@@ -36,12 +39,11 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments:
                         })).format(row.original.amount)
                     },
                     {
-                        accessorKey: 'subtype',
-                        header: 'Source',
-                    },
-                    {
-                        accessorKey: 'destination_subtype',
-                        header: 'Destination',
+                        accessorKey: 'transfer',
+                        header: 'Transfer',
+                        cell:({row:{original:p}}:any) => (
+                            <span>{p.subtype} <BsArrowRight/> {p.destination_subtype}</span>
+                        )
                     },
                     {
                         accessorKey: 'status',
@@ -53,6 +55,11 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments:
                         header: 'Updated',
                         accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
+                    },
+                    {
+                        accessorKey: 'latency',
+                        accessorFn: (r: Payment) => moment(r.updated_at).diff(r.created_at, 's'),
+                        cell: ({ row: { original: p } }: any) => <Latency from={p.created_at} to={p.updated_at}/>
                     },
                     {
                         id: 'actions',
