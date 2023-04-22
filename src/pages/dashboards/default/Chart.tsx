@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { useGetDashboardChartDataQuery } from 'features/dashboard/dashboard.api';
 import {
     ChartAid,
     ComponentLoader,
     Frequency,
     groupBy,
-    LoadingButton,
+    IconButton,
     Period,
     RawAnalytics,
     SectionError,
@@ -19,7 +17,8 @@ import { Line } from "react-chartjs-2";
 import {
     CategoryScale,
     Chart,
-    ChartData, ChartDataset,
+    ChartData,
+    ChartDataset,
     ChartOptions,
     Legend,
     LinearScale,
@@ -31,6 +30,7 @@ import {
 } from "chart.js";
 import CardBgCorner from "../../../components/CardBgCorner";
 import { AnalyticsChartData } from "../../../utils/types";
+import { FaSync } from "react-icons/all";
 
 type Dataset = { label: string, dataset: number[], color: string }
 
@@ -166,17 +166,16 @@ const DashboardChart = () => {
     };
 
     return (
-        <Card className="rounded-3 overflow-hidden h-100 shadow-none">
+        <Card className="mb-0 mb-xxl-3">
             <CardBgCorner/>
             <Card.Body className={'position-relative pb-2'} style={{
                 height: 300,
                 backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, .5), #198019)'
             }}>
                 <div className="d-flex position-absolute right-0 me-3">
-                    <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
-                                   title="Update LineChart" onClick={() => refetch()}>
-                        <FontAwesomeIcon icon={faSync}/>
-                    </LoadingButton>
+                    <IconButton className="me-2 refresh-chart" type="button" onClick={() => refetch()}>
+                        <FaSync size={12}/>
+                    </IconButton>
                     <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                         setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
                     }}>

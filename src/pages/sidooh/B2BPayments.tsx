@@ -14,6 +14,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
 import { Payment } from "../../utils/types";
+import moment from "moment/moment";
+import Latency from "../../components/Latency";
 
 const B2BPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({
@@ -48,6 +50,11 @@ const B2BPayments = () => {
                         header: 'Updated',
                         accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
+                    },
+                    {
+                        accessorKey: 'latency',
+                        accessorFn: (r: Payment) => moment(r.updated_at).diff(r.created_at, 's'),
+                        cell: ({ row: { original: p } }: any) => <Latency from={p.created_at} to={p.updated_at}/>
                     },
                     {
                         id: 'Actions',

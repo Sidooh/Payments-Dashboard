@@ -1,5 +1,5 @@
 import { Card, Form } from "react-bootstrap";
-import { chartSelectOptions, Frequency, LoadingButton, Period, Status, Str } from "@nabcellent/sui-react";
+import { chartSelectOptions, Frequency, IconButton, LoadingButton, Period, Status, Str } from "@nabcellent/sui-react";
 import { Line } from "react-chartjs-2";
 import { ChartData, ChartOptions } from "chart.js";
 import { QueryActionCreatorResult } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
@@ -45,10 +45,10 @@ const LineChart = ({
             <Card.Body className={'position-relative pb-2'} style={{ height: 350, }}>
                 <div className="position-absolute right-0 me-3">
                     <div className={'d-flex'}>
-                        <LoadingButton loading={isFetching} className="btn btn-sm btn-light border-0 me-2"
+                        <IconButton loading={isFetching} className="me-2" color={'secondary'}
                                        spinner-position="replace" onClick={() => refetch()}>
                             <FaSync size={12}/>
-                        </LoadingButton>
+                        </IconButton>
                         <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                             setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
                         }}>

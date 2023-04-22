@@ -5,9 +5,10 @@ type LatencyProps = {
     to: Date
 }
 
+export const calcLatency = (from: Date, to: Date) => Math.abs(moment(to).diff(from, 's'))
+
 const Latency = ({ from, to }: LatencyProps) => {
-    console.log(to, from)
-    let unit = 's', color = 'danger', latency = Math.abs(moment(to).diff(from, 's'));
+    let unit = 's', color = 'danger', latency = calcLatency(from, to);
 
     if (latency <= 5) color = 'success'
     else if (latency <= 30) color = 'warning'

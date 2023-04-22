@@ -40,6 +40,7 @@ import { Fragment } from "react";
 import { CONFIG } from "../../config";
 import DestinationProvider from "./DestinationProvider";
 import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from "../../utils/types";
+import { calcLatency } from "../../components/Latency";
 
 const Show = () => {
     const { id } = useParams();
@@ -158,13 +159,17 @@ const Show = () => {
             <Card className="mb-3">
                 <CardBgCorner corner={4}/>
                 <Card.Body className="position-relative">
-                    <Flex justifyContent={'between'} className={'mb-3'}>
+                    <Flex justifyContent={'between'} >
                         <div>
                             <h5 className={'m-0'}>Payment Details: #{payment?.id}</h5>
-                            <p className="fs--1">{moment(payment?.created_at).format('MMM Do, Y, hh:mm A')}</p>
+                            <p className="fs--1 mb-0">{moment(payment?.created_at).format('MMM Do, Y, hh:mm A')}</p>
+                            <div className={'text-400 text-decoration-underline fs--2'}>
+                                <b>Latency</b>
+                                ({calcLatency(payment.updated_at, payment.created_at)}s)
+                            </div>
                         </div>
                         <div className={'text-end'}>
-                            <h4 className={'m-0'}>{payment?.type.toUpperCase()}</h4>
+                            <h5 className={'m-0'}>{payment?.type.toUpperCase()}</h5>
                             <small><b>{payment.subtype}</b></small>
                         </div>
                     </Flex>

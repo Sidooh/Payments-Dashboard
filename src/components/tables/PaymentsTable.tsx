@@ -42,7 +42,7 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments:
                         accessorKey: 'transfer',
                         header: 'Transfer',
                         cell:({row:{original:p}}:any) => (
-                            <span>{p.subtype} <BsArrowRight/> {p.destination_subtype}</span>
+                            <span className={'text-nowrap'}>{p.subtype} <BsArrowRight/> {p.destination_subtype}</span>
                         )
                     },
                     {
