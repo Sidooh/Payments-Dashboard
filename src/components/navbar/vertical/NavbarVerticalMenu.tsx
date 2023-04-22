@@ -6,23 +6,22 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
 import { Flex, RouteChildType } from '@nabcellent/sui-react';
 
-type CollapseItemsType = {
-    route: RouteChildType
-};
-
 type NavbarVerticalMenuItemType = {
     route: RouteChildType
 };
 
-const NavbarVerticalMenuItem = ({route}: NavbarVerticalMenuItemType) => (
+const NavbarVerticalMenuItem = ({ route }: NavbarVerticalMenuItemType) => (
     <Flex alignItems="center">
-        {route.icon && <span className="nav-link-icon">
-            {createElement(route.icon, { size: 15 })}</span>}
+        {route.icon && (
+            <span className="nav-link-icon">
+                {createElement(route.icon as any, { size: 15 })}
+            </span>
+        )}
         <span className="nav-link-text ps-1">{route.name}</span>
     </Flex>
 );
 
-const CollapseItems = ({ route }: CollapseItemsType) => {
+const CollapseItems = ({ route }: NavbarVerticalMenuItemType) => {
     const { pathname } = useLocation();
 
     const openCollapse = (children: RouteChildType[] | undefined) => {
