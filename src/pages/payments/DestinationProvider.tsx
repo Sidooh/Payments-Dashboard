@@ -4,8 +4,7 @@ import moment from 'moment';
 import { currencyFormat, PhoneChip } from '@nabcellent/sui-react';
 import { PaymentSubType, PaymentType } from "utils/enums";
 import CardHeader from "../../components/common/CardHeader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfo } from "@fortawesome/free-solid-svg-icons/faInfo";
+import { FaInfo } from "react-icons/all";
 
 const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
     <Table striped responsive className="border-bottom fs--1">
@@ -122,7 +121,7 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
 
     if (!destination) return (
         <Card className={'mb-3 bg-soft-primary'}>
-            <CardHeader title={'Destination Not Found.'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
+            <CardHeader title={'Destination Not Found.'}><FaInfo/></CardHeader>
         </Card>
     )
 

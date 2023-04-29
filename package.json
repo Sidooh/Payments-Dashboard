@@ -8,10 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/free-regular-svg-icons": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@nabcellent/sui-react": "^3.6.3",
+    "@nabcellent/sui-react": "^3.6.12",
     "@reduxjs/toolkit": "^1.9.5",
     "chart.js": "^4.2.1",
     "formik": "^2.2.9",

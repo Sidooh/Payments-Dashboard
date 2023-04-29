@@ -1,4 +1,4 @@
-import {Card} from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import {
     currencyFormat,
     DataTable,
@@ -7,12 +7,11 @@ import {
     SectionLoader,
     TableDate
 } from '@nabcellent/sui-react';
-import {Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEye} from '@fortawesome/free-regular-svg-icons';
-import {logger} from 'utils/logger';
-import {useFloatAccountsQuery} from "../../features/float-accounts/floatAccountsApi";
-import {FloatAccount} from "../../utils/types";
+import { Link } from 'react-router-dom';
+import { logger } from 'utils/logger';
+import { useFloatAccountsQuery } from "../../features/float-accounts/floatAccountsApi";
+import { FloatAccount } from "../../utils/types";
+import { FaRegEye } from "react-icons/all";
 
 const FloatAccounts = () => {
     let { data: floatAccounts, isLoading, isSuccess, isError, error } = useFloatAccountsQuery();
@@ -40,12 +39,12 @@ const FloatAccounts = () => {
                     {
                         accessorKey: 'description',
                         header: 'Description',
-                        cell: ({row}: any) => row.original.description
+                        cell: ({ row }: any) => row.original.description
                     },
                     {
                         accessorKey: 'balance',
                         header: 'Balance',
-                        cell: ({row}: any) => currencyFormat(row.original.balance)
+                        cell: ({ row }: any) => currencyFormat(row.original.balance)
                     },
                     {
                         accessorKey: 'updated_at',
@@ -56,7 +55,7 @@ const FloatAccounts = () => {
                     {
                         id: 'Actions',
                         cell: ({ row }: any) => (
-                            <Link to={`/float-accounts/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                            <Link to={`/float-accounts/${row.original.id}`}><FaRegEye/></Link>
                         )
                     }
                 ]} data={floatAccounts}/>

@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import { useAppDispatch } from 'app/hooks';
 import { logout, reset } from 'features/auth/authSlice';
-import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { Avatar } from '@nabcellent/sui-react';
+import { FaCrown } from "react-icons/all";
 
 const ProfileDropdown = () => {
     const navigate = useNavigate()
@@ -25,7 +24,7 @@ const ProfileDropdown = () => {
             <Dropdown.Menu className="dropdown-menu-card  dropdown-menu-end">
                 <div className="bg-white rounded-2 py-2 dark__bg-1000">
                     <Dropdown.Item className="fw-bold text-warning" href="#!">
-                        <FontAwesomeIcon icon={faCrown} className="me-1"/>
+                        <FaCrown className="me-1"/>
                         <span>Sidooh</span>
                     </Dropdown.Item>
                     <Dropdown.Divider/>

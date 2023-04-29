@@ -8,8 +8,7 @@ import {
 } from '@nabcellent/sui-react';
 import { FloatAccountTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { FaRegEye } from "react-icons/all";
 
 type FloatAccountTransactionsTableProps = { transactions: FloatAccountTransaction[], showAccountColumn?: boolean }
 
@@ -42,7 +41,7 @@ const FloatAccountTransactionsTable = ({
         {
             id: 'Actions',
             cell: ({ row }: any) => (
-                <Link to={`/payments/${row.original?.payment?.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                <Link to={`/payments/${row.original?.payment?.id}`}><FaRegEye/></Link>
             )
         }
     ]

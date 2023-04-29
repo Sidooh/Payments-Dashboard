@@ -10,10 +10,9 @@ import {
     StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
 import { Payment } from "../../utils/types";
+import { FaRegEye } from "react-icons/all";
 
 const STKPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({
@@ -52,7 +51,7 @@ const STKPayments = () => {
                     {
                         id: 'Actions',
                         cell: ({ row }: any) => (
-                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                            <Link to={`/payments/${row.original.id}`}><FaRegEye/></Link>
                         )
                     }
                 ]} data={payments}/>

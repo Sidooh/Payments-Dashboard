@@ -60,20 +60,6 @@ const NavbarTop = () => {
 
             <Logo src={IMAGES.logos.sidooh} at="navbar-top" width={40}/>
 
-            {navbarPosition === 'top' || navbarPosition === 'combo' ? (
-                <Navbar.Collapse in={navbarCollapsed} className="scrollbar pb-3 pb-lg-0">
-                    <Nav navbar>
-                        {/*<NavbarTopDropDownMenus/>*/}
-                    </Nav>
-                </Navbar.Collapse>
-            ) : (
-                <Nav navbar className={`align-items-center d-none d-${topNavbarBreakpoint}-block`} as="ul">
-                    <Nav.Item as="li">
-                        <SearchBox/>
-                    </Nav.Item>
-                </Nav>
-            )}
-
             <TopNavRightSideNavItem/>
         </Navbar>
     );

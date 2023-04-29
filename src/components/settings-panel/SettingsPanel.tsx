@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Button, ButtonGroup, Col, Form, Offcanvas, Row } from 'react-bootstrap';
 import { IMAGES } from 'constants/images';
@@ -6,8 +5,8 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { resetTheme, setTheme } from 'features/theme/themeSlice';
 import { CONFIG } from 'config';
-import { faPalette, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Flex } from '@nabcellent/sui-react';
+import { FaPalette, FaRedoAlt } from "react-icons/all";
 
 const SettingsPanel = () => {
     const {
@@ -22,44 +21,44 @@ const SettingsPanel = () => {
 
     const [navbars] = useState([
         {
-            name : 'transparent',
+            name: 'transparent',
             image: IMAGES.generic.default
         },
         {
-            name : 'inverted',
+            name: 'inverted',
             image: IMAGES.generic.inverted
         },
         {
-            name : 'card',
+            name: 'card',
             image: IMAGES.generic.card
         },
         {
-            name : 'vibrant',
+            name: 'vibrant',
             image: IMAGES.generic.vibrant
         }
     ]);
 
-    const setConfig = (key: string, value: string | boolean) => dispatch(setTheme({key, value}));
+    const setConfig = (key: string, value: string | boolean) => dispatch(setTheme({ key, value }));
 
     return (
         <Offcanvas
             show={showSettingPanel}
-            onHide={() => dispatch(setTheme({key: 'showSettingPanel', value: false}))}
+            onHide={() => dispatch(setTheme({ key: 'showSettingPanel', value: false }))}
             placement="end"
-            style={{maxWidth: '22rem'}}
+            style={{ maxWidth: '22rem' }}
             className="border-0"
         >
             <Offcanvas.Header closeVariant="white" className="bg-shape settings-panel-header"
-                              style={{minHeight: '4.3125rem'}}>
+                              style={{ minHeight: '4.3125rem' }}>
                 <Offcanvas.Title as="div" className="py-1 z-index-1 light">
                     <div className="d-flex justify-content-between align-items-center mb-1">
                         <h5 className="text-white">
-                            <FontAwesomeIcon icon={faPalette} className="me-2 fs-0"/>
+                            <FaPalette className="me-2 fs-0"/>
                             Settings
                         </h5>
                         <Button variant="primary" size="sm" className="rounded-pill mt-0 mb-0"
-                                style={{fontSize: '12px'}} onClick={() => dispatch(resetTheme())}>
-                            <FontAwesomeIcon icon={faRedoAlt} style={{fontSize: '10px'}} className="me-1"/>
+                                style={{ fontSize: '12px' }} onClick={() => dispatch(resetTheme())}>
+                            <FaRedoAlt style={{ fontSize: '10px' }} className="me-1"/>
                             Reset
                         </Button>
                     </div>
@@ -78,7 +77,7 @@ const SettingsPanel = () => {
                         <Col xs={6}>
                             <input className="btn-check" id="themeSwitcherLight" name="theme-color" type="radio"
                                    value="light" data-theme-control="theme" checked={!isDark}
-                                   onChange={({target}) => setConfig('isDark', !target.checked)}
+                                   onChange={({ target }) => setConfig('isDark', !target.checked)}
                             />
                             <label className="btn d-inline-block btn-navbar-style fs--1" htmlFor="themeSwitcherLight">
                                     <span className="hover-overlay mb-2 rounded d-block">
@@ -91,7 +90,7 @@ const SettingsPanel = () => {
                         <Col xs={6}>
                             <input className="btn-check" id="themeSwitcherDark" name="theme-color" type="radio"
                                    value="dark" data-theme-control="theme" checked={isDark}
-                                   onChange={({target}) => setConfig('isDark', target.checked)}
+                                   onChange={({ target }) => setConfig('isDark', target.checked)}
                             />
                             <label className="btn d-inline-block btn-navbar-style fs--1" htmlFor="themeSwitcherDark">
                                     <span className="hover-overlay mb-2 rounded d-block">
@@ -116,7 +115,7 @@ const SettingsPanel = () => {
                         type="switch"
                         id="fluid-mode-switch"
                         checked={isFluid}
-                        onChange={({target}) => setConfig('isFluid', target.checked)}
+                        onChange={({ target }) => setConfig('isFluid', target.checked)}
                     />
                 </Flex>
                 <hr/>

@@ -173,7 +173,7 @@ const DashboardChart = () => {
                 backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, .5), #198019)'
             }}>
                 <div className="d-flex position-absolute right-0 me-3">
-                    <IconButton className="me-2 refresh-chart" type="button" onClick={() => refetch()}>
+                    <IconButton className="shadow-sm me-2" type="button" onClick={() => refetch()}>
                         <FaSync size={12}/>
                     </IconButton>
                     <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {

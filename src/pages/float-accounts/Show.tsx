@@ -1,15 +1,14 @@
-import {useParams} from 'react-router-dom';
-import {SectionError, SectionLoader} from '@nabcellent/sui-react';
+import { useParams } from 'react-router-dom';
+import { SectionError, SectionLoader } from '@nabcellent/sui-react';
 import CardHeader from 'components/common/CardHeader';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faInfo} from '@fortawesome/free-solid-svg-icons/faInfo';
-import {Card, Col, Row} from 'react-bootstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import CardBgCorner from 'components/CardBgCorner';
-import {CONFIG} from 'config';
+import { CONFIG } from 'config';
 import CountUp from 'react-countup';
-import {logger} from 'utils/logger';
-import {useFloatAccountQuery} from "features/float-accounts/floatAccountsApi";
+import { logger } from 'utils/logger';
+import { useFloatAccountQuery } from "features/float-accounts/floatAccountsApi";
 import FloatAccountTransactionsTable from "components/tables/FloatAccountTransactionsTable";
+import { FaInfo } from "react-icons/all";
 
 const Show = () => {
     const { id } = useParams();
@@ -57,12 +56,11 @@ const Show = () => {
             </Row>
 
             {floatAccount?.transactions?.length ?
-                <FloatAccountTransactionsTable transactions={floatAccount.transactions}/> : (
-                    <Card className={'mb-3 bg-soft-primary'}>
-                        <CardHeader title={'No Float Transactions Made Yet.'}><FontAwesomeIcon
-                            icon={faInfo}/></CardHeader>
-                    </Card>
-                )}
+             <FloatAccountTransactionsTable transactions={floatAccount.transactions}/> : (
+                 <Card className={'mb-3 bg-soft-primary'}>
+                     <CardHeader title={'No Float Transactions Made Yet.'}><FaInfo/></CardHeader>
+                 </Card>
+             )}
         </>
     );
 };

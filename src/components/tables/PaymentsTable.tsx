@@ -2,12 +2,10 @@ import { Card } from 'react-bootstrap';
 import { Payment } from 'utils/types';
 import { DataTable, getRelativeDateAndTime, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
 import SidoohAccount from "../common/SidoohAccount";
 import moment from "moment";
 import Latency from "../Latency";
-import { BsArrowRight, FaArrowRight } from "react-icons/all";
+import { BsArrowRight, FaRegEye } from "react-icons/all";
 
 const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments: Payment[] }) => {
     return (
@@ -41,7 +39,7 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments:
                     {
                         accessorKey: 'transfer',
                         header: 'Transfer',
-                        cell:({row:{original:p}}:any) => (
+                        cell: ({ row: { original: p } }: any) => (
                             <span className={'text-nowrap'}>{p.subtype} <BsArrowRight/> {p.destination_subtype}</span>
                         )
                     },
@@ -65,7 +63,7 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments:
                         id: 'actions',
                         header: '',
                         cell: ({ row }: any) => (
-                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                            <Link to={`/payments/${row.original.id}`}><FaRegEye/></Link>
                         )
                     }
                 ]} data={payments}/>
