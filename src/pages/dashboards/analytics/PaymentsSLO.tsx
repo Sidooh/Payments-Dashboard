@@ -14,7 +14,7 @@ import { Fragment } from "react";
 import CountUp from "react-countup";
 import { FaPercentage, FaSync } from "react-icons/all";
 
-const PaymentsSLOs = () => {
+const PaymentsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetPaymentsSLOsQuery()
 
     if (isError) return <SectionError error={error}/>;
@@ -28,7 +28,7 @@ const PaymentsSLOs = () => {
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
                         Payments Success Rate
-                        <Tooltip title="Refresh SLO" placement="left">
+                        <Tooltip title="Refresh SLO" placement="start">
                             <IconButton loading={isFetching} color={'secondary'} onClick={() => refetch()}>
                                 <FaSync size={12}/>
                             </IconButton>
@@ -75,4 +75,4 @@ const PaymentsSLOs = () => {
     );
 };
 
-export default PaymentsSLOs;
+export default PaymentsSLO;

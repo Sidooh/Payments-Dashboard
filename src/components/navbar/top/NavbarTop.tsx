@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 import classNames from 'classnames';
-import SearchBox from './SearchBox';
 import TopNavRightSideNavItem from './TopNavRightSideNavItem';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';

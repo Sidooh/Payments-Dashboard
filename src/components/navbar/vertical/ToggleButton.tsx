@@ -15,7 +15,7 @@ const ToggleButton = () => {
     };
 
     return (
-        <Tooltip title={'Toggle Navigation'} placement={'right'}>
+        <Tooltip title={'Toggle Navigation'} placement={'end'}>
             <div className="toggle-icon-wrapper">
                 <Button variant="link"
                         className="navbar-toggler-humburger-icon navbar-vertical-toggle"

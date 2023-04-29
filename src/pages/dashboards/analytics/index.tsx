@@ -12,8 +12,8 @@ import {
     Title,
     Tooltip
 } from "chart.js";
-import PaymentsSLOs from "./PaymentsSLOs";
-import VendorsSLOs from "./VendorsSLOs";
+import PaymentsSLO from "./PaymentsSLO";
+import VendorsSLO from "./VendorsSLO";
 
 Chart.register(Title, SubTitle, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler)
 Chart.defaults.color = '#fff'
@@ -29,8 +29,8 @@ const Dashboard = () => {
             </h5>
             <Payments/>
 
-            <PaymentsSLOs/>
-            <VendorsSLOs/>
+            <PaymentsSLO/>
+            <VendorsSLO/>
         </Row>
     );
 };

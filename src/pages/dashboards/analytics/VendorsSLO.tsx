@@ -5,7 +5,7 @@ import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
 import { FaPercentage, FaSync } from "react-icons/all";
 
-const VendorsSLOs = () => {
+const VendorsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetVendorsSLOsQuery()
 
     if (isError) return <SectionError error={error}/>;
@@ -16,7 +16,7 @@ const VendorsSLOs = () => {
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
                         Vendors Success Rate
-                        <Tooltip title="Refresh SLOs" placement="left">
+                        <Tooltip title="Refresh SLOs" placement="start">
                             <IconButton loading={isFetching} color={'secondary'} onClick={() => refetch()}>
                                 <FaSync size={12}/>
                             </IconButton>
@@ -58,4 +58,4 @@ const VendorsSLOs = () => {
     );
 };
 
-export default VendorsSLOs;
+export default VendorsSLO;
