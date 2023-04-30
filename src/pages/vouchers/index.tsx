@@ -6,7 +6,7 @@ import {
 } from '../../features/vouchers/vouchersAPI';
 import {
     currencyFormat,
-    DataTable, Flex,
+    DataTable, Flex, IconButton,
     SectionError,
     SectionLoader,
     Status,
@@ -17,12 +17,10 @@ import {
 } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
 import SidoohAccount from 'components/common/SidoohAccount';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
 import { Voucher } from "../../utils/types";
-import { faAdd, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { transactVoucher } from "../../components/TransactVoucher";
+import { FaMinus, FaPlus, FaRegEye } from "react-icons/all";
 
 const Vouchers = () => {
     let { data: vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();
@@ -113,15 +111,21 @@ const Vouchers = () => {
                         cell: ({ row: { original: voucher } }: any) => (
                             <Flex justifyContent={'between'}>
                                 <Tooltip title={'Debit'} placement={'top'}>
-                                    <FontAwesomeIcon color={'red'} icon={faMinus} className={'cursor-pointer'}
+                                    <IconButton size={'sm'}>
+                                        <FaMinus color={'red'} className={'cursor-pointer'}
                                                      onClick={() => handleQueryVoucher(voucher, 'debit')}/>
+                                    </IconButton>
                                 </Tooltip>
                                 <Tooltip title={'Credit'} placement={'top'}>
-                                    <FontAwesomeIcon color={'green'} icon={faAdd} className={'cursor-pointer'}
+                                    <IconButton size={'sm'}>
+                                        <FaPlus color={'green'} className={'cursor-pointer'}
                                                      onClick={() => handleQueryVoucher(voucher, 'credit')}/>
+                                    </IconButton>
                                 </Tooltip>
                                 <Tooltip title={'View'} placement={'top'}>
-                                    <Link to={`/vouchers/${voucher.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                                    <Link to={`/vouchers/${voucher.id}`}>
+                                        <IconButton size={'sm'}><FaRegEye/></IconButton>
+                                    </Link>
                                 </Tooltip>
                             </Flex>
                         )

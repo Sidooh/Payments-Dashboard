@@ -1,26 +1,27 @@
 import { Nav } from 'react-bootstrap';
 import ProfileDropdown from 'components/navbar/top/ProfileDropdown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
 import { RootState } from 'app/store';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
-import { Waffle,Tooltip } from '@nabcellent/sui-react';
+import { Tooltip, Waffle } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
+import { FaMoon, FaSun } from "react-icons/all";
 
 const TopNavRightSideNavItem = () => {
     const dispatch = useAppDispatch();
 
-    const {isDark} = useAppSelector((state: RootState) => state.theme);
+    const { isDark } = useAppSelector((state: RootState) => state.theme);
+
+    const ThemeIcon = isDark ? FaSun : FaMoon
 
     return (
         <Nav navbar className="navbar-nav-icons ms-auto flex-row align-items-center" as="ul">
             <Nav.Item as={'li'}>
                 <Nav.Link className="px-2 theme-control-toggle"
-                          onClick={() => dispatch(setTheme({key: 'isDark', value: !isDark}))}>
+                          onClick={() => dispatch(setTheme({ key: 'isDark', value: !isDark }))}>
                     <Tooltip title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>
                         <div className="theme-control-toggle-label">
-                            <FontAwesomeIcon icon={isDark ? faSun : faMoon} className="fs-0"/>
+                            <ThemeIcon className="fs-0"/>
                         </div>
                     </Tooltip>
                 </Nav.Link>

@@ -8,7 +8,7 @@ import ProviderBalances from "./ProviderBalances";
 const Dashboard = () => {
     return (
         <>
-            <Row className="g-3 mb-3">
+            <Row className="g-3">
                 <Col xxl={9}><DashboardChart/></Col>
                 <Col><PaymentSummaries/></Col>
             </Row>

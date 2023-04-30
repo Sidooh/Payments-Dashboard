@@ -8,8 +8,7 @@ import {
 } from '@nabcellent/sui-react';
 import { VoucherTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { FaRegEye } from "react-icons/all";
 
 const VoucherTransactionsTable = ({ transactions }: { transactions: VoucherTransaction[] }) => {
     return (
@@ -40,7 +39,7 @@ const VoucherTransactionsTable = ({ transactions }: { transactions: VoucherTrans
                     {
                         id: 'Actions',
                         cell: ({ row }: any) => (
-                            <Link to={`/payments/${row.original?.payment?.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                            <Link to={`/payments/${row.original?.payment?.id}`}><FaRegEye/></Link>
                         )
                     }
                 ]} data={transactions}/>

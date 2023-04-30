@@ -1,43 +1,42 @@
-import React, { useState } from 'react';
+import React, { createElement, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Collapse, Nav } from 'react-bootstrap';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
 import { Flex, RouteChildType } from '@nabcellent/sui-react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-type CollapseItemsType = {
-    route: RouteChildType
-};
 
 type NavbarVerticalMenuItemType = {
     route: RouteChildType
 };
 
-const NavbarVerticalMenuItem = ({route}: NavbarVerticalMenuItemType) => (
+const NavbarVerticalMenuItem = ({ route }: NavbarVerticalMenuItemType) => (
     <Flex alignItems="center">
-        {route.icon && <span className="nav-link-icon"><FontAwesomeIcon icon={route.icon}/></span>}
+        {route.icon && (
+            <span className="nav-link-icon">
+                {createElement(route.icon as any, { size: 15 })}
+            </span>
+        )}
         <span className="nav-link-text ps-1">{route.name}</span>
     </Flex>
 );
 
-const CollapseItems = ({ route }: CollapseItemsType) => {
+const CollapseItems = ({ route }: NavbarVerticalMenuItemType) => {
     const { pathname } = useLocation();
 
-    const openCollapse = (childrens: RouteChildType[] | undefined) => {
-        if (!childrens) return false;
+    const openCollapse = (children: RouteChildType[] | undefined) => {
+        if (!children) return false;
 
-        const checkLink = (children: RouteChildType) => {
-            if (children.to === pathname) return true;
+        const checkLink = (child: RouteChildType) => {
+            if (child.to === pathname) return true;
 
             return (
-                Object.prototype.hasOwnProperty.call(children, 'children') &&
-                children.children?.some(checkLink)
+                Object.prototype.hasOwnProperty.call(child, 'children') &&
+                child.children?.some(checkLink)
             );
         };
 
-        return childrens.some(checkLink);
+        return children.some(checkLink);
     };
 
     const [open, setOpen] = useState(openCollapse(route.children));

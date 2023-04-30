@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 import classNames from 'classnames';
-import SearchBox from './SearchBox';
 import TopNavRightSideNavItem from './TopNavRightSideNavItem';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -59,20 +58,6 @@ const NavbarTop = () => {
             </Navbar.Toggle>
 
             <Logo src={IMAGES.logos.sidooh} at="navbar-top" width={40}/>
-
-            {navbarPosition === 'top' || navbarPosition === 'combo' ? (
-                <Navbar.Collapse in={navbarCollapsed} className="scrollbar pb-3 pb-lg-0">
-                    <Nav navbar>
-                        {/*<NavbarTopDropDownMenus/>*/}
-                    </Nav>
-                </Navbar.Collapse>
-            ) : (
-                <Nav navbar className={`align-items-center d-none d-${topNavbarBreakpoint}-block`} as="ul">
-                    <Nav.Item as="li">
-                        <SearchBox/>
-                    </Nav.Item>
-                </Nav>
-            )}
 
             <TopNavRightSideNavItem/>
         </Navbar>

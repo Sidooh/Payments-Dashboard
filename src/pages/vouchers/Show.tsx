@@ -9,8 +9,6 @@ import {
 import { Flex, SectionError, SectionLoader, Status, StatusChip, Sweet, toast, Tooltip } from '@nabcellent/sui-react';
 import VoucherTransactionsTable from 'components/tables/VoucherTransactionsTable';
 import CardHeader from 'components/common/CardHeader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd, faInfo, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { Card, Col, Row } from 'react-bootstrap';
 import CardBgCorner from 'components/CardBgCorner';
 import { CONFIG } from '../../config';
@@ -18,6 +16,7 @@ import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
 import moment from "moment/moment";
 import { transactVoucher } from "components/TransactVoucher";
+import { FaInfo, FaMinus, FaPlus } from "react-icons/all";
 
 const Show = () => {
     const { id } = useParams();
@@ -121,14 +120,14 @@ const Show = () => {
                                         onClick={() => handleQueryVoucher('debit')}
                                         style={{ borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
                                     <Tooltip title={'Debit'} placement={'top'}>
-                                        <FontAwesomeIcon color={'red'} icon={faMinus}/>
+                                        <FaMinus style={{ color: 'red' }}/>
                                     </Tooltip>
                                 </button>
                                 <button className="col-auto btn btn-sm btn-light py-0 rounded-start-0"
                                         onClick={() => handleQueryVoucher('credit')}
                                         style={{ borderTopRightRadius: 20, borderBottomRightRadius: 20 }}>
                                     <Tooltip title={'Credit'} placement={'top'}>
-                                        <FontAwesomeIcon color={'green'} icon={faAdd}/>
+                                        <FaPlus style={{ color: 'green' }}/>
                                     </Tooltip>
                                 </button>
                             </div>
@@ -138,11 +137,11 @@ const Show = () => {
             </Row>
 
             {voucher?.transactions?.length ?
-                <VoucherTransactionsTable transactions={voucher.transactions}/> : (
-                    <Card className={'mb-3 bg-soft-primary'}>
-                        <CardHeader title={'No Voucher Transactions Made'}><FontAwesomeIcon icon={faInfo}/></CardHeader>
-                    </Card>
-                )}
+             <VoucherTransactionsTable transactions={voucher.transactions}/> : (
+                 <Card className={'mb-3 bg-soft-primary'}>
+                     <CardHeader title={'No Voucher Transactions Made'}><FaInfo/></CardHeader>
+                 </Card>
+             )}
         </>
     );
 };

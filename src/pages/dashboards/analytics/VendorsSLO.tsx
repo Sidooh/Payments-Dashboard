@@ -1,14 +1,11 @@
 import { useGetVendorsSLOsQuery } from "../../../features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
-import { ComponentLoader, LoadingButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { ComponentLoader, IconButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
-import moment from "moment";
-import { FaPercentage } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/all";
 
-const VendorsSLOs = () => {
+const VendorsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetVendorsSLOsQuery()
 
     if (isError) return <SectionError error={error}/>;
@@ -18,12 +15,11 @@ const VendorsSLOs = () => {
         <Col xs={12} className={'mb-3'}>
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
-                        VENDORS SUCCESS RATE - SLOs
-                        <Tooltip title="Refresh SLOs" placement="left">
-                            <LoadingButton loading={isFetching} className="btn btn-sm border-0 py-2"
-                                           spinner-position="replace" onClick={() => refetch()}>
-                                <FontAwesomeIcon icon={faSync}/>
-                            </LoadingButton>
+                        Vendors Success Rate
+                        <Tooltip title="Refresh SLOs" placement="start">
+                            <IconButton loading={isFetching} color={'secondary'} onClick={() => refetch()}>
+                                <FaSync size={12}/>
+                            </IconButton>
                         </Tooltip>
                     </span>
                 <span
@@ -32,8 +28,10 @@ const VendorsSLOs = () => {
 
             <Card>
                 <CardBgCorner corner={5}/>
-                <Card.Body>
-                    <h5 className={'text-primary text-decoration-underline'}>YTD</h5>
+                <Card.Body className={'bg-dark'}>
+                    <div className={'d-flex'}>
+                        <h5 className={'text-light border-bottom pe-lg-5'}>YTD</h5>
+                    </div>
                     <Row className={'g-2'}>
                         {Object.keys(data).map((product) => {
                             let color = 'success', slo = data[product as keyof typeof data]
@@ -42,7 +40,7 @@ const VendorsSLOs = () => {
                             else if(slo < 90) color = 'warning'
 
                             return (
-                                <Col key={product} lg={4} className={`text-center border-bottom`}>
+                                <Col key={product} md={4} lg={3} className={`text-center`}>
                                     <div className="py-3">
                                         <div className={`icon-circle icon-circle-${color} fw-bold`}>
                                             <CountUp end={data[product as keyof typeof data]} className="me-1 fs-2"/>
@@ -60,4 +58,4 @@ const VendorsSLOs = () => {
     );
 };
 
-export default VendorsSLOs;
+export default VendorsSLO;

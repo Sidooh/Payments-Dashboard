@@ -4,16 +4,17 @@ import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
 import {
     currencyFormat,
     DataTable,
-    getRelativeDateAndTime,
+    getRelativeDateAndTime, IconButton,
     SectionError,
     SectionLoader,
     StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { logger } from 'utils/logger';
 import { Payment } from "../../utils/types";
+import moment from "moment/moment";
+import Latency from "../../components/Latency";
+import { FaEye, FaRegEye } from "react-icons/all";
 
 const B2BPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({
@@ -50,9 +51,16 @@ const B2BPayments = () => {
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
+                        accessorKey: 'latency',
+                        accessorFn: (r: Payment) => moment(r.updated_at).diff(r.created_at, 's'),
+                        cell: ({ row: { original: p } }: any) => <Latency from={p.created_at} to={p.updated_at}/>
+                    },
+                    {
                         id: 'Actions',
                         cell: ({ row }: any) => (
-                            <Link to={`/payments/${row.original.id}`}><FontAwesomeIcon icon={faEye}/></Link>
+                            <Link to={`/payments/${row.original.id}`}>
+                                <IconButton size={'sm'}><FaRegEye/></IconButton>
+                            </Link>
                         )
                     }
                 ]} data={payments}/>

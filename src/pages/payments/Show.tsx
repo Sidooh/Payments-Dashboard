@@ -26,20 +26,13 @@ import {
     Tooltip
 } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faArrowRotateLeft,
-    faArrowRotateRight,
-    faArrowsRotate,
-    faClockRotateLeft,
-    faCrosshairs,
-    faRepeat
-} from "@fortawesome/free-solid-svg-icons";
 import { SweetAlertOptions } from 'sweetalert2';
 import { Fragment } from "react";
 import { CONFIG } from "../../config";
 import DestinationProvider from "./DestinationProvider";
 import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from "../../utils/types";
+import { calcLatency } from "../../components/Latency";
+import { BsCheck2Circle, FaCrosshairs, FaUndoAlt, HiOutlineRefresh, MdQueryStats, MdRotateLeft } from "react-icons/all";
 
 const Show = () => {
     const { id } = useParams();
@@ -128,14 +121,14 @@ const Show = () => {
     if (payment?.status === Status.PENDING) {
         paymentDropdownItems.push(
             <Dropdown.Item as="button" onClick={() => queryPayment('check-payment')}>
-                <FontAwesomeIcon icon={faArrowsRotate}/>&nbsp; Check Payment
+                <BsCheck2Circle/>&nbsp; Check Payment
             </Dropdown.Item>
         );
 
         if (payment.subtype === PaymentSubType.STK && (payment.provider as StkRequest)?.status !== Status.PAID) {
             paymentDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryPayment('query-status')}>
-                    <FontAwesomeIcon icon={faRepeat}/>&nbsp; Query Status
+                    <MdQueryStats/>&nbsp; Query Status
                 </Dropdown.Item>
             )
         }
@@ -143,12 +136,12 @@ const Show = () => {
     if (payment?.status === Status.COMPLETED) {
         paymentDropdownItems.push(
             <Dropdown.Item as="button" onClick={() => queryPayment('retry-purchase')}>
-                <FontAwesomeIcon icon={faArrowRotateRight}/>&nbsp; Retry Purchase
+                <HiOutlineRefresh/>&nbsp; Retry Purchase
             </Dropdown.Item>
         );
         paymentDropdownItems.push(
             <Dropdown.Item as="button" onClick={() => queryPayment('reverse')}>
-                <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Reverse Payment
+                <FaUndoAlt/>&nbsp; Reverse Payment
             </Dropdown.Item>
         );
     }
@@ -158,13 +151,17 @@ const Show = () => {
             <Card className="mb-3">
                 <CardBgCorner corner={4}/>
                 <Card.Body className="position-relative">
-                    <Flex justifyContent={'between'} className={'mb-3'}>
+                    <Flex justifyContent={'between'}>
                         <div>
                             <h5 className={'m-0'}>Payment Details: #{payment?.id}</h5>
-                            <p className="fs--1">{moment(payment?.created_at).format('MMM Do, Y, hh:mm A')}</p>
+                            <p className="fs--1 mb-0">{moment(payment?.created_at).format('MMM Do, Y, hh:mm A')}</p>
+                            <div className={'text-400 text-decoration-underline fs--2'}>
+                                <b>Latency</b>
+                                ({calcLatency(payment.updated_at, payment.created_at)}s)
+                            </div>
                         </div>
                         <div className={'text-end'}>
-                            <h4 className={'m-0'}>{payment?.type.toUpperCase()}</h4>
+                            <h5 className={'m-0'}>{payment?.type.toUpperCase()}</h5>
                             <small><b>{payment.subtype}</b></small>
                         </div>
                     </Flex>
@@ -199,10 +196,10 @@ const Show = () => {
                                     }}/>
                         <Flex alignItems={'center'}>
                             {payment?.description?.toLowerCase().includes('reversal') && (
-                                <Tooltip title={'Previous Payment'} placement={'left'}>
+                                <Tooltip title={'Previous Payment'} placement={'start'}>
                                     <Link to={`/payments/${payment.destination_data.payment_id}`}
                                           className={'btn btn-secondary py-1 px-2 rounded-circle'}>
-                                        <FontAwesomeIcon icon={faClockRotateLeft}/>
+                                        <MdRotateLeft/>
                                     </Link>
                                 </Tooltip>
                             )}
@@ -210,8 +207,7 @@ const Show = () => {
                             {paymentDropdownItems.length > 0 && (
                                 <Dropdown>
                                     <Dropdown.Toggle size={'sm'} as={'a'} className={'cursor-pointer'}>
-                                        <FontAwesomeIcon icon={faCrosshairs}
-                                                         className={'btn btn-danger py-2 px-2 rounded-circle'}/>
+                                        <FaCrosshairs className={'btn btn-danger py-2 px-2 rounded-circle'}/>
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         {paymentDropdownItems.map((item, i) => <Fragment key={i}>{item}</Fragment>)}
