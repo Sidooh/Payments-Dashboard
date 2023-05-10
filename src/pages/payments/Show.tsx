@@ -33,6 +33,7 @@ import DestinationProvider from "./DestinationProvider";
 import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from "../../utils/types";
 import { calcLatency } from "../../components/Latency";
 import { BsCheck2Circle, FaCrosshairs, FaUndoAlt, HiOutlineRefresh, MdQueryStats, MdRotateLeft } from "react-icons/all";
+import BuniPayment from "./BuniPayment";
 
 const Show = () => {
     const { id } = useParams();
