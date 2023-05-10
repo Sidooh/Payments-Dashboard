@@ -16,6 +16,22 @@ export interface StkRequest extends Model {
     response?: StkCallback;
 }
 
+export interface BuniStkCallback extends Model {
+    amount: number;
+    result_desc: string;
+    merchant_request_id: string;
+    mpesa_receipt_number: string
+}
+
+export interface BuniStkRequest extends Model {
+    merchant_request_id: string;
+    amount: number;
+    phone_number: number;
+    invoice_number: string;
+    status: Status;
+    response?: BuniStkCallback;
+}
+
 export interface Voucher extends Model {
     type: string;
     balance: number;
@@ -48,7 +64,7 @@ export interface MpesaC2BCallback extends Model {
     msisdn: string
 }
 
-export interface Payment<P = StkRequest | VoucherTransaction | MpesaC2BCallback> extends Model {
+export interface Payment<P = StkRequest | BuniStkRequest | VoucherTransaction | MpesaC2BCallback> extends Model {
     amount: number;
     charge: number;
     type: string;

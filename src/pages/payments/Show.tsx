@@ -265,6 +265,7 @@ const Show = () => {
             </Card>
 
             {payment?.type === PaymentType.MPESA && <MpesaPayment payment={payment}/>}
+            {payment?.type === PaymentType.BUNI && <BuniPayment payment={payment}/>}
             {payment?.type === PaymentType.SIDOOH &&
                 <SourceProvider payment={payment as Payment<FloatAccountTransaction | VoucherTransaction>}/>}
             <DestinationProvider payment={payment}/>
