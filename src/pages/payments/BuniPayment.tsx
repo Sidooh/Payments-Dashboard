@@ -31,14 +31,14 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                             <p className="mb-0">{provider?.phone_number}</p>
                         </td>
                         <td className="align-middle">{currencyFormat(provider?.amount)}</td>
-                        <td className="align-middle">{provider.response?.result_desc}</td>
-                        <td className="align-middle">{provider.response?.mpesa_receipt_number || 'N/A'}</td>
+                        <td className="align-middle">{provider.callback?.result_desc}</td>
+                        <td className="align-middle">{provider.callback?.mpesa_receipt_number || 'N/A'}</td>
                         <td className="align-middle text-center">
                             <StatusChip status={provider?.status} bg={false}/>
                         </td>
                         <td className="text-end">
-                            {moment(provider?.response?.created_at || provider?.created_at).format('MMM D, Y')}<br/>
-                            <small>{moment(provider?.response?.created_at || provider?.created_at).format('hh:mm A')}</small>
+                            {moment(provider?.callback?.created_at || provider?.created_at).format('MMM D, Y')}<br/>
+                            <small>{moment(provider?.callback?.created_at || provider?.created_at).format('hh:mm A')}</small>
                         </td>
                     </tr>
                     </tbody>

@@ -29,7 +29,7 @@ export interface BuniStkRequest extends Model {
     phone_number: number;
     invoice_number: string;
     status: Status;
-    response?: BuniStkCallback;
+    callback?: BuniStkCallback;
 }
 
 export interface Voucher extends Model {
