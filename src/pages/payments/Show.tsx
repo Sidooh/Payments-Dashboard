@@ -33,6 +33,7 @@ import DestinationProvider from "./DestinationProvider";
 import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from "../../utils/types";
 import { calcLatency } from "../../components/Latency";
 import { BsCheck2Circle, FaCrosshairs, FaUndoAlt, HiOutlineRefresh, MdQueryStats, MdRotateLeft } from "react-icons/all";
+import BuniPayment from "./BuniPayment";
 
 const Show = () => {
     const { id } = useParams();
@@ -265,6 +266,7 @@ const Show = () => {
             </Card>
 
             {payment?.type === PaymentType.MPESA && <MpesaPayment payment={payment}/>}
+            {payment?.type === PaymentType.BUNI && <BuniPayment payment={payment}/>}
             {payment?.type === PaymentType.SIDOOH &&
                 <SourceProvider payment={payment as Payment<FloatAccountTransaction | VoucherTransaction>}/>}
             <DestinationProvider payment={payment}/>
