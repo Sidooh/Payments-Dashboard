@@ -8,7 +8,7 @@ import {
 } from '@nabcellent/sui-react';
 import { FloatAccountTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
-import { FaRegEye } from "react-icons/all";
+import { FaRegEye } from "react-icons/fa6";
 
 type FloatAccountTransactionsTableProps = { transactions: FloatAccountTransaction[], showAccountColumn?: boolean }
 

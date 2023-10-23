@@ -4,7 +4,7 @@ import moment from 'moment';
 import { currencyFormat, PhoneChip } from '@nabcellent/sui-react';
 import { PaymentSubType, PaymentType } from "utils/enums";
 import CardHeader from "../../components/common/CardHeader";
-import { FaInfo } from "react-icons/all";
+import { FaInfo } from "react-icons/fa6";
 
 const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
     <Table striped responsive className="border-bottom fs--1">

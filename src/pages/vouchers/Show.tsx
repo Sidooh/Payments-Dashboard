@@ -16,7 +16,7 @@ import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
 import moment from "moment/moment";
 import { transactVoucher } from "components/TransactVoucher";
-import { FaInfo, FaMinus, FaPlus } from "react-icons/all";
+import { FaInfo, FaMinus, FaPlus } from "react-icons/fa6";
 
 const Show = () => {
     const { id } = useParams();

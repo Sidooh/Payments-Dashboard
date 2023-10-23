@@ -3,7 +3,7 @@ import PaymentsTable from 'components/tables/PaymentsTable';
 import CardHeader from "components/common/CardHeader";
 import { Card } from 'react-bootstrap';
 import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
-import { FaInfo } from "react-icons/all";
+import { FaInfo } from "react-icons/fa6";
 
 const PendingPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = usePaymentsQuery(Status.PENDING);

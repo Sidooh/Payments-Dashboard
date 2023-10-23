@@ -20,7 +20,7 @@ import SidoohAccount from 'components/common/SidoohAccount';
 import { logger } from 'utils/logger';
 import { Voucher } from "../../utils/types";
 import { transactVoucher } from "../../components/TransactVoucher";
-import { FaMinus, FaPlus, FaRegEye } from "react-icons/all";
+import { FaMinus, FaPlus, FaRegEye } from "react-icons/fa6";
 
 const Vouchers = () => {
     let { data: vouchers, isLoading, isSuccess, isError, error } = useVouchersQuery();

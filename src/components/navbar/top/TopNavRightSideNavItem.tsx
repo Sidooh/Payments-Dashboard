@@ -5,7 +5,7 @@ import { setTheme } from 'features/theme/themeSlice';
 import { RootState } from 'app/store';
 import { Tooltip, Waffle } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
-import { FaMoon, FaSun } from "react-icons/all";
+import { FaMoon, FaSun } from "react-icons/fa6";
 
 const TopNavRightSideNavItem = () => {
     const dispatch = useAppDispatch();
@@ -40,6 +40,13 @@ const TopNavRightSideNavItem = () => {
                     title: 'Enterprise',
                     link: `/events/event-detail`,
                     contentClass: 'bg-soft-primary text-primary',
+                },
+                {
+                    avatarText: 'M',
+                    title: 'Merchants',
+                    link: CONFIG.sidooh.services.merchants.dashboard.url,
+                    contentClass: 'bg-soft-primary text-primary',
+                    enabled: true
                 },
                 {
                     avatarText: 'N',

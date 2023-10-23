@@ -12,7 +12,7 @@ import {
 import CardBgCorner from "../../../components/CardBgCorner";
 import { Fragment } from "react";
 import CountUp from "react-countup";
-import { FaPercentage, FaSync } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/fa6";
 
 const PaymentsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetPaymentsSLOsQuery()

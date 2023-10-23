@@ -6,7 +6,8 @@ import { RootState } from 'app/store';
 import { resetTheme, setTheme } from 'features/theme/themeSlice';
 import { CONFIG } from 'config';
 import { Badge, Flex } from '@nabcellent/sui-react';
-import { FaPalette, FaRedoAlt } from "react-icons/all";
+import { FaPalette } from "react-icons/fa6";
+import { FaRedoAlt } from "react-icons/fa";
 
 const SettingsPanel = () => {
     const {

@@ -1,14 +1,10 @@
 import { RouteType } from "@nabcellent/sui-react";
-import {
-    FaBusinessTime,
-    FaChartPie,
-    GiPayMoney,
-    GiReceiveMoney,
-    MdPayments,
-    RiCoupon2Fill,
-    SiFloatplane,
-    TbPrompt
-} from "react-icons/all";
+import { FaBusinessTime, FaChartPie } from "react-icons/fa6";
+import { MdPayments } from "react-icons/md";
+import { RiCoupon2Fill } from "react-icons/ri";
+import { SiFloatplane } from "react-icons/si";
+import { TbPrompt } from "react-icons/tb";
+import { GiPayMoney, GiReceiveMoney } from "react-icons/gi";
 
 const routes: RouteType[] = [
     {

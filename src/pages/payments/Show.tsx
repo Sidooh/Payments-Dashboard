@@ -32,8 +32,12 @@ import { CONFIG } from "../../config";
 import DestinationProvider from "./DestinationProvider";
 import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from "../../utils/types";
 import { calcLatency } from "../../components/Latency";
-import { BsCheck2Circle, FaCrosshairs, FaUndoAlt, HiOutlineRefresh, MdQueryStats, MdRotateLeft } from "react-icons/all";
 import BuniPayment from "./BuniPayment";
+import { BsCheck2Circle } from "react-icons/bs";
+import { MdQueryStats, MdRotateLeft } from "react-icons/md";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { FaUndoAlt } from "react-icons/fa";
+import { FaCrosshairs } from "react-icons/fa6";
 
 const Show = () => {
     const { id } = useParams();

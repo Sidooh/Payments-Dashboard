@@ -30,7 +30,7 @@ import {
 } from "chart.js";
 import CardBgCorner from "../../../components/CardBgCorner";
 import { AnalyticsChartData } from "../../../utils/types";
-import { FaSync } from "react-icons/all";
+import { FaSync } from "react-icons/fa";
 
 type Dataset = { label: string, dataset: number[], color: string }
 

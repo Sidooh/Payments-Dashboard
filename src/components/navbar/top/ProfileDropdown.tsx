@@ -3,7 +3,7 @@ import { Dropdown } from 'react-bootstrap';
 import { useAppDispatch } from 'app/hooks';
 import { logout, reset } from 'features/auth/authSlice';
 import { Avatar } from '@nabcellent/sui-react';
-import { FaCrown } from "react-icons/all";
+import { FaCrown } from "react-icons/fa6";
 
 const ProfileDropdown = () => {
     const navigate = useNavigate()

@@ -8,7 +8,7 @@ import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
 import { useFloatAccountQuery } from "features/float-accounts/floatAccountsApi";
 import FloatAccountTransactionsTable from "components/tables/FloatAccountTransactionsTable";
-import { FaInfo } from "react-icons/all";
+import { FaInfo } from "react-icons/fa6";
 
 const Show = () => {
     const { id } = useParams();

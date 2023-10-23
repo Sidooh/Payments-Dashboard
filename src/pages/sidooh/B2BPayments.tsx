@@ -4,7 +4,8 @@ import { useMpesaPaymentsQuery } from '../../features/mpesa/mpesaAPI';
 import {
     currencyFormat,
     DataTable,
-    getRelativeDateAndTime, IconButton,
+    getRelativeDateAndTime,
+    IconButton,
     SectionError,
     SectionLoader,
     StatusChip,
@@ -14,11 +15,11 @@ import { logger } from 'utils/logger';
 import { Payment } from "../../utils/types";
 import moment from "moment/moment";
 import Latency from "../../components/Latency";
-import { FaEye, FaRegEye } from "react-icons/all";
+import { FaRegEye } from "react-icons/fa6";
 
 const B2BPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({
-        type: 'SIDOOH',
+        type    : 'SIDOOH',
         sub_type: 'B2B'
     });
     logger.log(payments);
@@ -32,31 +33,31 @@ const B2BPayments = () => {
                 <DataTable title={`B2B Payments`} columns={[
                     {
                         accessorKey: 'amount',
-                        header: 'Amount',
-                        cell: ({ row }: any) => currencyFormat(row.original.amount)
+                        header     : 'Amount',
+                        cell       : ({ row }: any) => currencyFormat(row.original.amount)
                     },
                     {
                         accessorKey: 'description',
-                        header: 'Description',
+                        header     : 'Description',
                     },
                     {
                         accessorKey: 'status',
-                        header: 'Status',
-                        cell: ({ row }: any) => <StatusChip status={row.original.status}/>
+                        header     : 'Status',
+                        cell       : ({ row }: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Updated',
-                        accessorFn: (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
-                        cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
+                        header     : 'Updated',
+                        accessorFn : (row: Payment) => getRelativeDateAndTime(row.updated_at).toString(),
+                        cell       : ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
                         accessorKey: 'latency',
-                        accessorFn: (r: Payment) => moment(r.updated_at).diff(r.created_at, 's'),
-                        cell: ({ row: { original: p } }: any) => <Latency from={p.created_at} to={p.updated_at}/>
+                        accessorFn : (r: Payment) => moment(r.updated_at).diff(r.created_at, 's'),
+                        cell       : ({ row: { original: p } }: any) => <Latency from={p.created_at} to={p.updated_at}/>
                     },
                     {
-                        id: 'Actions',
+                        id  : 'Actions',
                         cell: ({ row }: any) => (
                             <Link to={`/payments/${row.original.id}`}>
                                 <IconButton size={'sm'}><FaRegEye/></IconButton>

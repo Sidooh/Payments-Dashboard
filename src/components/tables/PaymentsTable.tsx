@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import SidoohAccount from "../common/SidoohAccount";
 import moment from "moment";
 import Latency from "../Latency";
-import { BsArrowRight, FaRegEye } from "react-icons/all";
+import { BsArrowRight } from "react-icons/bs";
+import { FaRegEye } from 'react-icons/fa6';
 
 const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string, payments: Payment[] }) => {
     return (

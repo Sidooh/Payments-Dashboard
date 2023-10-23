@@ -12,7 +12,7 @@ import {
 } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 import { Payment } from "../../utils/types";
-import { FaRegEye } from "react-icons/all";
+import { FaRegEye } from "react-icons/fa6";
 
 const STKPayments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = useMpesaPaymentsQuery({

@@ -8,7 +8,7 @@ import {
 } from '@nabcellent/sui-react';
 import { VoucherTransaction } from 'utils/types';
 import { Link } from 'react-router-dom';
-import { FaRegEye } from "react-icons/all";
+import { FaRegEye } from "react-icons/fa6";
 
 const VoucherTransactionsTable = ({ transactions }: { transactions: VoucherTransaction[] }) => {
     return (

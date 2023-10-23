@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { logger } from 'utils/logger';
 import { useFloatAccountsQuery } from "../../features/float-accounts/floatAccountsApi";
 import { FloatAccount } from "../../utils/types";
-import { FaRegEye } from "react-icons/all";
+import { FaRegEye } from "react-icons/fa6";
 
 const FloatAccounts = () => {
     let { data: floatAccounts, isLoading, isSuccess, isError, error } = useFloatAccountsQuery();
