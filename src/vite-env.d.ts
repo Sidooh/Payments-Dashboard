@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
 
+import { LogLevel } from "./utils/logger";
+
 interface ImportMetaEnv {
-    readonly VITE_LOG_LEVEL: string
+    readonly VITE_LOG_LEVEL: LogLevel
 
     readonly VITE_ACCOUNTS_API_URL: string
     readonly VITE_PAYMENTS_API_URL: string

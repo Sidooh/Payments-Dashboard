@@ -3,7 +3,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, IconButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
-import { FaPercentage, FaSync } from "react-icons/fa6";
+import { FaPercentage, FaSync } from "react-icons/fa";
 
 const VendorsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetVendorsSLOsQuery()
