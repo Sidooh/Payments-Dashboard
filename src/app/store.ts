@@ -1,36 +1,22 @@
-import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import authReducer from 'features/auth/authSlice';
-import themeReducer from 'features/theme/themeSlice';
-import { paymentsAPI } from 'features/payments/paymentsAPI';
-import { mpesaAPI } from 'features/mpesa/mpesaAPI';
-import { vouchersAPI } from 'features/vouchers/vouchersAPI';
-import { floatAccountsApi } from 'features/float-accounts/floatAccountsApi';
-import { dashboardApi } from "../features/dashboard/dashboard.api";
-import { analyticsApi } from "../features/analytics/analyticsApi";
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from '@/features/auth/authSlice';
+import themeReducer from '@/features/theme/themeSlice';
+import { coreApi } from '@/services/coreApi';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         theme: themeReducer,
 
-        [dashboardApi.reducerPath]: dashboardApi.reducer,
-        [analyticsApi.reducerPath]: analyticsApi.reducer,
-        [paymentsAPI.reducerPath]: paymentsAPI.reducer,
-        [mpesaAPI.reducerPath]: mpesaAPI.reducer,
-        [vouchersAPI.reducerPath]: vouchersAPI.reducer,
-        [floatAccountsApi.reducerPath]: floatAccountsApi.reducer,
+        [coreApi.reducerPath]: coreApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-        .concat(
-            dashboardApi.middleware,
-            analyticsApi.middleware,
-            paymentsAPI.middleware,
-            mpesaAPI.middleware,
-            vouchersAPI.middleware,
-            floatAccountsApi.middleware
-        )
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(coreApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

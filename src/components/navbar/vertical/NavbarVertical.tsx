@@ -2,20 +2,17 @@ import { Fragment, useEffect } from 'react';
 import { Col, Nav, Navbar, Row } from 'react-bootstrap';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
-import routes from 'routes';
-import { IMAGES } from 'constants/images';
-import { useAppSelector } from 'app/hooks';
-import { RootState } from 'app/store';
-import { navbarBreakPoint, topNavbarBreakpoint } from 'constants/breakpoints';
+import routes from '@/routes';
+import { IMAGES } from '@/constants/images';
+import { useAppSelector } from '@/app/store.ts';
+import { RootState } from '@/app/store';
+import { navbarBreakPoint, topNavbarBreakpoint } from '@/constants/breakpoints';
 import { capitalize, Flex, Logo } from '@nabcellent/sui-react';
 
 const NavbarVertical = () => {
-    const {
-        navbarPosition,
-        navbarStyle,
-        isNavbarVerticalCollapsed,
-        showBurgerMenu
-    } = useAppSelector((state: RootState) => state.theme);
+    const { navbarPosition, navbarStyle, isNavbarVerticalCollapsed, showBurgerMenu } = useAppSelector(
+        (state: RootState) => state.theme
+    );
 
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;
 
@@ -45,40 +42,46 @@ const NavbarVertical = () => {
         HTMLClassList.remove('navbar-vertical-collapsed-hover');
     };
 
-    const NavbarLabel = ({label}: { label: string }) => (
+    const NavbarLabel = ({ label }: { label: string }) => (
         <Nav.Item as="li">
             <Row className="mt-3 mb-2 navbar-vertical-label-wrapper">
                 <Col xs="auto" className="navbar-vertical-label navbar-vertical-label">
                     {label}
                 </Col>
                 <Col className="ps-0">
-                    <hr className="mb-0 navbar-vertical-divider"/>
+                    <hr className="mb-0 navbar-vertical-divider" />
                 </Col>
             </Row>
         </Nav.Item>
     );
 
     return (
-        <Navbar expand={navbarBreakPoint}
-            className={`navbar-vertical ${navbarStyle !== 'transparent' && `navbar-${navbarStyle}`}`} variant="light">
+        <Navbar
+            expand={navbarBreakPoint}
+            className={`navbar-vertical ${navbarStyle !== 'transparent' && `navbar-${navbarStyle}`}`}
+            variant="light"
+        >
             <Flex alignItems="center">
-                <ToggleButton/>
-                <Logo src={IMAGES.logos.sidooh} at="navbar-vertical" width={70}/>
+                <ToggleButton />
+                <Logo src={IMAGES.logos.sidooh} at="navbar-vertical" width={70} />
             </Flex>
-            <Navbar.Collapse in={showBurgerMenu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+            <Navbar.Collapse
+                in={showBurgerMenu}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
                 style={{
                     backgroundImage:
                         navbarStyle === 'vibrant'
                             ? `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2),url(${IMAGES.generic.bg_navbar})`
-                            : 'none'
+                            : 'none',
                 }}
             >
                 <div className="navbar-vertical-content scrollbar">
                     <Nav className="flex-column" as="ul">
-                        {routes.map(route => (
+                        {routes.map((route) => (
                             <Fragment key={route.label}>
-                                {!route.labelDisable && <NavbarLabel label={capitalize(route.label)}/>}
-                                <NavbarVerticalMenu routes={route.children}/>
+                                {!route.labelDisable && <NavbarLabel label={capitalize(route.label)} />}
+                                <NavbarVerticalMenu routes={route.children} />
                             </Fragment>
                         ))}
                     </Nav>
@@ -87,11 +90,9 @@ const NavbarVertical = () => {
                         {navbarPosition === 'combo' && (
                             <div className={`d-${topNavbarBreakpoint}-none`}>
                                 <div className="navbar-vertical-divider">
-                                    <hr className="navbar-vertical-hr my-2"/>
+                                    <hr className="navbar-vertical-hr my-2" />
                                 </div>
-                                <Nav navbar>
-                                    {/*<NavbarTopDropDownMenus/>*/}
-                                </Nav>
+                                <Nav navbar>{/*<NavbarTopDropDownMenus/>*/}</Nav>
                             </div>
                         )}
                     </>
