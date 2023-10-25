@@ -1,5 +1,4 @@
-import {RootState} from '../app/store';
-import {useAppSelector} from '../app/hooks';
+import { RootState, useAppSelector } from '../app/store';
 
 export const useAuth = () => {
     return useAppSelector((state: RootState) => state.auth);

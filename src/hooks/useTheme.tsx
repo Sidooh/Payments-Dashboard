@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { refreshTheme } from '../features/theme/themeSlice';
-import { useAppDispatch } from '../app/hooks';
+import { refreshTheme } from '@/features/theme/themeSlice';
+import { useAppDispatch } from '@/app/store';
 
 const useTheme = (isDark: boolean) => {
     const dispatch = useAppDispatch();

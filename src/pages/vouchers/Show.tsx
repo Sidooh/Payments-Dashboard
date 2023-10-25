@@ -4,19 +4,19 @@ import {
     useCreditVoucherMutation,
     useDeactivateVoucherMutation,
     useDebitVoucherMutation,
-    useVoucherQuery
-} from 'features/vouchers/vouchersAPI';
+    useVoucherQuery,
+} from '@/services/vouchersApi';
 import { Flex, SectionError, SectionLoader, Status, StatusChip, Sweet, toast, Tooltip } from '@nabcellent/sui-react';
-import VoucherTransactionsTable from 'components/tables/VoucherTransactionsTable';
-import CardHeader from 'components/common/CardHeader';
+import VoucherTransactionsTable from '@/components/tables/VoucherTransactionsTable';
+import CardHeader from '@/components/common/CardHeader';
 import { Card, Col, Row } from 'react-bootstrap';
-import CardBgCorner from 'components/CardBgCorner';
-import { CONFIG } from '../../config';
+import CardBgCorner from '@/components/CardBgCorner';
+import { CONFIG } from '@/config.ts';
 import CountUp from 'react-countup';
-import { logger } from 'utils/logger';
-import moment from "moment/moment";
-import { transactVoucher } from "components/TransactVoucher";
-import { FaInfo, FaMinus, FaPlus } from "react-icons/fa6";
+import { logger } from '@/utils/logger';
+import moment from 'moment/moment';
+import { transactVoucher } from '@/components/TransactVoucher';
+import { FaInfo, FaMinus, FaPlus } from 'react-icons/fa6';
 
 const Show = () => {
     const { id } = useParams();
@@ -27,15 +27,15 @@ const Show = () => {
     const [activateVoucher] = useActivateVoucherMutation();
     const [deactivateVoucher] = useDeactivateVoucherMutation();
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !voucher) return <SectionLoader/>;
+    if (isError) return <SectionError error={error} />;
+    if (isLoading || !isSuccess || !voucher) return <SectionLoader />;
 
     logger.log('Voucher:', voucher);
     const account = voucher.account;
 
     const handleQueryVoucher = async (action: 'credit' | 'debit') => {
-        await transactVoucher(action, voucher, creditVoucher, debitVoucher)
-    }
+        await transactVoucher(action, voucher, creditVoucher, debitVoucher);
+    };
 
     const handleStatusChange = async (status: Status) => {
         await Sweet.fire({
@@ -54,47 +54,58 @@ const Show = () => {
             preConfirm: async () => {
                 let res;
                 if (status === Status.ACTIVE) {
-                    res = await activateVoucher(voucher.id) as any;
+                    res = (await activateVoucher(voucher.id)) as any;
                 } else if (status === Status.INACTIVE) {
-                    res = await deactivateVoucher(voucher.id) as any;
-                } else return
+                    res = (await deactivateVoucher(voucher.id)) as any;
+                } else return;
 
-                if (res?.data?.id) await toast({
-                    html: `Voucher <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
+                if (res?.data?.id)
+                    await toast({
+                        html: `Voucher <b class="text-${status === Status.ACTIVE ? 'success' : 'danger'}">
                         ${status === Status.ACTIVE ? 'Activated' : 'Deactivated'}
-                    </b>`
-                });
-                if (res?.error?.data?.message) await toast({
-                    titleText: res?.error.data.message,
-                    icon: 'error',
-                    timer: 7
-                });
-            }
+                    </b>`,
+                    });
+                if (res?.error?.data?.message)
+                    await toast({
+                        titleText: res?.error.data.message,
+                        icon: 'error',
+                        timer: 7,
+                    });
+            },
         });
-    }
+    };
 
     return (
         <>
             <Card className={'mb-3'}>
-                <CardBgCorner corner={3}/>
+                <CardBgCorner corner={3} />
                 <Card.Body className="position-relative">
                     <Flex justifyContent={'between'} alignItems={'start'}>
                         <div>
                             <h5>Account: #{account?.id}</h5>
                             <h6 className="mb-2">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
-                                   target={'_blank'} rel={'noreferrer noopener'}>
+                                <a
+                                    href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
+                                    target={'_blank'}
+                                    rel={'noreferrer noopener'}
+                                >
                                     {account?.user?.name}
                                 </a>
                             </h6>
                             <p className="mb-0 fs--1">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
-                                   target={'_blank'} rel={'noreferrer noopener'}>
+                                <a
+                                    href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
+                                    target={'_blank'}
+                                    rel={'noreferrer noopener'}
+                                >
                                     {account?.phone}
                                 </a>
                             </p>
-                            <StatusChip status={voucher.status} statuses={[Status.ACTIVE, Status.INACTIVE]}
-                                        onStatusChange={handleStatusChange}/>
+                            <StatusChip
+                                status={voucher.status}
+                                statuses={[Status.ACTIVE, Status.INACTIVE]}
+                                onStatusChange={handleStatusChange}
+                            />
                         </div>
                         <i className="fs--1">
                             <b>CREATED:</b> {moment(voucher?.created_at).format('MMM Do, Y, hh:mm A')}
@@ -107,27 +118,32 @@ const Show = () => {
                 <Col lg={6}>
                     <Card className={'bg-line-chart-gradient'}>
                         <Card.Header
-                            className={'bg-transparent light d-flex justify-content-between align-items-start'}>
+                            className={'bg-transparent light d-flex justify-content-between align-items-start'}
+                        >
                             <div>
                                 <h6 className="text-white">BALANCE</h6>
                                 <h4 className="text-white m-0">
-                                    <CountUp end={voucher.balance} prefix={'KES '} separator=","/>
+                                    <CountUp end={voucher.balance} prefix={'KES '} separator="," />
                                 </h4>
                             </div>
 
                             <div className="row gx-2 fw-bolder">
-                                <button className="col-auto btn btn-sm btn-light py-0 rounded-end-0"
-                                        onClick={() => handleQueryVoucher('debit')}
-                                        style={{ borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
+                                <button
+                                    className="col-auto btn btn-sm btn-light py-0 rounded-end-0"
+                                    onClick={() => handleQueryVoucher('debit')}
+                                    style={{ borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}
+                                >
                                     <Tooltip title={'Debit'} placement={'top'}>
-                                        <FaMinus style={{ color: 'red' }}/>
+                                        <FaMinus style={{ color: 'red' }} />
                                     </Tooltip>
                                 </button>
-                                <button className="col-auto btn btn-sm btn-light py-0 rounded-start-0"
-                                        onClick={() => handleQueryVoucher('credit')}
-                                        style={{ borderTopRightRadius: 20, borderBottomRightRadius: 20 }}>
+                                <button
+                                    className="col-auto btn btn-sm btn-light py-0 rounded-start-0"
+                                    onClick={() => handleQueryVoucher('credit')}
+                                    style={{ borderTopRightRadius: 20, borderBottomRightRadius: 20 }}
+                                >
                                     <Tooltip title={'Credit'} placement={'top'}>
-                                        <FaPlus style={{ color: 'green' }}/>
+                                        <FaPlus style={{ color: 'green' }} />
                                     </Tooltip>
                                 </button>
                             </div>
@@ -136,12 +152,15 @@ const Show = () => {
                 </Col>
             </Row>
 
-            {voucher?.transactions?.length ?
-             <VoucherTransactionsTable transactions={voucher.transactions}/> : (
-                 <Card className={'mb-3 bg-soft-primary'}>
-                     <CardHeader title={'No Voucher Transactions Made'}><FaInfo/></CardHeader>
-                 </Card>
-             )}
+            {voucher?.transactions?.length ? (
+                <VoucherTransactionsTable transactions={voucher.transactions} />
+            ) : (
+                <Card className={'mb-3 bg-soft-primary'}>
+                    <CardHeader title={'No Voucher Transactions Made'}>
+                        <FaInfo />
+                    </CardHeader>
+                </Card>
+            )}
         </>
     );
 };

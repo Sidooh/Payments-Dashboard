@@ -1,73 +1,58 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CONFIG } from 'config';
-import { RootState } from 'app/store';
-import { Voucher, VoucherTransaction } from 'utils/types';
+import { Voucher, VoucherTransaction } from '@/utils/types';
 import { ApiResponse } from '@nabcellent/sui-react';
+import { coreApi } from '@/services/coreApi.ts';
 
-export const vouchersAPI = createApi({
-    reducerPath: 'vouchersApi',
-    tagTypes: ['Voucher'],
-    keepUnusedDataFor: 60 * 5, // Five minutes
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
-        prepareHeaders: (headers, { getState }) => {
-            const token = (getState() as RootState).auth.auth?.token;
-
-            if (token) headers.set('authorization', `Bearer ${token}`);
-
-            return headers;
-        }
-    }),
+export const vouchersApi = coreApi.injectEndpoints({
     endpoints: (builder) => ({
         vouchers: builder.query<Voucher[], void>({
             query: () => '/vouchers?with=account',
             transformResponse: (response: ApiResponse<Voucher[]>) => response.data,
-            providesTags: ['Voucher']
+            providesTags: ['Voucher'],
         }),
         voucher: builder.query<Voucher, number>({
-            query: id => `/vouchers/${id}?with=account,transactions`,
+            query: (id) => `/vouchers/${id}?with=account,transactions`,
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            providesTags: ['Voucher']
+            providesTags: ['Voucher'],
         }),
         voucherTransactions: builder.query<VoucherTransaction[], void>({
             query: () => `/voucher-transactions?with=payment`,
-            transformResponse: (response: ApiResponse<VoucherTransaction[]>) => response.data
+            transformResponse: (response: ApiResponse<VoucherTransaction[]>) => response.data,
         }),
-        creditVoucher: builder.mutation<Voucher, { id: number, amount: number }>({
+        creditVoucher: builder.mutation<Voucher, { id: number; amount: number }>({
             query: ({ id, ...patch }) => ({
                 url: `/vouchers/${id}/credit`,
                 method: 'PUT',
-                body: patch
+                body: patch,
             }),
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            invalidatesTags: ['Voucher']
+            invalidatesTags: ['Voucher'],
         }),
-        debitVoucher: builder.mutation<Voucher, { id: number, amount: number }>({
+        debitVoucher: builder.mutation<Voucher, { id: number; amount: number }>({
             query: ({ id, ...patch }) => ({
                 url: `/vouchers/${id}/debit`,
                 method: 'PUT',
-                body: patch
+                body: patch,
             }),
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            invalidatesTags: ['Voucher']
+            invalidatesTags: ['Voucher'],
         }),
         activateVoucher: builder.mutation<Voucher, number>({
-            query: id => ({
+            query: (id) => ({
                 url: `/vouchers/${id}/activate`,
                 method: 'PUT',
             }),
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            invalidatesTags: ['Voucher']
+            invalidatesTags: ['Voucher'],
         }),
         deactivateVoucher: builder.mutation<Voucher, number>({
-            query: id => ({
+            query: (id) => ({
                 url: `/vouchers/${id}/deactivate`,
                 method: 'PUT',
             }),
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            invalidatesTags: ['Voucher']
+            invalidatesTags: ['Voucher'],
         }),
-    })
+    }),
 });
 
 export const {
@@ -78,4 +63,4 @@ export const {
     useDebitVoucherMutation,
     useActivateVoucherMutation,
     useDeactivateVoucherMutation,
-} = vouchersAPI;
+} = vouchersApi;

@@ -1,32 +1,34 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { authAPI, LoginRequest } from './authAPI';
+import { authApi, LoginRequest } from './authApi.ts';
 
 //  Get user data from localstorage
 const auth = JSON.parse(String(localStorage.getItem('auth')));
 
 export type AuthState = {
     auth?: {
-        token?: string
+        token?: string;
     } | null;
     isError: boolean;
     isSuccess: boolean;
     isLoading: boolean;
     message: string;
-}
+};
 
 const initialState: AuthState = {
-    auth     : auth || null,
-    isError  : false,
+    auth: auth || null,
+    isError: false,
     isSuccess: false,
     isLoading: false,
-    message  : ""
+    message: '',
 };
 
 export const login = createAsyncThunk('auth/login', async (user: LoginRequest, thunkAPI) => {
     try {
-        return await authAPI.login(user);
+        return await authApi.login(user);
     } catch (err: any) {
-        const message = err.response?.data?.errors[0]?.message ?? err.message ??
+        const message =
+            err.response?.data?.errors[0]?.message ??
+            err.message ??
             (err.response && err.response.data && err.response.data.message) ??
             err.toString();
 
@@ -35,23 +37,23 @@ export const login = createAsyncThunk('auth/login', async (user: LoginRequest, t
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    await authAPI.logout();
+    await authApi.logout();
 });
 
 export const authSlice = createSlice({
-    name         : 'auth',
+    name: 'auth',
     initialState,
-    reducers     : {
+    reducers: {
         reset: (state) => {
             state.isLoading = false;
             state.isSuccess = false;
             state.isError = false;
             state.message = '';
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, state => {
+            .addCase(login.pending, (state) => {
                 state.isLoading = true;
             })
             .addCase(login.fulfilled, (state, action) => {
@@ -68,9 +70,9 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.auth = undefined;
             });
-    }
+    },
 });
 
-export const {reset} = authSlice.actions;
+export const { reset } = authSlice.actions;
 
 export default authSlice.reducer;

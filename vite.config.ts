@@ -1,24 +1,16 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
     server: {
-        port: 3000
+        port: 3000,
     },
     resolve: {
         alias: {
-            app: "/src/app",
-            assets: "/src/assets",
-            components: "/src/components",
-            config: "/src/config",
-            constants: "/src/constants",
-            hooks: "/src/hooks",
-            features: "/src/features",
-            pages: "/src/pages",
-            routes: "/src/routes",
-            utils: "/src/utils"
-        }
+            '@': path.resolve(__dirname, './src'),
+        },
     },
-    plugins: [react()]
+    plugins: [react()],
 });

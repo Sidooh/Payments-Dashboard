@@ -1,108 +1,76 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CONFIG } from 'config';
-import { RootState } from 'app/store';
-import { Payment } from 'utils/types';
+import { Payment } from '@/utils/types';
 import { ApiResponse, Status } from '@nabcellent/sui-react';
+import { coreApi } from '@/services/coreApi.ts';
 
-type ChartData = {
-    labels: string[],
-    datasets: number[]
-}
-
-interface RevenueDayData {
-    [key: string]: ChartData;
-}
-
-type RevenueData = {
-    today: RevenueDayData
-    yesterday: RevenueDayData
-}
-
-type DashboardData = {
-    total_payments: number
-    total_payments_today: number
-    total_revenue: number
-    total_revenue_today: number
-    org_balance: number
-}
-
-export const paymentsAPI = createApi({
-    reducerPath: 'paymentsApi',
-    keepUnusedDataFor: 60 * 5, // Five minutes
-    tagTypes: ['Payment'],
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.payments.api.url}/payments`,
-        prepareHeaders: (headers, {getState}) => {
-            const token = (getState() as RootState).auth.auth?.token;
-
-            if (token) headers.set('authorization', `Bearer ${token}`);
-
-            return headers;
-        }
-    }),
+export const paymentsApi = coreApi.injectEndpoints({
     endpoints: (builder) => ({
         payments: builder.query<Payment[], Status | void>({
             query: (status?: Status) => {
-                let url = '?with=account';
+                let url = '/payments?with=account';
 
                 if (status) url += `&status=${status}`;
 
                 return url;
             },
             transformResponse: (response: ApiResponse<Payment[]>) => response.data,
-            providesTags: ['Payment']
+            providesTags: ['Payment'],
         }),
         payment: builder.query<Payment, number>({
-            query: id => `/${id}`,
+            query: (id) => `/payments/${id}`,
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            providesTags: ['Payment']
+            providesTags: ['Payment'],
         }),
         checkPayment: builder.mutation<Payment, number>({
-            query: id => ({
-                url: `/${id}/check-payment`,
+            query: (id) => ({
+                url: `/payments/${id}/check-payment`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment']
+            invalidatesTags: ['Payment'],
         }),
         retryPurchase: builder.mutation<Payment, number>({
-            query: id => ({
-                url: `/${id}/retry-purchase`,
+            query: (id) => ({
+                url: `/payments/${id}/retry-purchase`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment']
+            invalidatesTags: ['Payment'],
         }),
         reversePayment: builder.mutation<Payment, number>({
-            query: id => ({
-                url: `/${id}/reverse`,
+            query: (id) => ({
+                url: `/payments/${id}/reverse`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment']
+            invalidatesTags: ['Payment'],
         }),
         querySTKStatus: builder.mutation<Payment, void>({
-            query: () => `/mpesa/status/query`,
+            query: () => `/payments/mpesa/status/query`,
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment']
+            invalidatesTags: ['Payment'],
         }),
         completePayment: builder.mutation<Payment, number>({
-            query: id => ({
-                url: `/${id}/complete`,
+            query: (id) => ({
+                url: `/payments/${id}/complete`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment']
+            invalidatesTags: ['Payment'],
         }),
         failPayment: builder.mutation<Payment, number>({
-            query: id => ({
-                url: `/${id}/fail`,
+            query: (id) => ({
+                url: `/payments/${id}/fail`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment']
+            invalidatesTags: ['Payment'],
         }),
-    })
+
+        mpesaPayments: builder.query<Payment[], { type: string; sub_type: string }>({
+            query: ({ type, sub_type }) => `/payments/providers/${type}/${sub_type}`,
+            transformResponse: (response: ApiResponse<Payment[]>) => response.data,
+        }),
+    }),
 });
 
 export const {
@@ -114,4 +82,5 @@ export const {
     useQuerySTKStatusMutation,
     useCompletePaymentMutation,
     useFailPaymentMutation,
-} = paymentsAPI;
+    useMpesaPaymentsQuery,
+} = paymentsApi;
