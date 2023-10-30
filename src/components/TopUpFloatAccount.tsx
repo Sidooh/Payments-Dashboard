@@ -78,7 +78,7 @@ export async function topUpFloatAccount<T extends Function>(
                                 name={'amount'}
                                 value={values.amount}
                                 required
-                                placeholder="70000"
+                                placeholder="e.g: 70,000"
                                 onChange={handleChange}
                             />
                         </Form.Group>
