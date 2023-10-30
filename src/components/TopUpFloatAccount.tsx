@@ -63,9 +63,9 @@ export async function topUpFloatAccount<T extends Function>(
                                     .filter((a) => a.id !== floatAccount.id)
                                     .map((a) => (
                                         <option key={a.id} value={a.id}>
-                                            (Account, {a.account_id}) ({a.floatable_type}, {a.id}){' '}
-                                            {a.account?.user?.name && `- ${a.account?.user?.name}`}
-                                            {a.description && `- ${a.description}`}
+                                            (Account, {a.account_id}) ({a.floatable_type}, {a.id})
+                                            {a.account?.user?.name && ` - ${a.account?.user?.name}`}
+                                            {a.description && ` - ${a.description}`}
                                         </option>
                                     ))}
                             </Form.Select>
@@ -78,7 +78,7 @@ export async function topUpFloatAccount<T extends Function>(
                                 name={'amount'}
                                 value={values.amount}
                                 required
-                                placeholder="70000"
+                                placeholder="e.g: 70,000"
                                 onChange={handleChange}
                             />
                         </Form.Group>
