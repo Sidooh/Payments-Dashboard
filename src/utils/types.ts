@@ -1,5 +1,5 @@
 import { Account, Model, Status, TransactionType } from '@nabcellent/sui-react';
-import { PaymentSubType } from '@/utils/enums.ts';
+import { PaymentSubType, PaymentType } from '@/utils/enums.ts';
 
 export interface StkCallback extends Model {
     amount: number;
@@ -72,7 +72,7 @@ export interface Payment<P = StkRequest | BuniStkRequest | VoucherTransaction | 
     subtype: string;
     status: Status;
     description: string;
-    destination_type: string;
+    destination_type: PaymentType;
     destination_subtype: string;
     destination_data: {
         payment_id?: number;
@@ -167,4 +167,42 @@ export type CreditFloatAccountRequest = {
     float_account: number;
     source: PaymentSubType;
     source_account: number;
+};
+
+export type MpesaB2BRequest = Model & {
+    command_id: string;
+    party_a: string;
+    party_b: string;
+    requester: string;
+    amount: number;
+    account_reference: string;
+    remarks?: string;
+    conversation_id: string;
+    original_conversation_id: string;
+    response_code: string;
+    response_description: string;
+    relation_id?: string;
+
+    response: MpesaB2BResponse;
+};
+
+export type MpesaB2BResponse = Model & {
+    result_type: number;
+    result_code: string;
+    result_desc: string;
+    originator_conversation_id: string;
+    conversation_id: string;
+    transaction_id: string;
+    debit_account_balance: string;
+    amount: number;
+    debit_party_affected_account_balance?: string;
+    trans_completed_time: string;
+    debit_party_charges: string;
+    receiver_party_public_name?: string;
+    currency: string;
+    initiator_account_current_balance: string;
+    debit_account_current_balance: string;
+    credit_account_balance: string;
+    debit_party_public_name: string;
+    credit_party_public_name: string;
 };

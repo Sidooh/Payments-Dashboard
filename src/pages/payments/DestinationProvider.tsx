@@ -1,5 +1,5 @@
 import { Card, Table } from 'react-bootstrap';
-import { BulkPaymentRequest, Payment, SidoohTransaction, TendePayRequest } from '@/utils/types';
+import { BulkPaymentRequest, MpesaB2BRequest, Payment, SidoohTransaction, TendePayRequest } from '@/utils/types';
 import moment from 'moment';
 import { currencyFormat, PhoneChip } from '@nabcellent/sui-react';
 import { PaymentSubType, PaymentType } from '@/utils/enums';
@@ -39,7 +39,7 @@ const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
     </Table>
 );
 
-const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
+const TendeB2BTable = ({ destination }: { destination: TendePayRequest }) => (
     <>
         <Table striped responsive className="border-bottom fs--1">
             <thead className="bg-200 text-900">
@@ -101,6 +101,63 @@ const B2BTable = ({ destination }: { destination: TendePayRequest }) => (
     </>
 );
 
+const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
+    <>
+        <Table striped responsive className="border-bottom fs--1">
+            <thead className="bg-200 text-900">
+                <tr>
+                    <th className="border-0">Command ID</th>
+                    <th className="border-0">Description</th>
+                    <th className="border-0">Amount</th>
+                    <th className="border-0">Requester</th>
+                    <th className="border-0">Parties</th>
+                    <th className="border-0 text-end">Created</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr className="border-200">
+                    <td>{request.command_id}</td>
+                    <td>{request.response_description}</td>
+                    <td>{currencyFormat(request.amount)}</td>
+                    <td>
+                        <PhoneChip phone={request.requester} />
+                    </td>
+                    <td>
+                        <p className={'m-0'}>A - {request.party_a}</p>
+                        <p className={'m-0'}>B - {request.party_b}</p>
+                    </td>
+                    <td colSpan={2} className="text-end">
+                        {moment(request.created_at).format('MMM D, Y')}
+                        <br />
+                        <small>{moment(request.created_at).format('hh:mm A')}</small>
+                    </td>
+                </tr>
+            </tbody>
+        </Table>
+        <Table>
+            <thead className="bg-200 text-900">
+                <tr className={'mb-3'}>
+                    <th className="border-0">Transaction ID</th>
+                    <th className="border-0">Credit Party Name</th>
+                    <th className="border-0">Debit Party Name</th>
+                    <th className="border-0">Result Description</th>
+                    <th className="border-0">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr className="border-200">
+                    <td>{request.response?.transaction_id}</td>
+                    <td>{request.response?.credit_party_public_name}</td>
+                    <td>{request.response?.debit_party_public_name}</td>
+                    <td>{request.response?.result_desc}</td>
+                    <td>{currencyFormat(request.response?.amount)}</td>
+                </tr>
+            </tbody>
+        </Table>
+    </>
+);
+
 const FloatOrVoucherTable = ({ destination }: { destination: SidoohTransaction }) => (
     <Table striped responsive className="border-bottom fs--1">
         <thead className="bg-200 text-900">
@@ -155,9 +212,14 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
                 {payment.destination_subtype === PaymentSubType.B2C && (
                     <B2CTable destination={destination as BulkPaymentRequest} />
                 )}
-                {payment.destination_subtype === PaymentSubType.B2B && (
-                    <B2BTable destination={destination as TendePayRequest} />
-                )}
+                {payment.destination_subtype === PaymentSubType.B2B &&
+                    payment.destination_type === PaymentType.TENDE && (
+                        <TendeB2BTable destination={destination as TendePayRequest} />
+                    )}
+                {payment.destination_subtype === PaymentSubType.B2B &&
+                    payment.destination_type === PaymentType.MPESA && (
+                        <MpesaB2BTable request={destination as MpesaB2BRequest} />
+                    )}
             </div>
         </Card>
     );
