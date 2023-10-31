@@ -130,7 +130,7 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                     <td colSpan={2} className="text-end">
                         {moment(request.created_at).format('MMM D, Y')}
                         <br />
-                        <small>{moment(request.created_at).format('hh:mm A')}</small>
+                        <small>{moment(request.created_at).format('H:mm\\Hr\\s')}</small>
                     </td>
                 </tr>
             </tbody>
@@ -139,25 +139,25 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
             <thead className="bg-200 text-900">
                 <tr className={'mb-3'}>
                     <th className="border-0 white-space-nowrap">Transaction ID</th>
-                    <th className="border-0">Conversation ID</th>
                     <th className="border-0">Credit Party Name</th>
-                    <th className="border-0">Debit Party Name</th>
+                    <th className="border-0">Debit Account Balance</th>
                     <th className="border-0">Result Description</th>
+                    <th className="border-0 text-end">Created</th>
                 </tr>
             </thead>
             <tbody>
                 <tr className="border-200">
                     <td>{request.response.transaction_id}</td>
-                    <td>
-                        {request.response.conversation_id}
-                        <br />
-                        <span title={'Original Conversation ID'}>
-                            <b>{request.response.originator_conversation_id}</b>
-                        </span>
-                    </td>
                     <td>{request.response.credit_party_public_name}</td>
-                    <td>{request.response.debit_party_public_name}</td>
+                    <td>{currencyFormat(Number(request.response.debit_account_balance.split('|')[2]))}</td>
                     <td>{request.response.result_desc}</td>
+                    <td className="text-end">
+                        {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
+                        <br />
+                        <small>
+                            {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm\\Hr\\s')}
+                        </small>
+                    </td>
                 </tr>
             </tbody>
         </Table>
