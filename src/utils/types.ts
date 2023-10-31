@@ -79,7 +79,7 @@ export interface Payment<P = StkRequest | BuniStkRequest | VoucherTransaction | 
     };
     account?: Account;
     provider?: P;
-    destination_provider?: SidoohTransaction | BulkPaymentRequest | TendePayRequest;
+    destination_provider?: SidoohTransaction | BulkPaymentRequest | TendePayRequest | MpesaB2BRequest;
 }
 
 export interface BulkPaymentRequest extends Model {
