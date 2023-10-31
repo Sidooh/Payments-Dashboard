@@ -130,7 +130,7 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                     <td colSpan={2} className="text-end">
                         {moment(request.created_at).format('MMM D, Y')}
                         <br />
-                        <small>{moment(request.created_at).format('H:mm\\Hr\\s')}</small>
+                        <small>{moment(request.created_at).format('H:mm:ss')}</small>
                     </td>
                 </tr>
             </tbody>
@@ -154,9 +154,7 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                     <td className="text-end">
                         {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
                         <br />
-                        <small>
-                            {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm\\Hr\\s')}
-                        </small>
+                        <small>{moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}</small>
                     </td>
                 </tr>
             </tbody>
