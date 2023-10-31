@@ -2,6 +2,7 @@ export enum PaymentType {
     MPESA = 'MPESA',
     SIDOOH = 'SIDOOH',
     BUNI = 'BUNI',
+    TENDE = 'TENDE',
 }
 
 export enum PaymentSubType {
