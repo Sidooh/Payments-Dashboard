@@ -138,20 +138,26 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
         <Table>
             <thead className="bg-200 text-900">
                 <tr className={'mb-3'}>
-                    <th className="border-0">Transaction ID</th>
+                    <th className="border-0 white-space-nowrap">Transaction ID</th>
+                    <th className="border-0">Conversation ID</th>
                     <th className="border-0">Credit Party Name</th>
                     <th className="border-0">Debit Party Name</th>
                     <th className="border-0">Result Description</th>
-                    <th className="border-0">Amount</th>
                 </tr>
             </thead>
             <tbody>
                 <tr className="border-200">
-                    <td>{request.response?.transaction_id}</td>
-                    <td>{request.response?.credit_party_public_name}</td>
-                    <td>{request.response?.debit_party_public_name}</td>
-                    <td>{request.response?.result_desc}</td>
-                    <td>{currencyFormat(request.response?.amount)}</td>
+                    <td>{request.response.transaction_id}</td>
+                    <td>
+                        {request.response.conversation_id}
+                        <br />
+                        <span title={'Original Conversation ID'}>
+                            <b>{request.response.originator_conversation_id}</b>
+                        </span>
+                    </td>
+                    <td>{request.response.credit_party_public_name}</td>
+                    <td>{request.response.debit_party_public_name}</td>
+                    <td>{request.response.result_desc}</td>
                 </tr>
             </tbody>
         </Table>
