@@ -135,7 +135,7 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                 </tr>
             </tbody>
         </Table>
-        <Table>
+        <Table responsive>
             <thead className="bg-200 text-900">
                 <tr className={'mb-3'}>
                     <th className="border-0 white-space-nowrap">Transaction ID</th>
