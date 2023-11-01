@@ -156,8 +156,6 @@ const Show = () => {
         );
     }
 
-    console.log(payment);
-
     return (
         <>
             <Card className="mb-3">

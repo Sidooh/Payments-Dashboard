@@ -148,13 +148,25 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
             <tbody>
                 <tr className="border-200">
                     <td>{request.response.transaction_id}</td>
-                    <td>{request.response.credit_party_public_name}</td>
-                    <td>{currencyFormat(Number(request.response.debit_account_balance.split('|')[2]))}</td>
+                    <td>{request.response.credit_party_public_name ?? 'N/A'}</td>
+                    <td>
+                        {request.response.debit_account_balance
+                            ? currencyFormat(Number(request.response.debit_account_balance?.split('|')[2]))
+                            : 'N/A'}
+                    </td>
                     <td>{request.response.result_desc}</td>
                     <td className="text-end">
-                        {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
-                        <br />
-                        <small>{moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}</small>
+                        {request.response.trans_completed_time ? (
+                            <>
+                                {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
+                                <br />
+                                <small>
+                                    {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}
+                                </small>
+                            </>
+                        ) : (
+                            'N/A'
+                        )}
                     </td>
                 </tr>
             </tbody>
