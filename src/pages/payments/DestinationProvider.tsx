@@ -135,42 +135,44 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                 </tr>
             </tbody>
         </Table>
-        <Table responsive>
-            <thead className="bg-200 text-900">
-                <tr className={'mb-3'}>
-                    <th className="border-0 white-space-nowrap">Transaction ID</th>
-                    <th className="border-0">Credit Party Name</th>
-                    <th className="border-0">Debit Account Balance</th>
-                    <th className="border-0">Result Description</th>
-                    <th className="border-0 text-end">Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr className="border-200">
-                    <td>{request.response.transaction_id}</td>
-                    <td>{request.response.credit_party_public_name ?? 'N/A'}</td>
-                    <td>
-                        {request.response.debit_account_balance
-                            ? currencyFormat(Number(request.response.debit_account_balance?.split('|')[2]))
-                            : 'N/A'}
-                    </td>
-                    <td>{request.response.result_desc}</td>
-                    <td className="text-end">
-                        {request.response.trans_completed_time ? (
-                            <>
-                                {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
-                                <br />
-                                <small>
-                                    {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}
-                                </small>
-                            </>
-                        ) : (
-                            'N/A'
-                        )}
-                    </td>
-                </tr>
-            </tbody>
-        </Table>
+        {request.response && (
+            <Table responsive>
+                <thead className="bg-200 text-900">
+                    <tr className={'mb-3'}>
+                        <th className="border-0 white-space-nowrap">Transaction ID</th>
+                        <th className="border-0">Credit Party Name</th>
+                        <th className="border-0">Debit Account Balance</th>
+                        <th className="border-0">Result Description</th>
+                        <th className="border-0 text-end">Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr className="border-200">
+                        <td>{request.response.transaction_id}</td>
+                        <td>{request.response.credit_party_public_name ?? 'N/A'}</td>
+                        <td>
+                            {request.response.debit_account_balance
+                                ? currencyFormat(Number(request.response.debit_account_balance?.split('|')[2]))
+                                : 'N/A'}
+                        </td>
+                        <td>{request.response.result_desc}</td>
+                        <td className="text-end">
+                            {request.response.trans_completed_time ? (
+                                <>
+                                    {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
+                                    <br />
+                                    <small>
+                                        {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}
+                                    </small>
+                                </>
+                            ) : (
+                                'N/A'
+                            )}
+                        </td>
+                    </tr>
+                </tbody>
+            </Table>
+        )}
     </>
 );
 

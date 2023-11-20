@@ -183,7 +183,7 @@ export type MpesaB2BRequest = Model & {
     response_description: string;
     relation_id?: string;
 
-    response: MpesaB2BResponse;
+    response?: MpesaB2BResponse;
 };
 
 export type MpesaB2BResponse = Model & {
