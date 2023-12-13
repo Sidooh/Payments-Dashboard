@@ -12,24 +12,35 @@ const ProviderBalances = () => {
 
     return (
         <Row className="g-3 h-100">
-            <Col md={6} className={'mb-xxl-2'}>
+            <Col lg={4} className={'mb-xxl-2'}>
                 <Card className={'bg-line-chart-gradient'}>
                     <CardBgCorner />
                     <Card.Body className={'position-relative'}>
                         <h6 className="mb-md-0 mb-lg-2 text-light">Org. Mpesa Balance</h6>
-                        <h4 className="m-0 fs-2 fw-normal text-white">
+                        <h4 className="m-0 fs-1 fw-bold text-white">
                             <CountUp end={data.org_balance} separator="," prefix={'KES '} decimals={2} />
                         </h4>
                     </Card.Body>
                 </Card>
             </Col>
-            <Col md={6} className={'mb-xxl-2'}>
+            <Col lg={4} className={'mb-xxl-2'}>
                 <Card className={'bg-line-chart-gradient'}>
                     <CardBgCorner corner={2} />
                     <Card.Body className={'position-relative'}>
                         <h6 className="mb-md-0 mb-lg-2 text-light">B2B Balance</h6>
-                        <h4 className="m-0 fs-2 fw-normal text-white">
+                        <h4 className="m-0 fs-1 fw-bold text-white">
                             <CountUp end={data.b2b_balance} separator="," prefix={'KES '} decimals={2} />
+                        </h4>
+                    </Card.Body>
+                </Card>
+            </Col>
+            <Col lg={4} className={'mb-xxl-2'}>
+                <Card className={'bg-line-chart-gradient'}>
+                    <CardBgCorner corner={2} />
+                    <Card.Body className={'position-relative'}>
+                        <h6 className="mb-md-0 mb-lg-2 text-light">B2C Balance</h6>
+                        <h4 className="m-0 fs-1 fw-bold text-white">
+                            <CountUp end={data.b2c_balance} separator="," prefix={'KES '} decimals={2} />
                         </h4>
                     </Card.Body>
                 </Card>

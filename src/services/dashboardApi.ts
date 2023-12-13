@@ -11,6 +11,7 @@ type DashboardSummariesResponse = {
 type ProvidersBalancesResponse = {
     org_balance: number;
     b2b_balance: number;
+    b2c_balance: number;
 };
 
 export const dashboardApi = coreApi.injectEndpoints({
