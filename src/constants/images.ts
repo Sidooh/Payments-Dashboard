@@ -5,8 +5,6 @@ import card from '@/assets/images/generic/card.png';
 import genericDefault from '@/assets/images/generic/default.png';
 import inverted from '@/assets/images/generic/inverted.png';
 import vibrant from '@/assets/images/generic/vibrant.png';
-import falconModeDefault from '@/assets/images/generic/falcon-mode-default.jpg';
-import falconModeDark from '@/assets/images/generic/falcon-mode-dark.jpg';
 
 //  icons
 import arrowsH from '@/assets/images/icons/arrows-h.svg';
@@ -23,8 +21,6 @@ import corner_4 from '@/assets/images/icons/spot-illustrations/corner-4.png';
 import corner_5 from '@/assets/images/icons/spot-illustrations/corner-5.png';
 import shape_1 from '@/assets/images/icons/spot-illustrations/shape-1.png';
 
-//  team
-import one from '@/assets/images/team/1.jpg';
 
 export const IMAGES = {
     generic: {
@@ -33,8 +29,6 @@ export const IMAGES = {
         default: genericDefault,
         inverted,
         vibrant,
-        falconModeDefault,
-        falconModeDark,
     },
     icons: {
         arrowsH,
@@ -55,8 +49,5 @@ export const IMAGES = {
     },
     logos: {
         sidooh,
-    },
-    team: {
-        1: one,
     },
 };
