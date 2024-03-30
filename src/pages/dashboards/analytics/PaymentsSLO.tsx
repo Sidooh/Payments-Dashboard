@@ -1,21 +1,13 @@
-import { PaymentsSLOsResponse, useGetPaymentsSLOsQuery } from '@/services/analyticsApi';
-import { Card, Col, Row } from 'react-bootstrap';
-import {
-    ComponentLoader,
-    getStatusColor,
-    groupBy,
-    IconButton,
-    SectionError,
-    Status,
-    Tooltip,
-} from '@nabcellent/sui-react';
+import {PaymentsSLOsResponse, useGetPaymentsSLOsQuery} from '@/services/analyticsApi';
+import {Card, Col, Row} from 'react-bootstrap';
+import {ComponentLoader, getStatusColor, groupBy, IconButton, SectionError, Tooltip,} from '@nabcellent/sui-react';
 import CardBgCorner from '../../../components/CardBgCorner';
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import CountUp from 'react-countup';
-import { FaPercentage, FaSync } from 'react-icons/fa';
+import {FaPercentage, FaSync} from 'react-icons/fa';
 
 const PaymentsSLO = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetPaymentsSLOsQuery();
+    let {data, isError, error, isLoading, isSuccess, refetch, isFetching} = useGetPaymentsSLOsQuery();
 
     if (isError) return <SectionError error={error} />;
     if (isLoading || !isSuccess || !data) return <ComponentLoader />;
@@ -44,7 +36,7 @@ const PaymentsSLO = () => {
                         const total = groupedSLOs[year].reduce((p, c) => (p += c.count), 0);
                         const data = groupedSLOs[year]
                             .sort((a, b) => b.count - a.count)
-                            .filter((s) => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status));
+                            /*.filter((s) => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status))*/;
 
                         return (
                             <Fragment key={`year-${year}`}>
