@@ -1,5 +1,5 @@
-import { Account, Model, Status, TransactionType } from '@nabcellent/sui-react';
-import { PaymentSubType, PaymentType } from '@/utils/enums.ts';
+import {Account, Model, Status, TransactionType} from '@nabcellent/sui-react';
+import {PaymentSubType, PaymentType} from '@/utils/enums.ts';
 
 export interface StkCallback extends Model {
     amount: number;
@@ -102,6 +102,7 @@ export interface BulkPaymentResponse extends Model {
 export interface FloatAccountTransaction extends Model {
     type: TransactionType;
     amount: number;
+    balance: number;
     description: string;
     float_account_id: number;
     float_account?: FloatAccount;
