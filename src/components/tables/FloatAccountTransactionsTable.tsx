@@ -59,7 +59,7 @@ const FloatAccountTransactionsTable = ({
             accessorKey: 'account',
             header: 'Account',
             cell: ({ row }: { row: { original: FloatAccountTransaction } }) => {
-                return row.description ?? '-';
+                return row.original.description ?? '-';
             },
         });
     }
