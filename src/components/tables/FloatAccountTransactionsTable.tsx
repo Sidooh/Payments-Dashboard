@@ -59,13 +59,7 @@ const FloatAccountTransactionsTable = ({
             accessorKey: 'account',
             header: 'Account',
             cell: ({ row }: { row: { original: FloatAccountTransaction } }) => {
-                if (row.original.float_account_id === 1) {
-                    return 'PAYMENTS';
-                } else if (row.original.float_account_id === 2) {
-                    return 'SAVINGS';
-                } else {
-                    return '-';
-                }
+                return row.description ?? '-';
             },
         });
     }
