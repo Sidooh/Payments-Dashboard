@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Button, ButtonGroup, Col, Form, Offcanvas, Row } from 'react-bootstrap';
-import { IMAGES } from '@/constants/images';
-import { useAppDispatch, useAppSelector } from '@/app/store.ts';
-import { RootState } from '@/app/store';
-import { resetTheme, setTheme } from '@/features/theme/themeSlice';
-import { CONFIG } from '@/config';
-import { Badge, Flex } from '@nabcellent/sui-react';
-import { FaPalette } from 'react-icons/fa6';
-import { FaRedoAlt } from 'react-icons/fa';
+import {useState} from 'react';
+import {Button, ButtonGroup, Col, Form, Offcanvas, Row} from 'react-bootstrap';
+import {IMAGES} from '@/constants/images';
+import {useAppDispatch, useAppSelector} from '@/app/store.ts';
+import {RootState} from '@/app/store';
+import {resetTheme, setTheme} from '@/features/theme/themeSlice';
+import {CONFIG} from '@/config';
+import {Badge, Flex} from '@nabcellent/sui-react';
+import {FaPalette} from 'react-icons/fa6';
+import {FaRedoAlt} from 'react-icons/fa';
 
 const SettingsPanel = () => {
     const { showSettingPanel, navbarStyle, navbarPosition, isDark, isFluid } = useAppSelector(
@@ -95,11 +95,11 @@ const SettingsPanel = () => {
                             />
                             <label className="btn d-inline-block btn-navbar-style fs--1" htmlFor="themeSwitcherLight">
                                 <span className="hover-overlay mb-2 rounded d-block">
-                                    <img
-                                        className="img-fluid img-prototype mb-0"
-                                        src={IMAGES.generic.falconModeDefault}
-                                        alt=""
-                                    />
+                                    {/*<img*/}
+                                    {/*    className="img-fluid img-prototype mb-0"*/}
+                                    {/*    src={IMAGES.generic.falconModeDefault}*/}
+                                    {/*    alt=""*/}
+                                    {/*/>*/}
                                 </span>
                                 <span className="label-text">Light</span>
                             </label>
@@ -117,11 +117,11 @@ const SettingsPanel = () => {
                             />
                             <label className="btn d-inline-block btn-navbar-style fs--1" htmlFor="themeSwitcherDark">
                                 <span className="hover-overlay mb-2 rounded d-block">
-                                    <img
-                                        className="img-fluid img-prototype mb-0"
-                                        src={IMAGES.generic.falconModeDark}
-                                        alt=""
-                                    />
+                                    {/*<img*/}
+                                    {/*    className="img-fluid img-prototype mb-0"*/}
+                                    {/*    src={IMAGES.generic.falconModeDark}*/}
+                                    {/*    alt=""*/}
+                                    {/*/>*/}
                                 </span>
                                 <span className="label-text"> Dark</span>
                             </label>

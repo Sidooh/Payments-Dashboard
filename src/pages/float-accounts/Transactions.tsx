@@ -1,6 +1,5 @@
-import { SectionError, SectionLoader } from '@nabcellent/sui-react';
-import { logger } from '@/utils/logger';
-import { useFloatAccountsTransactionsQuery } from '@/services/floatAccountsApi';
+import {SectionError, SectionLoader} from '@nabcellent/sui-react';
+import {useFloatAccountsTransactionsQuery} from '@/services/floatAccountsApi';
 import FloatAccountTransactionsTable from '@/components/tables/FloatAccountTransactionsTable';
 
 const FloatAccountsTransactions = () => {
@@ -8,8 +7,6 @@ const FloatAccountsTransactions = () => {
 
     if (isError) return <SectionError error={error} />;
     if (isLoading || !isSuccess || !transactions) return <SectionLoader />;
-
-    logger.log(transactions);
 
     return <FloatAccountTransactionsTable transactions={transactions} showAccountColumn />;
 };

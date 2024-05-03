@@ -1,4 +1,4 @@
-import { Card } from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import {
     currencyFormat,
     DataTable,
@@ -6,9 +6,9 @@ import {
     TableDate,
     TransactionTypeChip,
 } from '@nabcellent/sui-react';
-import { FloatAccountTransaction } from '@/utils/types';
-import { Link } from 'react-router-dom';
-import { FaRegEye } from 'react-icons/fa6';
+import {FloatAccountTransaction} from '@/utils/types';
+import {Link} from 'react-router-dom';
+import {FaRegEye} from 'react-icons/fa6';
 
 type FloatAccountTransactionsTableProps = { transactions: FloatAccountTransaction[]; showAccountColumn?: boolean };
 
@@ -32,6 +32,11 @@ const FloatAccountTransactionsTable = ({
         {
             accessorKey: 'description',
             header: 'Description',
+        },
+        {
+            accessorKey: 'balance',
+            header: 'Balance',
+            cell: ({row}: any) => currencyFormat(row.original.balance),
         },
         {
             accessorKey: 'created_at',
@@ -59,7 +64,7 @@ const FloatAccountTransactionsTable = ({
                 } else if (row.original.float_account_id === 2) {
                     return 'SAVINGS';
                 } else {
-                    return '-';
+                    return row.original.float_account_id;
                 }
             },
         });
