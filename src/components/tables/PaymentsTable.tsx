@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { Payment } from '@/utils/types';
+import { FloatAccount, Payment } from '@/utils/types';
 import { DataTable, getRelativeDateAndTime, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { Link } from 'react-router-dom';
 import SidoohAccount from '../common/SidoohAccount';
@@ -18,6 +18,8 @@ const PaymentsTable = ({ tableTitle, payments }: { tableTitle: string; payments:
                         {
                             accessorKey: 'account',
                             header: 'Account',
+                            accessorFn: (row: FloatAccount) =>
+                                `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
                             cell: ({ row }: { row: { original: Payment } }) => (
                                 <SidoohAccount account={row.original.account} />
                             ),
