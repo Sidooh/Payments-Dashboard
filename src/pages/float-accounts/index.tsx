@@ -41,18 +41,19 @@ const FloatAccounts = () => {
                             cell: ({ row }: any) => <SidoohAccount account={row.original.account} />,
                         },
                         {
-                            accessorKey: 'floatable',
+                            accessorKey: 'floatable_type',
                             header: 'Floatable',
                             cell: ({ row }: any) => row.original.floatable_type,
                         },
                         {
                             accessorKey: 'description',
                             header: 'Description',
-                            cell: ({ row }: any) => row.original.description,
+                            accessorFn: (row: FloatAccount) => row.description ?? '',
                         },
                         {
                             accessorKey: 'balance',
                             header: 'Balance',
+                            accessorFn: (row: FloatAccount) => currencyFormat(row.balance),
                             cell: ({ row }: any) => currencyFormat(row.original.balance),
                         },
                         {
