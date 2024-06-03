@@ -17,7 +17,7 @@ const PaymentSummaries = () => {
             <Card className={'relative'}>
                 <CardBgCorner corner={2} />
                 <CardHeader className={'pb-0'}>
-                    <span>Payments</span>
+                    <span className={'text-sm text-muted-foreground'}>Payments</span>
                     <div className="absolute top-3 right-6">
                         <Badge className={'rounded-full'}>
                             <CountUp end={stats.total_payments_today} separator="," />
@@ -33,7 +33,7 @@ const PaymentSummaries = () => {
             <Card className={'relative'}>
                 <CardBgCorner />
                 <CardHeader className={'pb-0'}>
-                    <span>Revenue</span>
+                    <span className={'text-sm text-muted-foreground'}>Revenue</span>
                     <div className="absolute top-3 right-6">
                         <Badge className={'bg-green-500 rounded-full'}>
                             <CountUp end={stats.total_revenue_today} prefix={'KES '} separator="," />

@@ -2,7 +2,7 @@ const PageLoader = () => {
     return (
         <div
             role="status"
-            className="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 p-60 rounded-full bg-white/50 shadow-sm"
+            className="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 p-32 lg:p-60 rounded-full bg-white/50 shadow-sm"
         >
             <svg
                 aria-hidden="true"

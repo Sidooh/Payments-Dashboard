@@ -12,7 +12,7 @@ const ProviderBalances = () => {
     if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
 
     return (
-        <div className="grid grid-cols-3 gap-3 h-full">
+        <div className="grid lg:grid-cols-3 gap-3 h-full">
             <div className={'2xl:mb-2'}>
                 <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center'}>
                     <CardBgCorner />

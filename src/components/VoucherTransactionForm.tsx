@@ -86,21 +86,21 @@ export const VoucherTransactionForm = ({ voucher }: VoucherTransactionFormProps)
     return (
         <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
             <DialogTrigger asChild>
-                <div>
+                <div className={'flex items-center me-2'}>
                     <Tooltip title={'Debit'} asChild>
-                        <Button size={'icon'} className={'rounded-s-full rounded-e-none h-7'}>
+                        <Button size={'icon'} className={'rounded-s-full rounded-e-none h-6 lg:h-7'}>
                             <FaMinus
                                 color={'red'}
-                                className={'cursor-pointer'}
+                                className={'text-xs lg:text-base'}
                                 onClick={() => setAction(Action.DEBIT)}
                             />
                         </Button>
                     </Tooltip>
                     <Tooltip title={'Credit'} asChild>
-                        <Button size={'icon'} className={'rounded-e-full rounded-s-none h-7'}>
+                        <Button size={'icon'} className={'rounded-e-full rounded-s-none h-6 lg:h-7'}>
                             <FaPlus
                                 color={'green'}
-                                className={'cursor-pointer'}
+                                className={'text-xs lg:text-base'}
                                 onClick={() => setAction(Action.CREDIT)}
                             />
                         </Button>

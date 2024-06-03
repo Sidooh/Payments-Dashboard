@@ -34,11 +34,11 @@ export function MobileNav() {
                     <span className="sr-only">Toggle Menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="pr-0">
+            <SheetContent side="left" className="w-3/5 pr-0">
                 <MobileLink to="/" className="ps-4 flex items-center" onOpenChange={setOpen}>
                     <Logo />
                 </MobileLink>
-                <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 px-6">
+                <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10">
                     <div className="flex flex-col space-y-4">
                         {routes.map((r, index) => (
                             <div key={index} className="flex flex-col pt-6 pe-6">
