@@ -87,9 +87,9 @@ export default function TopUpFloatAccount({ trigger, floatAccount, floatAccounts
             <Tooltip title={'Top Up Float'} placement={'top'} asChild>
                 <DialogTrigger asChild>{trigger}</DialogTrigger>
             </Tooltip>
-            <DialogContent>
+            <DialogContent className={'w-max'}>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSubmit)} className="sm:max-w-md space-y-4">
+                    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                         <DialogHeader>
                             <DialogTitle>Float Top Up</DialogTitle>
                             <DialogDescription>Fill in the form to credit the float account.</DialogDescription>

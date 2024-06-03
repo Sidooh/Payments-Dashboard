@@ -6,7 +6,7 @@ import TableDate from '@/components/common/TableDate.tsx';
 
 const SourceProvider = ({ payment }: { payment: Payment<FloatAccountTransaction | VoucherTransaction> }) => (
     <Card className="mb-3">
-        <CardHeader className="flex-row gap-1">
+        <CardHeader className="flex-row gap-1 text-sm lg:text-base">
             Source - <i className={'text-muted-foreground'}>{payment.subtype}</i>
         </CardHeader>
         <CardContent>

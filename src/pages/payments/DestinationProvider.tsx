@@ -119,7 +119,7 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                     <TableCell>
                         <Phone phone={request.requester} />
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={'text-nowrap'}>
                         <p>A - {request.party_a}</p>
                         <p>B - {request.party_b}</p>
                     </TableCell>
@@ -134,9 +134,9 @@ const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
                 <TableHeader className="bg-slate-100">
                     <TableRow>
                         <TableHead className="whitespace-nowrap">Transaction ID</TableHead>
-                        <TableHead>Credit Party Name</TableHead>
-                        <TableHead>Debit Account Balance</TableHead>
-                        <TableHead>Result Description</TableHead>
+                        <TableHead className={'text-nowrap'}>Credit Party Name</TableHead>
+                        <TableHead className={'text-nowrap'}>Debit Account Balance</TableHead>
+                        <TableHead className={'text-nowrap'}>Result Description</TableHead>
                         <TableHead className="text-end">Created</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -205,7 +205,7 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
 
     return (
         <Card>
-            <CardHeader className={'flex-row gap-1'}>
+            <CardHeader className={'flex-row gap-1 text-sm lg:text-base'}>
                 Destination - <i className={'text-muted-foreground'}>{payment.destination_subtype}</i>
             </CardHeader>
             <CardContent>
