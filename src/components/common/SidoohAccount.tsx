@@ -1,16 +1,17 @@
-import { Account, PhoneChip } from '@nabcellent/sui-react';
 import { CONFIG } from '@/config';
+import Phone from '@/components/common/Phone.tsx';
+import { Account } from '@/lib/types/models.ts';
 
 const SidoohAccount = ({ account }: { account?: Account }) => {
     if (!account) return <>-</>;
 
     return (
-        <span>
+        <p>
             {account?.user?.name} {account?.user?.name && <br />}
-            <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account.id}`} target={'_blank'}>
-                <PhoneChip phone={account.phone} />
+            <a href={`${CONFIG.services.accounts.dashboard.url}/accounts/${account.id}`} target={'_blank'}>
+                <Phone phone={account.phone} />
             </a>
-        </span>
+        </p>
     );
 };
 

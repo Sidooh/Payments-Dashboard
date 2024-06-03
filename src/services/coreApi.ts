@@ -7,11 +7,11 @@ export const coreApi = createApi({
     keepUnusedDataFor: 60 * 7, // Seven minutes
     tagTypes: ['Dashboard', 'Payment', 'Voucher', 'FloatAccount'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.payments.api.url}`,
+        baseUrl: `${CONFIG.services.payments.api.url}`,
         prepareHeaders: async (headers, { getState }) => {
-            const token = (getState() as RootState).auth.auth?.token;
+            const token = (getState() as RootState).auth?.token;
 
-            if (!CONFIG.sidooh.services.payments.api.url) throw new Error('Payments Api URL Env is not set!');
+            if (!CONFIG.services.payments.api.url) throw new Error('Payments Api URL Env is not set!');
 
             if (token) headers.set('authorization', `Bearer ${token}`);
 

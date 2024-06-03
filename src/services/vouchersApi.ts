@@ -1,6 +1,6 @@
-import { Voucher, VoucherTransaction } from '@/utils/types';
-import { ApiResponse } from '@nabcellent/sui-react';
+import { Voucher, VoucherTransaction } from '@/lib/types/models';
 import { coreApi } from '@/services/coreApi.ts';
+import { ApiResponse } from '@/lib/types';
 
 export const vouchersApi = coreApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -25,7 +25,7 @@ export const vouchersApi = coreApi.injectEndpoints({
                 body: patch,
             }),
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            invalidatesTags: ['Voucher'],
+            invalidatesTags: (_, err) => (err ? [] : ['Voucher']),
         }),
         debitVoucher: builder.mutation<Voucher, { id: number; amount: number }>({
             query: ({ id, ...patch }) => ({
@@ -34,7 +34,7 @@ export const vouchersApi = coreApi.injectEndpoints({
                 body: patch,
             }),
             transformResponse: (response: ApiResponse<Voucher>) => response.data,
-            invalidatesTags: ['Voucher'],
+            invalidatesTags: (_, err) => (err ? [] : ['Voucher']),
         }),
         activateVoucher: builder.mutation<Voucher, number>({
             query: (id) => ({

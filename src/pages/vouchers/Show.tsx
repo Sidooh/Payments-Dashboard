@@ -1,44 +1,34 @@
 import { useParams } from 'react-router-dom';
-import {
-    useActivateVoucherMutation,
-    useCreditVoucherMutation,
-    useDeactivateVoucherMutation,
-    useDebitVoucherMutation,
-    useVoucherQuery,
-} from '@/services/vouchersApi';
-import { Flex, SectionError, SectionLoader, Status, StatusChip, Sweet, toast, Tooltip } from '@nabcellent/sui-react';
+import { useActivateVoucherMutation, useDeactivateVoucherMutation, useVoucherQuery } from '@/services/vouchersApi';
 import VoucherTransactionsTable from '@/components/tables/VoucherTransactionsTable';
-import CardHeader from '@/components/common/CardHeader';
-import { Card, Col, Row } from 'react-bootstrap';
 import CardBgCorner from '@/components/CardBgCorner';
-import { CONFIG } from '@/config.ts';
 import CountUp from 'react-countup';
-import { logger } from '@/utils/logger';
 import moment from 'moment/moment';
-import { transactVoucher } from '@/components/TransactVoucher';
-import { FaInfo, FaMinus, FaPlus } from 'react-icons/fa6';
+import { VoucherTransactionForm } from '@/components/VoucherTransactionForm.tsx';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import { Status } from '@/lib/enums.ts';
+import Swal from 'sweetalert2';
+import { toast } from '@/lib/utils.ts';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import StatusBadge from '@/components/common/StatusBadge.tsx';
+import SidoohAccount from '@/components/common/SidoohAccount.tsx';
+import AlertInfo from '@/components/alerts/AlertInfo.tsx';
 
 const Show = () => {
     const { id } = useParams();
     const { data: voucher, isError, error, isLoading, isSuccess } = useVoucherQuery(Number(id));
 
-    const [creditVoucher] = useCreditVoucherMutation();
-    const [debitVoucher] = useDebitVoucherMutation();
     const [activateVoucher] = useActivateVoucherMutation();
     const [deactivateVoucher] = useDeactivateVoucherMutation();
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !voucher) return <SectionLoader />;
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !voucher) return <Skeleton className={'h-[700px]'} />;
 
-    logger.log('Voucher:', voucher);
     const account = voucher.account;
 
-    const handleQueryVoucher = async (action: 'credit' | 'debit') => {
-        await transactVoucher(action, voucher, creditVoucher, debitVoucher);
-    };
-
     const handleStatusChange = async (status: Status) => {
-        await Sweet.fire({
+        await Swal.fire({
             backdrop: `rgba(0, 0, 150, 0.4)`,
             showLoaderOnConfirm: true,
             icon: 'warning',
@@ -50,7 +40,7 @@ const Show = () => {
                     ${status === Status.ACTIVE ? 'ACTIVATE' : 'DEACTIVATE'}
                 </b>
                 this voucher?`,
-            allowOutsideClick: () => !Sweet.isLoading(),
+            allowOutsideClick: () => !Swal.isLoading(),
             preConfirm: async () => {
                 let res;
                 if (status === Status.ACTIVE) {
@@ -76,92 +66,52 @@ const Show = () => {
     };
 
     return (
-        <>
-            <Card className={'mb-3'}>
-                <CardBgCorner corner={3} />
-                <Card.Body className="position-relative">
-                    <Flex justifyContent={'between'} alignItems={'start'}>
-                        <div>
-                            <h5>Account: #{account?.id}</h5>
-                            <h6 className="mb-2">
-                                <a
-                                    href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
-                                    target={'_blank'}
-                                    rel={'noreferrer noopener'}
-                                >
-                                    {account?.user?.name}
-                                </a>
-                            </h6>
-                            <p className="mb-0 fs--1">
-                                <a
-                                    href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
-                                    target={'_blank'}
-                                    rel={'noreferrer noopener'}
-                                >
-                                    {account?.phone}
-                                </a>
-                            </p>
-                            <StatusChip
-                                status={voucher.status}
-                                statuses={[Status.ACTIVE, Status.INACTIVE]}
-                                onStatusChange={handleStatusChange}
-                            />
-                        </div>
-                        <i className="fs--1">
-                            <b>CREATED:</b> {moment(voucher?.created_at).format('MMM Do, Y, hh:mm A')}
+        <div className={'space-y-3'}>
+            <div className={'grid lg:grid-cols-3 gap-3'}>
+                <Card className={'relative lg:col-span-2'}>
+                    <CardBgCorner corner={3} />
+                    <CardHeader className={'flex-row justify-between relative'}>
+                        <span>
+                            Account: #{account?.id}
+                            <SidoohAccount account={account} />
+                        </span>
+                        <i className="text-sm text-muted-foreground text-end">
+                            <b>
+                                <small>CREATED ON</small>
+                            </b>
+                            <br /> {moment(voucher?.created_at).format('MMM Do, Y, hh:mm A')}
                         </i>
-                    </Flex>
-                </Card.Body>
-            </Card>
-
-            <Row className={'justify-content-center mb-3'}>
-                <Col lg={6}>
-                    <Card className={'bg-line-chart-gradient'}>
-                        <Card.Header
-                            className={'bg-transparent light d-flex justify-content-between align-items-start'}
-                        >
-                            <div>
-                                <h6 className="text-white">BALANCE</h6>
-                                <h4 className="text-white m-0">
-                                    <CountUp end={voucher.balance} prefix={'KES '} separator="," />
-                                </h4>
-                            </div>
-
-                            <div className="row gx-2 fw-bolder">
-                                <button
-                                    className="col-auto btn btn-sm btn-light py-0 rounded-end-0"
-                                    onClick={() => handleQueryVoucher('debit')}
-                                    style={{ borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}
-                                >
-                                    <Tooltip title={'Debit'} placement={'top'}>
-                                        <FaMinus style={{ color: 'red' }} />
-                                    </Tooltip>
-                                </button>
-                                <button
-                                    className="col-auto btn btn-sm btn-light py-0 rounded-start-0"
-                                    onClick={() => handleQueryVoucher('credit')}
-                                    style={{ borderTopRightRadius: 20, borderBottomRightRadius: 20 }}
-                                >
-                                    <Tooltip title={'Credit'} placement={'top'}>
-                                        <FaPlus style={{ color: 'green' }} />
-                                    </Tooltip>
-                                </button>
-                            </div>
-                        </Card.Header>
-                    </Card>
-                </Col>
-            </Row>
+                    </CardHeader>
+                    <CardContent className="relative">
+                        <StatusBadge
+                            status={voucher.status}
+                            statuses={[Status.ACTIVE, Status.INACTIVE]}
+                            onStatusChange={handleStatusChange}
+                        />
+                    </CardContent>
+                </Card>
+                <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center'}>
+                    <CardHeader className="text-muted-foreground pb-0 lg:pb-6">BALANCE</CardHeader>
+                    <CardContent>
+                        <CountUp
+                            className={'text-white text-xl lg:text-2xl'}
+                            end={voucher.balance}
+                            prefix={'KES '}
+                            separator=","
+                        />
+                        <div className={'absolute top-3 end-3'}>
+                            <VoucherTransactionForm voucher={voucher} />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
 
             {voucher?.transactions?.length ? (
                 <VoucherTransactionsTable transactions={voucher.transactions} />
             ) : (
-                <Card className={'mb-3 bg-soft-primary'}>
-                    <CardHeader title={'No Voucher Transactions Made'}>
-                        <FaInfo />
-                    </CardHeader>
-                </Card>
+                <AlertInfo title={'No Voucher Transactions Made Yet'} />
             )}
-        </>
+        </div>
     );
 };
 

@@ -1,26 +1,20 @@
-import { RouteType } from "@nabcellent/sui-react";
-import { FaBusinessTime, FaChartPie } from "react-icons/fa6";
-import { MdPayments } from "react-icons/md";
-import { RiCoupon2Fill } from "react-icons/ri";
-import { SiFloatplane } from "react-icons/si";
-import { TbPrompt } from "react-icons/tb";
-import { GiPayMoney, GiReceiveMoney } from "react-icons/gi";
+import { FaChartPie } from 'react-icons/fa6';
+import { MdPayments } from 'react-icons/md';
+import { RiCoupon2Fill } from 'react-icons/ri';
+import { SiFloatplane } from 'react-icons/si';
+import { RouteType } from '@/lib/types';
 
 const routes: RouteType[] = [
     {
         label: 'Dashboard',
-        labelDisable: true,
         children: [
             {
-                name: 'Dashboard',
+                name: 'Home',
                 active: true,
                 icon: FaChartPie,
-                children: [
-                    { name: 'Home', to: '/', },
-                    { name: 'Analytics', to: '/dashboard/analytics', },
-                ]
-            }
-        ]
+                to: '/',
+            },
+        ],
     },
     {
         label: 'App',
@@ -31,35 +25,32 @@ const routes: RouteType[] = [
                 to: '/payments',
                 active: false,
             },
-        ]
+        ],
     },
     {
-        label: 'SIDOOH',
+        label: 'Sidooh',
         children: [
             {
                 icon: RiCoupon2Fill,
-                name: 'Voucher', to: '/', active: true, children: [
+                name: 'Voucher',
+                to: '/',
+                active: true,
+                children: [
                     { name: 'Vouchers', to: '/vouchers', active: false },
                     { name: 'Transactions', to: '/voucher/transactions', active: false },
-                ]
+                ],
             },
             {
                 icon: SiFloatplane,
-                name: 'Float', to: '/', active: true, children: [
+                name: 'Float',
+                to: '/',
+                active: true,
+                children: [
                     { name: 'Accounts', to: '/float-accounts', active: false },
                     { name: 'Transactions', to: '/float-accounts/transactions', active: false },
-                ]
+                ],
             },
-            { icon: FaBusinessTime, name: 'B2B', to: '/sidooh/b2b', active: false }
-        ]
-    },
-    {
-        label: 'MPESA',
-        children: [
-            { icon: TbPrompt, name: 'STK', to: '/mpesa/stk', active: false },
-            { icon: GiPayMoney, name: 'C2B', to: '/mpesa/c2b', active: false },
-            { icon: GiReceiveMoney, name: 'B2C', to: '/mpesa/b2c', active: false },
-        ]
+        ],
     },
 ];
 

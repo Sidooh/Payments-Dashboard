@@ -1,5 +1,5 @@
-import { ApiResponse, RawAnalytics } from '@nabcellent/sui-react';
 import { coreApi } from '@/services/coreApi.ts';
+import { ApiResponse, RawAnalytics } from '@/lib/types';
 
 type DashboardSummariesResponse = {
     total_payments: number;

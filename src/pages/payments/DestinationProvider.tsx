@@ -1,229 +1,214 @@
-import { Card, Table } from 'react-bootstrap';
-import { BulkPaymentRequest, MpesaB2BRequest, Payment, SidoohTransaction, TendePayRequest } from '@/utils/types';
+import { BulkPaymentRequest, MpesaB2BRequest, Payment, SidoohTransaction, TendePayRequest } from '@/lib/types/models';
 import moment from 'moment';
-import { currencyFormat, PhoneChip } from '@nabcellent/sui-react';
-import { PaymentSubType, PaymentType } from '@/utils/enums';
-import CardHeader from '@/components/common/CardHeader';
-import { FaInfo } from 'react-icons/fa6';
+import { PaymentSubType, PaymentType } from '@/lib/enums';
+import AlertInfo from '@/components/alerts/AlertInfo.tsx';
+import { currencyFormat } from '@/lib/utils.ts';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table.tsx';
+import Phone from '@/components/common/Phone.tsx';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import TableDate from '@/components/common/TableDate.tsx';
 
 const B2CTable = ({ destination }: { destination: BulkPaymentRequest }) => (
-    <Table striped responsive className="border-bottom fs--1">
-        <thead className="bg-200 text-900">
-            <tr>
-                <th className="border-0">ID</th>
-                <th className="border-0">Phone</th>
-                <th className="border-0">Amount</th>
-                <th className="border-0">Description</th>
-                <th className="border-0 text-end">Created</th>
-            </tr>
-        </thead>
+    <Table className="border-muted">
+        <TableHeader className="bg-slate-100">
+            <TableRow className={'border-muted'}>
+                <TableHead>ID</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="text-end">Created</TableHead>
+            </TableRow>
+        </TableHeader>
 
-        <tbody>
-            <tr className="border-200">
-                <td>
+        <TableBody>
+            <TableRow>
+                <TableCell>
                     <h6>{destination.command_id}</h6>
                     <h6>{destination.conversation_id}</h6>
-                </td>
-                <td>
-                    <PhoneChip phone={destination.phone} />
-                </td>
-                <td>{currencyFormat(destination.amount)}</td>
-                <td>{destination.response?.result_desc}</td>
-                <td className="text-end">
-                    {moment(destination.created_at).format('MMM D, Y')}
-                    <br />
-                    <small>{moment(destination.created_at).format('hh:mm A')}</small>
-                </td>
-            </tr>
-        </tbody>
+                </TableCell>
+                <TableCell>
+                    <Phone phone={destination.phone} />
+                </TableCell>
+                <TableCell>{currencyFormat(destination.amount)}</TableCell>
+                <TableCell>{destination.response?.result_desc}</TableCell>
+                <TableCell className="text-end">
+                    <TableDate date={destination.created_at} />
+                </TableCell>
+            </TableRow>
+        </TableBody>
     </Table>
 );
 
 const TendeB2BTable = ({ destination }: { destination: TendePayRequest }) => (
     <>
-        <Table striped responsive className="border-bottom fs--1">
-            <thead className="bg-200 text-900">
-                <tr>
-                    <th className="border-0">Transaction Reference</th>
-                    <th className="border-0">Service</th>
-                    <th className="border-0">Amount</th>
-                    <th className="border-0">MSISDN</th>
-                    <th className="border-0">Status</th>
-                    <th className="border-0">Created</th>
-                </tr>
-            </thead>
+        <Table className="border-muted">
+            <TableHeader className="bg-slate-100">
+                <TableRow className={'border-muted'}>
+                    <TableHead>Transaction Reference</TableHead>
+                    <TableHead>Service</TableHead>
+                    <TableHead>Amount</TableHead>
+                    <TableHead>MSISDN</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Created</TableHead>
+                </TableRow>
+            </TableHeader>
 
-            <tbody>
-                <tr className="border-200">
-                    <td>{destination.transaction_reference}</td>
-                    <td>{destination.service}</td>
-                    <td>{currencyFormat(destination.text?.amount)}</td>
-                    <td>
-                        <PhoneChip phone={destination.msisdn} />
-                    </td>
-                    <td>{destination.status}</td>
-                    <td colSpan={2} className="text-end">
-                        {moment(destination.created_at).format('MMM D, Y')}
-                        <br />
-                        <small>{moment(destination.created_at).format('hh:mm A')}</small>
-                    </td>
-                </tr>
-            </tbody>
+            <TableBody>
+                <TableRow>
+                    <TableCell>{destination.transaction_reference}</TableCell>
+                    <TableCell>{destination.service}</TableCell>
+                    <TableCell>{currencyFormat(destination.text?.amount)}</TableCell>
+                    <TableCell>
+                        <Phone phone={destination.msisdn} />
+                    </TableCell>
+                    <TableCell>{destination.status}</TableCell>
+                    <TableCell colSpan={2} className="text-end">
+                        <TableDate date={destination.created_at} />
+                    </TableCell>
+                </TableRow>
+            </TableBody>
         </Table>
         <Table>
-            <thead className="bg-200 text-900">
-                <tr className={'mb-3'}>
-                    <th className="border-0">Initiator Reference</th>
-                    <th className="border-0">Receiver</th>
-                    <th className="border-0">Account Reference</th>
-                    <th className="border-0">Amount</th>
-                    <th className="border-0">Code</th>
-                    <th className="border-0">Description</th>
-                    <th className="border-0 text-end">Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr className="border-200">
-                    <td>{destination.callback?.initiator_reference}</td>
-                    <td>{destination.callback?.receiver_party_name}</td>
-                    <td>{destination.callback?.account_reference}</td>
-                    <td>{currencyFormat(destination.callback?.amount)}</td>
-                    <td>{destination.callback?.confirmation_code}</td>
-                    <td>{destination.callback?.status_description}</td>
-                    <td colSpan={2} className="text-end">
-                        {moment(destination.callback?.created_at).format('MMM D, Y')}
-                        <br />
-                        <small>{moment(destination.callback?.created_at).format('hh:mm A')}</small>
-                    </td>
-                </tr>
-            </tbody>
+            <TableHeader className="bg-slate-100">
+                <TableRow className={'border-muted'}>
+                    <TableHead>Initiator Reference</TableHead>
+                    <TableHead>Receiver</TableHead>
+                    <TableHead>Account Reference</TableHead>
+                    <TableHead>Amount</TableHead>
+                    <TableHead>Code</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead className="text-end">Created</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                <TableRow>
+                    <TableCell>{destination.callback?.initiator_reference}</TableCell>
+                    <TableCell>{destination.callback?.receiver_party_name}</TableCell>
+                    <TableCell>{destination.callback?.account_reference}</TableCell>
+                    <TableCell>{currencyFormat(destination.callback?.amount)}</TableCell>
+                    <TableCell>{destination.callback?.confirmation_code}</TableCell>
+                    <TableCell>{destination.callback?.status_description}</TableCell>
+                    <TableCell colSpan={2} className="text-end">
+                        <TableDate date={destination.callback?.created_at} />
+                    </TableCell>
+                </TableRow>
+            </TableBody>
         </Table>
     </>
 );
 
 const MpesaB2BTable = ({ request }: { request: MpesaB2BRequest }) => (
     <>
-        <Table striped responsive className="border-bottom fs--1">
-            <thead className="bg-200 text-900">
-                <tr>
-                    <th className="border-0">Command ID</th>
-                    <th className="border-0">Description</th>
-                    <th className="border-0">Amount</th>
-                    <th className="border-0">Requester</th>
-                    <th className="border-0">Parties</th>
-                    <th className="border-0 text-end">Created</th>
-                </tr>
-            </thead>
+        <Table className="border-muted">
+            <TableHeader className="bg-slate-100">
+                <TableRow className={'border-muted'}>
+                    <TableHead>Command ID</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Amount</TableHead>
+                    <TableHead>Requester</TableHead>
+                    <TableHead>Parties</TableHead>
+                    <TableHead className="text-end">Created</TableHead>
+                </TableRow>
+            </TableHeader>
 
-            <tbody>
-                <tr className="border-200">
-                    <td>{request.command_id}</td>
-                    <td>{request.response_description}</td>
-                    <td>{currencyFormat(request.amount)}</td>
-                    <td>
-                        <PhoneChip phone={request.requester} />
-                    </td>
-                    <td>
-                        <p className={'m-0'}>A - {request.party_a}</p>
-                        <p className={'m-0'}>B - {request.party_b}</p>
-                    </td>
-                    <td colSpan={2} className="text-end">
-                        {moment(request.created_at).format('MMM D, Y')}
-                        <br />
-                        <small>{moment(request.created_at).format('H:mm:ss')}</small>
-                    </td>
-                </tr>
-            </tbody>
+            <TableBody>
+                <TableRow>
+                    <TableCell>{request.command_id}</TableCell>
+                    <TableCell>{request.response_description}</TableCell>
+                    <TableCell>{currencyFormat(request.amount)}</TableCell>
+                    <TableCell>
+                        <Phone phone={request.requester} />
+                    </TableCell>
+                    <TableCell>
+                        <p>A - {request.party_a}</p>
+                        <p>B - {request.party_b}</p>
+                    </TableCell>
+                    <TableCell colSpan={2} className="text-end">
+                        <TableDate date={request.created_at} />
+                    </TableCell>
+                </TableRow>
+            </TableBody>
         </Table>
         {request.response && (
-            <Table responsive>
-                <thead className="bg-200 text-900">
-                    <tr className={'mb-3'}>
-                        <th className="border-0 white-space-nowrap">Transaction ID</th>
-                        <th className="border-0">Credit Party Name</th>
-                        <th className="border-0">Debit Account Balance</th>
-                        <th className="border-0">Result Description</th>
-                        <th className="border-0 text-end">Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr className="border-200">
-                        <td>{request.response.transaction_id}</td>
-                        <td>{request.response.credit_party_public_name ?? 'N/A'}</td>
-                        <td>
+            <Table>
+                <TableHeader className="bg-slate-100">
+                    <TableRow>
+                        <TableHead className="whitespace-nowrap">Transaction ID</TableHead>
+                        <TableHead>Credit Party Name</TableHead>
+                        <TableHead>Debit Account Balance</TableHead>
+                        <TableHead>Result Description</TableHead>
+                        <TableHead className="text-end">Created</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>{request.response.transaction_id}</TableCell>
+                        <TableCell>{request.response.credit_party_public_name ?? 'N/A'}</TableCell>
+                        <TableCell>
                             {request.response.debit_account_balance
                                 ? currencyFormat(Number(request.response.debit_account_balance?.split('|')[2]))
                                 : 'N/A'}
-                        </td>
-                        <td>{request.response.result_desc}</td>
-                        <td className="text-end">
+                        </TableCell>
+                        <TableCell>{request.response.result_desc}</TableCell>
+                        <TableCell className="text-end">
                             {request.response.trans_completed_time ? (
                                 <>
-                                    {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('MMM D, Y')}
+                                    <strong>
+                                        {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}
+                                    </strong>
                                     <br />
                                     <small>
-                                        {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('H:mm:ss')}
+                                        {moment(request.response.trans_completed_time, 'YYYYMDHmss').format('D.M.y')}
                                     </small>
                                 </>
                             ) : (
                                 'N/A'
                             )}
-                        </td>
-                    </tr>
-                </tbody>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
             </Table>
         )}
     </>
 );
 
 const FloatOrVoucherTable = ({ destination }: { destination: SidoohTransaction }) => (
-    <Table striped responsive className="border-bottom fs--1">
-        <thead className="bg-200 text-900">
-            <tr>
-                <th className="border-0">Type</th>
-                <th className="border-0">Description</th>
-                <th className="border-0">Amount</th>
-                <th className="border-0 text-end">Created</th>
-            </tr>
-        </thead>
+    <Table className="border-muted">
+        <TableHeader className="bg-slate-100">
+            <TableRow className={'border-muted'}>
+                <TableHead>Type</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead className="text-end">Created</TableHead>
+            </TableRow>
+        </TableHeader>
 
-        <tbody>
-            <tr className="border-200">
-                <td>
+        <TableBody>
+            <TableRow>
+                <TableCell>
                     <h6 className="mb-0 text-nowrap">{destination.type}</h6>
-                </td>
-                <td>{destination.description}</td>
-                <td>{currencyFormat(destination.amount)}</td>
-                <td className="text-end">
-                    {moment(destination.created_at).format('MMM D, Y')}
-                    <br />
-                    <small>{moment(destination.created_at).format('hh:mm A')}</small>
-                </td>
-            </tr>
-        </tbody>
+                </TableCell>
+                <TableCell>{destination.description}</TableCell>
+                <TableCell>{currencyFormat(destination.amount)}</TableCell>
+                <TableCell className="text-end">
+                    <TableDate date={destination.created_at} />
+                </TableCell>
+            </TableRow>
+        </TableBody>
     </Table>
 );
 
 const DestinationProvider = ({ payment }: { payment: Payment }) => {
     const destination = payment.destination_provider;
 
-    if (!destination)
-        return (
-            <Card className={'mb-3 bg-soft-primary'}>
-                <CardHeader title={'Destination Not Found.'}>
-                    <FaInfo />
-                </CardHeader>
-            </Card>
-        );
+    if (!destination) return <AlertInfo title={'Destination Not Found.'} />;
 
     return (
-        <Card className="mb-3">
-            <Card.Header className="pb-0">
-                <h5 className="fs-0">
-                    Destination - <i className={'text-secondary'}>{payment.destination_subtype}</i>
-                </h5>
-            </Card.Header>
-            <div className="card-body">
+        <Card>
+            <CardHeader className={'flex-row gap-1'}>
+                Destination - <i className={'text-muted-foreground'}>{payment.destination_subtype}</i>
+            </CardHeader>
+            <CardContent>
                 {payment.destination_type === PaymentType.SIDOOH && (
                     <FloatOrVoucherTable destination={destination as SidoohTransaction} />
                 )}
@@ -238,7 +223,7 @@ const DestinationProvider = ({ payment }: { payment: Payment }) => {
                     payment.destination_type === PaymentType.MPESA && (
                         <MpesaB2BTable request={destination as MpesaB2BRequest} />
                     )}
-            </div>
+            </CardContent>
         </Card>
     );
 };

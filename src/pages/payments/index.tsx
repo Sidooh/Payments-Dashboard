@@ -1,15 +1,13 @@
 import { usePaymentsQuery } from '@/services/paymentsApi';
-import { SectionError, SectionLoader } from '@nabcellent/sui-react';
-import PaymentsTable from '@/components/tables/PaymentsTable';
-import { logger } from '@/utils/logger';
+import PaymentsTable from '@/components/tables/payments-table/PaymentsTable.tsx';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
 
 const Payments = () => {
     let { data: payments, isLoading, isSuccess, isError, error } = usePaymentsQuery();
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !payments) return <SectionLoader />;
-
-    logger.log(payments);
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !payments) return <Skeleton className={'h-[700px]'} />;
 
     return <PaymentsTable tableTitle={'Payments'} payments={payments} />;
 };

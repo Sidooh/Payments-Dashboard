@@ -1,6 +1,6 @@
-import { CreditFloatAccountRequest, FloatAccount, FloatAccountTransaction, Payment } from '@/utils/types';
-import { ApiResponse } from '@nabcellent/sui-react';
+import { FloatAccount, FloatAccountTransaction, Payment } from '@/lib/types/models';
 import { coreApi } from '@/services/coreApi.ts';
+import { ApiResponse, CreditFloatAccountRequest } from '@/lib/types';
 
 export const floatAccountsApi = coreApi.injectEndpoints({
     endpoints: (build) => ({
@@ -28,7 +28,7 @@ export const floatAccountsApi = coreApi.injectEndpoints({
                 body,
             }),
             transformResponse: (res: ApiResponse<Payment>) => res.data,
-            invalidatesTags: ['FloatAccount'],
+            invalidatesTags: (_, error) => (error ? [] : ['FloatAccount']),
         }),
     }),
 });

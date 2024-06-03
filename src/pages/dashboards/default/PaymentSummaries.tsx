@@ -1,50 +1,52 @@
-import { Card, Col, Row } from 'react-bootstrap';
 import { useGetDashboardSummariesQuery } from '@/services/dashboardApi';
 import CardBgCorner from '@/components/CardBgCorner';
 import CountUp from 'react-countup';
-import { Badge, ComponentLoader, SectionError } from '@nabcellent/sui-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 const PaymentSummaries = () => {
     const { data: stats, isError, error, isLoading, isSuccess } = useGetDashboardSummariesQuery();
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !stats) return <ComponentLoader />;
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !stats) return <Skeleton className={'h-[120px]'} />;
 
     return (
-        <Row className="g-3 mb-3 h-100">
-            <Col md={6} xxl={12}>
-                <Card className={'h-xl-100'}>
-                    <CardBgCorner corner={2} />
-                    <Card.Body className={'position-relative d-flex flex-column justify-content-center'}>
-                        <h6 className="mb-md-0 mb-lg-2">Payments</h6>
-                        <h5 className="m-0 text-700">
-                            <CountUp end={stats.total_payments} separator="," />
-                        </h5>
-                        <div className="position-absolute top-0 right-0 m-3">
-                            <Badge pill>
-                                <CountUp end={stats.total_payments_today} separator="," />
-                            </Badge>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </Col>
-            <Col md={6} xxl={12}>
-                <Card className={'h-xl-100'}>
-                    <CardBgCorner />
-                    <Card.Body className={'position-relative d-flex flex-column justify-content-center'}>
-                        <h6 className="mb-md-0 mb-lg-2">Revenue</h6>
-                        <h5 className="m-0 text-700 align-text-bottom">
-                            <CountUp end={stats.total_revenue} prefix={'KES '} separator="," />
-                        </h5>
-                        <div className="position-absolute top-0 right-0 m-3">
-                            <Badge bg={'success'} pill>
-                                <CountUp end={stats.total_revenue_today} prefix={'KES '} separator="," />
-                            </Badge>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </Col>
-        </Row>
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-1 gap-3 h-full">
+            <Card className={'relative'}>
+                <CardBgCorner corner={2} />
+                <CardHeader className={'pb-0'}>
+                    <span>Payments</span>
+                    <div className="absolute top-3 right-6">
+                        <Badge className={'rounded-full'}>
+                            <CountUp end={stats.total_payments_today} separator="," />
+                        </Badge>
+                    </div>
+                </CardHeader>
+                <CardContent className={'relative flex flex-col justify-content-center'}>
+                    <h5 className="text-xl font-semibold">
+                        <CountUp end={stats.total_payments} separator="," />
+                    </h5>
+                </CardContent>
+            </Card>
+            <Card className={'relative'}>
+                <CardBgCorner />
+                <CardHeader className={'pb-0'}>
+                    <span>Revenue</span>
+                    <div className="absolute top-3 right-6">
+                        <Badge className={'bg-green-500 rounded-full'}>
+                            <CountUp end={stats.total_revenue_today} prefix={'KES '} separator="," />
+                        </Badge>
+                    </div>
+                </CardHeader>
+                <CardContent className={'flex flex-col justify-content-center'}>
+                    <h5 className="text-xl font-semibold">
+                        <CountUp end={stats.total_revenue} prefix={'KES '} separator="," />
+                    </h5>
+                </CardContent>
+            </Card>
+        </div>
     );
 };
 

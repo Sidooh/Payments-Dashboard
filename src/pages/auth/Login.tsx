@@ -1,107 +1,115 @@
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginRequest } from '@/lib/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
 import { login, reset } from '@/features/auth/authSlice';
-import { useAuth } from '@/hooks/useAuth';
-import { useAppDispatch } from '@/app/store.ts';
+import { useAppDispatch } from '@/app/store';
 import * as yup from 'yup';
-import { useFormik } from 'formik';
-import { LoadingButton, TextField, toast } from '@nabcellent/sui-react';
+import { AiOutlineLogin } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
+import { toast } from '@/lib/utils';
 import { CONFIG } from '@/config';
-import { BiLogInCircle } from 'react-icons/bi';
+import SubmitButton from '@/components/common/SubmitButton.tsx';
 
-const validationSchema = yup.object({
-    email: yup.string().email('Must be a valid email').max(100).required('Email is required.'),
+const formSchema = yup.object({
+    email: yup.string().max(100).required('Email is required.'),
     password: yup.string().max(20).required('Password is required.'),
 });
 
 const Login = () => {
-    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
-    const { auth, isLoading, isError, isSuccess, message } = useAuth();
-
-    const formik = useFormik({
-        initialValues: { email: '', password: '' },
-        validationSchema: validationSchema,
-        onSubmit: (values) => dispatch(login(values)),
+    const navigate = useNavigate();
+    const { token, isError, isSuccess, isLoading, message } = useAuth();
+    const form = useForm<LoginRequest>({
+        resolver: yupResolver(formSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
     });
+
+    const handleSubmit: SubmitHandler<LoginRequest> = (values) => dispatch(login(values));
 
     useEffect(() => {
         if (isError) toast({ titleText: message, icon: 'error' });
-        if (isSuccess || auth) navigate('/');
+        if (isSuccess || token) navigate('/');
 
         dispatch(reset());
-    }, [auth, isError, isSuccess, message, navigate, dispatch]);
+    }, [token, isError, isSuccess, message, navigate, dispatch]);
 
     return (
-        <>
-            <div className="row flex-between-center mb-2">
-                <div className="col-auto">
-                    <h5>Sign In</h5>
-                </div>
-            </div>
-            <form onSubmit={formik.handleSubmit}>
-                <div className="mb-3">
-                    <TextField
-                        label="Email address"
-                        type={'email'}
-                        name={'email'}
-                        required
-                        autoComplete="username"
-                        value={formik.values.email}
-                        autoFocus
-                        onChange={formik.handleChange}
-                        error={Boolean(formik.errors.email)}
-                        errorMsg={formik.errors.email}
-                    />
-                </div>
-                <div className="mb-3">
-                    <TextField
-                        label="Password"
-                        type={'password'}
-                        name={'password'}
-                        required
-                        autoComplete="username"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        error={Boolean(formik.errors.password)}
-                        errorMsg={formik.errors.password}
-                    />
-                </div>
-                <div className="row justify-content-end">
-                    <div className="col-auto">
-                        <Link className="fs--1" to="/login">
-                            Forgot Password?
-                        </Link>
-                    </div>
-                </div>
-                <div className="mb-3">
-                    <LoadingButton
-                        size="sm"
-                        color="primary"
-                        loading={isLoading}
-                        type={'submit'}
-                        loadingPosition="end"
-                        className="w-100 mt-3"
-                        onClick={() => formik.submitForm()}
-                        endIcon={<BiLogInCircle />}
-                    >
-                        Sign In
-                    </LoadingButton>
-                </div>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
+                <Card className={'lg:p-5 lg:max-w-3xl lg:min-w-[30rem] relative shadow-xl border-0'}>
+                    <CardHeader>
+                        <CardTitle className={'text-end text-primary'}>
+                            Welcome Back
+                            <hr className="mt-3 w-1/2 ms-auto" />
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-3">
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={() => (
+                                    <FormItem>
+                                        <Input
+                                            placeholder="username@sidooh.co.ke"
+                                            type={'email'}
+                                            {...form.register('email')}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={() => (
+                                    <FormItem>
+                                        <Input
+                                            placeholder="********"
+                                            type={'password'}
+                                            {...form.register('password')}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </CardContent>
+                    <CardFooter className={'flex-col'}>
+                        <SubmitButton
+                            className={'w-full'}
+                            text={'Sign In'}
+                            isLoading={isLoading}
+                            loadingText={'Signing In...'}
+                            disabled={isLoading || !form.formState.isValid}
+                            icon={AiOutlineLogin}
+                        />
+
+                        <div className={'mt-5'}>
+                            <div className="relative mt-4">
+                                <hr className="bgap-300" />
+                                <div className="divider-content-center">🌟</div>
+                            </div>
+                            <div className="mt-2">
+                                <div className="text-center text-stone-400">
+                                    <i>
+                                        <small>{CONFIG.tagline}</small>
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                    </CardFooter>
+                </Card>
             </form>
-            <div className="position-relative mt-4">
-                <hr className="bg-300" />
-                <div className="divider-content-center">🌟</div>
-            </div>
-            <div className="row g-2 mt-2">
-                <div className="col text-center">
-                    <i>
-                        <small>{CONFIG.sidooh.tagline}</small>
-                    </i>
-                </div>
-            </div>
-        </>
+        </Form>
     );
 };
 

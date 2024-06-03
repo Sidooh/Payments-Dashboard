@@ -1,18 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Card, Form } from 'react-bootstrap';
 import { useGetDashboardChartDataQuery } from '@/services/dashboardApi';
-import {
-    ChartAid,
-    ComponentLoader,
-    Frequency,
-    groupBy,
-    IconButton,
-    Period,
-    RawAnalytics,
-    SectionError,
-    Status,
-    Str,
-} from '@nabcellent/sui-react';
 import { Line } from 'react-chartjs-2';
 import {
     CategoryScale,
@@ -29,12 +16,28 @@ import {
     TooltipItem,
 } from 'chart.js';
 import CardBgCorner from '../../../components/CardBgCorner';
-import { AnalyticsChartData } from '@/utils/types.ts';
+import { AnalyticsChartData, RawAnalytics } from '@/lib/types';
 import { FaSync } from 'react-icons/fa';
+import { Card, CardContent } from '@/components/ui/card.tsx';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select.tsx';
+import { Frequency, Period, Status } from '@/lib/enums.ts';
+import { groupBy, Str } from '@/lib/utils.ts';
+import { ChartAid } from '@/lib/ChartAid.ts';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import { Button } from '@/components/ui/button.tsx';
 
 Chart.register(Title, ChartTooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement);
 Chart.defaults.color = '#fff';
-Chart.defaults.font.weight = '700';
+Chart.defaults.font.weight = 700;
 Chart.defaults.font.family = "'Avenir', sans-serif";
 
 const DashboardChart = () => {
@@ -87,7 +90,7 @@ const DashboardChart = () => {
                 datasets.push({
                     data,
                     label: Str.headline(a),
-                    borderColor: Str.headline(a) === 'Amount' ? '#900' : '#fff',
+                    borderColor: Str.headline(a) === 'Amount' ? '#1A801A' : '#9D9BC3',
                 });
             });
 
@@ -99,8 +102,8 @@ const DashboardChart = () => {
         if (data) setCheckedPeriods(Object.keys(data));
     }, [data]);
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !data) return <ComponentLoader />;
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[300px]'} />;
 
     const options: ChartOptions<'line'> = {
         responsive: true,
@@ -133,7 +136,7 @@ const DashboardChart = () => {
                 display: true,
                 text: 'PAYMENTS',
                 font: {
-                    size: 17,
+                    size: 14,
                 },
                 padding: {
                     bottom: 20,
@@ -167,47 +170,54 @@ const DashboardChart = () => {
     };
 
     return (
-        <Card className="mb-0 mb-xxl-3">
+        <Card className={'relative'}>
             <CardBgCorner />
-            <Card.Body
-                className={'position-relative pb-2'}
+            <CardContent
+                className={'p-3 lg:p-6 relative pt-3 pb-2 rounded-xl'}
                 style={{
                     height: 300,
                     backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, .5), #198019)',
                 }}
             >
-                <div className="d-flex position-absolute right-0 me-3">
-                    <IconButton className="shadow-sm me-2" type="button" onClick={() => refetch()}>
+                <div className="flex absolute right-0 me-3">
+                    <Button size={'icon'} className="shadow-sm me-2 w-7 h-7" type="button" onClick={() => refetch()}>
                         <FaSync size={12} />
-                    </IconButton>
-                    <Form.Select
-                        className="px-2 me-2"
+                    </Button>
+                    <Select
                         value={chartTypeOpt}
-                        size={'sm'}
-                        onChange={(e) => {
-                            setChartTypeOpt(e.target.value as 'time-series' | 'cumulative');
-                        }}
+                        onValueChange={(e) => setChartTypeOpt(e as 'time-series' | 'cumulative')}
                     >
-                        <option value="time-series">Time Series</option>
-                        <option value="cumulative">Cumulative</option>
-                    </Form.Select>
-                    <Form.Select
-                        className="px-2"
-                        size="sm"
-                        value={txStatus}
-                        onChange={(e) => setTxStatus(e.target.value as Status)}
-                    >
-                        <option value="ALL">All</option>
-                        {[Status.COMPLETED, Status.FAILED, Status.PENDING, Status.REFUNDED].map((status, i) => (
-                            <option key={`status-${i}`} value={status}>
-                                {status}
-                            </option>
-                        ))}
-                    </Form.Select>
+                        <SelectTrigger className="w-24 h-7 lg:w-[120px] px-2 me-2">
+                            <SelectValue placeholder="Select chart type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Chart Type</SelectLabel>
+                                <SelectItem value="time-series">Time Series</SelectItem>
+                                <SelectItem value="cumulative">Cumulative</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select value={txStatus} onValueChange={(e) => setTxStatus(e as Status)}>
+                        <SelectTrigger className="w-24 h-7 lg:w-[120px] px-2">
+                            <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Status</SelectLabel>
+                                <SelectItem value="ALL">ALL</SelectItem>
+                                {[Status.COMPLETED, Status.FAILED, Status.PENDING, Status.REFUNDED].map((status, i) => (
+                                    <SelectItem key={`status-${i}`} value={status}>
+                                        {status}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <Line options={options} data={chartData} />
-            </Card.Body>
+            </CardContent>
         </Card>
     );
 };

@@ -1,37 +1,36 @@
 import { memo, Suspense } from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import { IMAGES } from '@/constants/images';
-import { Logo, PageLoader } from '@nabcellent/sui-react';
+import { CONFIG } from '@/config.ts';
+import PageLoader from '@/components/loaders/PageLoader.tsx';
 
 const GuestLayout = () => {
     return (
-        <Container fluid className="py-0">
-            <Row className="flex-center min-vh-100 g-0">
-                <Col sm={10} md={8} lg={6} xl={4} xxl={3} className="position-relative">
-                    <img
-                        className="bg-auth-circle-shape"
-                        src={IMAGES.icons.spotIllustrations.bg_shape}
-                        alt=""
-                        width="250"
-                    />
-                    <img
-                        className="bg-auth-circle-shape-2"
-                        src={IMAGES.icons.spotIllustrations.shape_1}
-                        alt=""
-                        width="150"
-                    />
-                    <Logo src={IMAGES.logos.sidooh} width={120} serviceName={'Payments'} />
-                    <Card>
-                        <Card.Body className="p-4 p-sm-5">
-                            <Suspense fallback={<PageLoader />}>
-                                <Outlet />
-                            </Suspense>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+        <div className={'flex justify-center items-center min-h-screen p-6'}>
+            <div className={'flex items-center justify-center mb-4 flex-col relative'}>
+                <img
+                    className="hidden lg:block absolute end-[-8.75rem] top-[-5.125rem]"
+                    src={IMAGES.icons.spotIllustrations.bg_shape}
+                    alt=""
+                    width="250"
+                />
+                <img
+                    className="hidden lg:block absolute start-[-6.75rem] bottom-[-2.4375rem]"
+                    src={IMAGES.icons.spotIllustrations.shape_1}
+                    alt=""
+                    width="150"
+                />
+
+                <img className="me-2" src={IMAGES.logos.sidooh} alt="Logo" width={120} />
+                <h6 className={'font-semibold text-[10pt]'} style={{ margin: `-.48rem 0 2rem` }}>
+                    {CONFIG.app.name}
+                </h6>
+
+                <Suspense fallback={<PageLoader />}>
+                    <Outlet />
+                </Suspense>
+            </div>
+        </div>
     );
 };
 

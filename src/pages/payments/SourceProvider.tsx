@@ -1,41 +1,36 @@
-import { Card, Table } from 'react-bootstrap';
-import { FloatAccountTransaction, Payment, VoucherTransaction } from '@/utils/types';
-import moment from 'moment';
-import { currencyFormat } from '@nabcellent/sui-react';
+import { FloatAccountTransaction, Payment, VoucherTransaction } from '@/lib/types/models';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table.tsx';
+import { currencyFormat } from '@/lib/utils.ts';
+import TableDate from '@/components/common/TableDate.tsx';
 
 const SourceProvider = ({ payment }: { payment: Payment<FloatAccountTransaction | VoucherTransaction> }) => (
     <Card className="mb-3">
-        <Card.Header className="pb-0">
-            <h5 className="fs-0">
-                Source - <i className={'text-secondary'}>{payment.subtype}</i>
-            </h5>
-        </Card.Header>
-        <div className="card-body">
-            <Table striped responsive className="border-bottom fs--1">
-                <thead className="bg-200 text-900">
-                    <tr>
-                        <th className="border-0">Type</th>
-                        <th className="border-0">Description</th>
-                        <th className="border-0">Amount</th>
-                        <th className="border-0 text-end">Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr className="border-200">
-                        <td>
-                            <h6 className="mb-0 text-nowrap">{payment.provider?.type}</h6>
-                        </td>
-                        <td>{payment.provider?.description}</td>
-                        <td>{currencyFormat(payment.provider?.amount)}</td>
-                        <td className="text-end">
-                            {moment(payment.provider?.created_at).format('MMM D, Y')}
-                            <br />
-                            <small>{moment(payment.provider?.created_at).format('hh:mm A')}</small>
-                        </td>
-                    </tr>
-                </tbody>
+        <CardHeader className="flex-row gap-1">
+            Source - <i className={'text-muted-foreground'}>{payment.subtype}</i>
+        </CardHeader>
+        <CardContent>
+            <Table className="border-b border-muted">
+                <TableHeader className="bg-slate-100">
+                    <TableRow className={'border-muted'}>
+                        <TableHead>Type</TableHead>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead className="text-end">Created</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>{payment.provider?.type}</TableCell>
+                        <TableCell>{payment.provider?.description}</TableCell>
+                        <TableCell>{currencyFormat(payment.provider?.amount)}</TableCell>
+                        <TableCell className="text-end">
+                            <TableDate date={payment.provider?.created_at} />
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
             </Table>
-        </div>
+        </CardContent>
     </Card>
 );
 

@@ -1,14 +1,8 @@
-import { Card } from 'react-bootstrap';
-import {
-    currencyFormat,
-    DataTable,
-    getRelativeDateAndTime,
-    TableDate,
-    TransactionTypeChip,
-} from '@nabcellent/sui-react';
-import { FloatAccountTransaction } from '@/utils/types';
-import { Link } from 'react-router-dom';
-import { FaRegEye } from 'react-icons/fa6';
+import { FloatAccountTransaction } from '@/lib/types/models';
+import TransactionTypeCell from '@/components/common/TransactionTypeCell.tsx';
+import { currencyFormat, getRelativeDateAndTime } from '@/lib/utils.ts';
+import TableDate from '@/components/common/TableDate.tsx';
+import { DataTable } from '@/components/datatable/DataTable.tsx';
 
 type FloatAccountTransactionsTableProps = { transactions: FloatAccountTransaction[]; showAccountColumn?: boolean };
 
@@ -20,7 +14,7 @@ const FloatAccountTransactionsTable = ({
         {
             accessorKey: 'type',
             header: 'Type',
-            cell: ({ row }: any) => <TransactionTypeChip type={row.original.type} />,
+            cell: ({ row }: any) => <TransactionTypeCell type={row.original.type} />,
         },
         {
             accessorKey: 'amount',
@@ -42,14 +36,6 @@ const FloatAccountTransactionsTable = ({
             accessorFn: (row: FloatAccountTransaction) => getRelativeDateAndTime(row.created_at).toString(),
             cell: ({ row }: any) => <TableDate date={row.original.created_at} />,
         },
-        {
-            id: 'Actions',
-            cell: ({ row }: any) => (
-                <Link to={`/payments/${row.original?.payment?.id}`}>
-                    <FaRegEye />
-                </Link>
-            ),
-        },
     ];
 
     if (showAccountColumn) {
@@ -68,13 +54,7 @@ const FloatAccountTransactionsTable = ({
         });
     }
 
-    return (
-        <Card className={'mb-3'}>
-            <Card.Body>
-                <DataTable title={`Float Account Transactions`} columns={columns} data={transactions} />
-            </Card.Body>
-        </Card>
-    );
+    return <DataTable title={`Float Account Transactions`} columns={columns} data={transactions} />;
 };
 
 export default FloatAccountTransactionsTable;

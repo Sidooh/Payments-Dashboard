@@ -1,32 +1,35 @@
 import { CONFIG } from '@/config';
+import axios from 'axios';
+import { LoginRequest, LoginResponse } from '@/lib/types';
 
-const API_URL = `${CONFIG.sidooh.services.accounts.api.url}/users/signin`;
+export const authAPI = {
+    login: async (data: LoginRequest) => {
+        try {
+            const { data: res } = await axios.post<LoginResponse>(
+                `${CONFIG.services.accounts.api.url}/users/signin`,
+                data
+            );
 
-export type LoginRequest = {
-    email: string;
-    password: string;
-};
+            localStorage.setItem('token', JSON.stringify(res.access_token));
 
-export const authApi = {
-    login: async (userData: LoginRequest) => {
-        let response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        });
-
-        let { access_token: token, errors } = await response.json();
-        if (errors) throw new Error(errors[0]?.message);
-
-        if (token) {
-            localStorage.setItem('auth', JSON.stringify({ token }));
-        } else {
-            throw new Error('Something went wrong.');
+            return res.access_token;
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status && [400, 422].includes(err.response?.status) && Boolean(err.response?.data)) {
+                    throw new Error(err.response?.data.errors[0].message);
+                } else if (err.response?.status === 401 && err.response.data) {
+                    throw new Error('Invalid credentials!');
+                } else if (err.response?.status === 429) {
+                    throw new Error('Sorry! We failed to sign you in. Please try again in a few minutes.');
+                } else if (err.code === 'ERR_NETWORK') {
+                    throw new Error('Network Error! Service unavailable.');
+                } else {
+                    throw new Error('Something went wrong!');
+                }
+            } else {
+                console.error('Unexpected errors:', err);
+            }
         }
-
-        return { token };
     },
-    logout: () => localStorage.removeItem('auth'),
+    logout: () => localStorage.removeItem('token'),
 };

@@ -5,16 +5,16 @@ import { store } from '@/app/store';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
-import '@nabcellent/sui-react/dist/style.min.css';
+import '@/assets/css/index.css';
+import { ThemeProvider } from '@/components/ThemeProvider.tsx';
 
-const container = document.getElementById('root')!;
-const root = createRoot(container);
-
-root.render(
+createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <App />
+                <ThemeProvider defaultTheme={'light'} storageKey={'payments-ui-theme'}>
+                    <App />
+                </ThemeProvider>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>

@@ -1,5 +1,6 @@
-import { ApiResponse, Status } from '@nabcellent/sui-react';
 import { coreApi } from '@/services/coreApi';
+import { Status } from '@/lib/enums.ts';
+import { ApiResponse } from '@/lib/types';
 
 export type PaymentsSLOsResponse = {
     year: number;

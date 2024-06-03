@@ -1,6 +1,7 @@
-import { Payment } from '@/utils/types';
-import { ApiResponse, Status } from '@nabcellent/sui-react';
+import { Payment } from '@/lib/types/models';
 import { coreApi } from '@/services/coreApi.ts';
+import { Status } from '@/lib/enums.ts';
+import { ApiResponse } from '@/lib/types';
 
 export const paymentsApi = coreApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -19,14 +20,6 @@ export const paymentsApi = coreApi.injectEndpoints({
             query: (id) => `/payments/${id}`,
             transformResponse: (response: ApiResponse<Payment>) => response.data,
             providesTags: ['Payment'],
-        }),
-        checkPayment: builder.mutation<Payment, number>({
-            query: (id) => ({
-                url: `/payments/${id}/check-payment`,
-                method: 'POST',
-            }),
-            transformResponse: (response: ApiResponse<Payment>) => response.data,
-            invalidatesTags: ['Payment'],
         }),
         retryPurchase: builder.mutation<Payment, number>({
             query: (id) => ({
@@ -76,11 +69,9 @@ export const paymentsApi = coreApi.injectEndpoints({
 export const {
     usePaymentsQuery,
     usePaymentQuery,
-    useCheckPaymentMutation,
     useRetryPurchaseMutation,
     useReversePaymentMutation,
     useQuerySTKStatusMutation,
     useCompletePaymentMutation,
     useFailPaymentMutation,
-    useMpesaPaymentsQuery,
 } = paymentsApi;

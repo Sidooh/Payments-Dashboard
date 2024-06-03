@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react';
-import { refreshTheme } from '@/features/theme/themeSlice';
-import { useAppDispatch } from '@/app/store';
+import { useContext } from 'react';
+import { ThemeProviderContext } from '@/components/ThemeProvider';
 
-const useTheme = (isDark: boolean) => {
-    const dispatch = useAppDispatch();
-    const [isLoaded, setIsLoaded] = useState(false);
+export const useTheme = () => {
+    const context = useContext(ThemeProviderContext);
 
-    useEffect(() => {
-        setIsLoaded(false);
+    if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider');
 
-        document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-        dispatch(refreshTheme());
-
-        setIsLoaded(true);
-    }, [isDark]);
-
-    return { isLoaded };
+    return context;
 };
-
-export default useTheme;

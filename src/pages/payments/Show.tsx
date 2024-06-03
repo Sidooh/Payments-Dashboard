@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
 import {
-    useCheckPaymentMutation,
     useCompletePaymentMutation,
     useFailPaymentMutation,
     usePaymentQuery,
@@ -10,50 +9,48 @@ import {
 } from '@/services/paymentsApi';
 import CardBgCorner from '@/components/CardBgCorner';
 import moment from 'moment';
-import { PaymentSubType, PaymentType } from '@/utils/enums';
-import { Card, Col, Dropdown, Row } from 'react-bootstrap';
 import MpesaPayment from './MpesaPayment';
 import SourceProvider from './SourceProvider';
-import {
-    currencyFormat,
-    Flex,
-    SectionError,
-    SectionLoader,
-    Status,
-    StatusChip,
-    Sweet,
-    toast,
-    Tooltip,
-} from '@nabcellent/sui-react';
-import { logger } from '@/utils/logger';
-import { SweetAlertOptions } from 'sweetalert2';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { Fragment } from 'react';
-import { CONFIG } from '@/config.ts';
 import DestinationProvider from './DestinationProvider';
-import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from '@/utils/types.ts';
-import { calcLatency } from '../../components/Latency';
+import { FloatAccountTransaction, Payment, StkRequest, VoucherTransaction } from '@/lib/types/models';
+import Latency from '../../components/Latency';
 import BuniPayment from './BuniPayment';
 import { BsCheck2Circle } from 'react-icons/bs';
-import { MdQueryStats, MdRotateLeft } from 'react-icons/md';
-import { HiOutlineRefresh } from 'react-icons/hi';
-import { FaUndoAlt } from 'react-icons/fa';
-import { FaCrosshairs } from 'react-icons/fa6';
+import { MdQueryStats } from 'react-icons/md';
+import { FaSyncAlt, FaUndoAlt } from 'react-icons/fa';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import { currencyFormat, toast } from '@/lib/utils.ts';
+import { PaymentSubType, PaymentType, Status } from '@/lib/enums.ts';
+import Tooltip from '@/components/common/Tooltip.tsx';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu.tsx';
+import StatusBadge from '@/components/common/StatusBadge.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { TiArrowBack } from 'react-icons/ti';
+import { CgOptions } from 'react-icons/cg';
+import SidoohAccount from '@/components/common/SidoohAccount.tsx';
+import { Separator } from '@/components/ui/separator.tsx';
 
 const Show = () => {
     const { id } = useParams();
     const { data: payment, isError, error, isLoading, isSuccess } = usePaymentQuery(Number(id));
 
-    const [checkPayment] = useCheckPaymentMutation();
     const [reversePayment] = useReversePaymentMutation();
     const [retryPurchase] = useRetryPurchaseMutation();
     const [querySTKStatus] = useQuerySTKStatusMutation();
     const [completePayment] = useCompletePaymentMutation();
     const [failPayment] = useFailPaymentMutation();
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !payment) return <SectionLoader />;
-
-    logger.log('Payment:', payment);
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !payment) return <Skeleton className={'h-[700px]'} />;
 
     const queryPayment = async (action: 'reverse' | 'check-payment' | 'retry-purchase' | 'query-status') => {
         let options: SweetAlertOptions = {
@@ -62,7 +59,7 @@ const Show = () => {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Proceed',
-            allowOutsideClick: () => !Sweet.isLoading(),
+            allowOutsideClick: () => !Swal.isLoading(),
         };
 
         const queryErrorAlert = (res: any, titleText: string) =>
@@ -72,23 +69,11 @@ const Show = () => {
                 icon: 'error',
             });
 
-        if (action === 'check-payment') {
-            options.title = 'Check Payment';
-            options.text = 'Are you sure you want to check this payment?';
-            options.preConfirm = async () => {
-                const res = (await checkPayment(payment.id)) as any;
-                logger.log(res);
-
-                if (res?.data?.id) toast({ titleText: 'Check Payment Complete!' });
-                if (res?.error) await queryErrorAlert(res, 'Check Payment Error!');
-            };
-        }
         if (action === 'reverse') {
             options.title = 'Reverse Payment';
             options.text = 'Are you sure you want to reverse this payment?';
             options.preConfirm = async () => {
                 const res = (await reversePayment(payment.id)) as any;
-                logger.log(res);
 
                 if (res?.data?.id) toast({ titleText: 'Payment Reversal Complete!' });
                 if (res?.error) await queryErrorAlert(res, 'Payment Reversal Error!');
@@ -99,7 +84,6 @@ const Show = () => {
             options.text = 'Are you sure you want to retry the purchase for this payment?';
             options.preConfirm = async () => {
                 const res = (await retryPurchase(payment.id)) as any;
-                logger.log(res);
 
                 if (res?.data?.id) toast({ titleText: 'Purchase Retry Complete!' });
                 if (res?.error) await queryErrorAlert(res, 'Purchase Retry Error!');
@@ -110,7 +94,6 @@ const Show = () => {
             options.text = 'Are you sure you want to query STK transactions?';
             options.preConfirm = async () => {
                 const res = (await querySTKStatus()) as any;
-                logger.log(res);
 
                 if (res?.data?.status === 0) {
                     toast({ titleText: 'STK Status Query Complete!' });
@@ -120,68 +103,70 @@ const Show = () => {
             };
         }
 
-        await Sweet.fire(options);
+        await Swal.fire(options);
     };
 
     const paymentDropdownItems = [];
     if (payment?.status === Status.PENDING) {
         paymentDropdownItems.push(
-            <Dropdown.Item as="button" onClick={() => queryPayment('check-payment')}>
+            <DropdownMenuItem onClick={() => queryPayment('check-payment')}>
                 <BsCheck2Circle />
                 &nbsp; Check Payment
-            </Dropdown.Item>
+            </DropdownMenuItem>
         );
 
         if (payment.subtype === PaymentSubType.STK && (payment.provider as StkRequest)?.status !== Status.PAID) {
             paymentDropdownItems.push(
-                <Dropdown.Item as="button" onClick={() => queryPayment('query-status')}>
+                <DropdownMenuItem onClick={() => queryPayment('query-status')}>
                     <MdQueryStats />
                     &nbsp; Query Status
-                </Dropdown.Item>
+                </DropdownMenuItem>
             );
         }
     }
     if (payment?.status === Status.COMPLETED) {
         paymentDropdownItems.push(
-            <Dropdown.Item as="button" onClick={() => queryPayment('retry-purchase')}>
-                <HiOutlineRefresh />
+            <DropdownMenuItem onClick={() => queryPayment('retry-purchase')}>
+                <FaSyncAlt />
                 &nbsp; Retry Purchase
-            </Dropdown.Item>
+            </DropdownMenuItem>
         );
         paymentDropdownItems.push(
-            <Dropdown.Item as="button" onClick={() => queryPayment('reverse')}>
+            <DropdownMenuItem onClick={() => queryPayment('reverse')}>
                 <FaUndoAlt />
                 &nbsp; Reverse Payment
-            </Dropdown.Item>
+            </DropdownMenuItem>
         );
     }
 
     return (
-        <>
-            <Card className="mb-3">
+        <div className="space-y-3">
+            <Card className="relative">
                 <CardBgCorner corner={4} />
-                <Card.Body className="position-relative">
-                    <Flex justifyContent={'between'}>
-                        <div>
-                            <h5 className={'m-0'}>Payment Details: #{payment?.id}</h5>
-                            <p className="fs--1 mb-0">{moment(payment?.created_at).format('MMM Do, Y, hh:mm A')}</p>
-                            <div className={'text-400 text-decoration-underline fs--2'}>
-                                <b>Latency</b>({calcLatency(payment.updated_at, payment.created_at)}s)
-                            </div>
-                        </div>
-                        <div className={'text-end'}>
-                            <h5 className={'m-0'}>{payment?.type.toUpperCase()}</h5>
-                            <small>
-                                <b>{payment.subtype}</b>
-                            </small>
-                        </div>
-                    </Flex>
-                    <Flex justifyContent={'between'} alignItems={'end'}>
-                        <StatusChip
+                <CardHeader className={'relative flex-row justify-between items-start'}>
+                    <div>
+                        <h5 className={'font-semibold leading-none tracking-tight'}>Payment: #{payment?.id}</h5>
+                        <p className="text-sm text-muted-foreground">
+                            {moment(payment?.created_at).format('MMM Do, Y | hh:mm A')}
+                        </p>
+                        <span className={'font-bold text-xs'}>
+                            Latency <Latency from={payment.created_at} to={payment.updated_at} />
+                        </span>
+                    </div>
+                    <div className={'text-end leading-none'}>
+                        <h5 className={'m-0'}>{payment?.type.toUpperCase()}</h5>
+                        <small>
+                            <b>{payment.subtype}</b>
+                        </small>
+                    </div>
+                </CardHeader>
+                <CardContent className="relative">
+                    <div className={'flex justify-between items-end'}>
+                        <StatusBadge
                             status={payment.status}
                             statuses={[Status.COMPLETED, Status.FAILED]}
                             onStatusChange={async (status) => {
-                                await Sweet.fire({
+                                await Swal.fire({
                                     backdrop: `rgba(0, 0, 150, 0.4)`,
                                     showLoaderOnConfirm: true,
                                     icon: 'warning',
@@ -189,7 +174,7 @@ const Show = () => {
                                     confirmButtonText: 'Proceed',
                                     title: 'Update Status',
                                     html: `Are you sure you want to update the status of this payment to <b>${status}</b>?`,
-                                    allowOutsideClick: () => !Sweet.isLoading(),
+                                    allowOutsideClick: () => !Swal.isLoading(),
                                     preConfirm: async () => {
                                         let res;
                                         if (status === Status.COMPLETED) {
@@ -209,20 +194,31 @@ const Show = () => {
                                 });
                             }}
                         />
-                        <Flex alignItems={'center'}>
+                        <div className={'items-center'}>
                             {payment?.description?.toLowerCase().includes('reversal') && (
-                                <Tooltip title={'Previous Payment'} placement={'start'}>
-                                    <Link
-                                        to={`/payments/${payment.destination_data.payment_id}`}
-                                        className={'btn btn-secondary py-1 px-2 rounded-circle'}
-                                    >
-                                        <MdRotateLeft />
-                                    </Link>
+                                <Tooltip title={'Previous Payment'} placement={'left'} asChild>
+                                    <Button size={'icon'} className={'rounded-full h-7 w-7'}>
+                                        <Link to={`/payments/${payment.destination_data.payment_id}`}>
+                                            <TiArrowBack />
+                                        </Link>
+                                    </Button>
                                 </Tooltip>
                             )}
 
                             {paymentDropdownItems.length > 0 && (
-                                <Dropdown>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button size={'icon'} className={'rounded-full h-7 w-7'}>
+                                            <CgOptions />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        {paymentDropdownItems.map((item, i) => (
+                                            <Fragment key={i}>{item}</Fragment>
+                                        ))}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                /*<Dropdown>
                                     <Dropdown.Toggle size={'sm'} as={'a'} className={'cursor-pointer'}>
                                         <FaCrosshairs className={'btn btn-danger py-2 px-2 rounded-circle'} />
                                     </Dropdown.Toggle>
@@ -231,75 +227,49 @@ const Show = () => {
                                             <Fragment key={i}>{item}</Fragment>
                                         ))}
                                     </Dropdown.Menu>
-                                </Dropdown>
+                                </Dropdown>*/
                             )}
-                        </Flex>
-                    </Flex>
-                </Card.Body>
+                        </div>
+                    </div>
+                </CardContent>
             </Card>
 
-            <Card className="mb-3">
+            <Card className="relative">
                 <CardBgCorner corner={1} />
-                <Card.Body className={'position-relative'}>
-                    <Row>
-                        <Col lg={4} className="mb-4 mb-lg-0">
-                            <h5 className="mb-3 fs-0">Account</h5>
-                            {payment.account ? (
-                                <>
-                                    <h6 className="mb-2">
-                                        <a
-                                            href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${payment.account?.user_id}`}
-                                            target={'_blank'}
-                                            rel={'noreferrer noopener'}
-                                        >
-                                            {payment.account?.user?.name}
-                                        </a>
-                                    </h6>
-                                    <p className="mb-0 fs--1">
-                                        <a
-                                            href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${payment.account?.id}`}
-                                            target={'_blank'}
-                                            rel={'noreferrer noopener'}
-                                        >
-                                            {payment.account?.phone}
-                                        </a>
-                                    </p>
-                                </>
-                            ) : (
-                                'N / A'
-                            )}
-                        </Col>
-                        <Col lg={8} className="mb-4 mb-lg-0">
-                            <h5 className="mb-3 fs-0">Details</h5>
-                            <Row>
-                                <Col>
-                                    <p className="mb-0 fs--1">
-                                        <b>Description: </b>
-                                        {payment.description}
-                                    </p>
-                                    <p className="mb-0 fs--1">
-                                        <b>Amount: </b>({currencyFormat(payment.amount)})
-                                    </p>
-                                    {payment.charge > 0 && (
-                                        <p className="mb-0 fs--1">
-                                            <b>Charge: </b>({currencyFormat(payment.charge)})
-                                        </p>
-                                    )}
-                                </Col>
-                                <Col>
-                                    <p className="mb-0 fs--1">
-                                        <b>Source: </b>
-                                        {payment.type} ~ {payment.subtype}
-                                    </p>
-                                    <p className="mb-0 fs--1">
-                                        <b>Destination: </b>
-                                        {payment.destination_type} ~ {payment.destination_subtype}
-                                    </p>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                </Card.Body>
+                <CardHeader className={'font-semibold leading-none tracking-tight'}>Details</CardHeader>
+                <CardContent className={'relative'}>
+                    <div className="flex flex-col justify-evenly gap-y-1 lg:flex-row lg:h-12 lg:items-center lg:space-x-4 text-sm">
+                        <div>
+                            <small className={'text-muted-foreground'}>Account</small>
+                            <SidoohAccount account={payment.account} />
+                        </div>
+                        <Separator orientation="vertical" />
+                        <div>
+                            <small className={'text-muted-foreground'}>Description</small>
+                            <p>{payment.description}</p>
+                        </div>
+                        <Separator orientation="vertical" />
+                        <div>
+                            <small className={'text-muted-foreground'}>Amount</small>
+                            <p>{currencyFormat(payment.amount)}</p>
+                            <small className={'text-red-700'}>{currencyFormat(payment.charge)}</small>
+                        </div>
+                        <Separator orientation="vertical" />
+                        <div>
+                            <small className={'text-muted-foreground'}>Source</small>
+                            <p>
+                                {payment.type} ~ {payment.subtype}
+                            </p>
+                        </div>
+                        <Separator orientation="vertical" />
+                        <div>
+                            <small className={'text-muted-foreground'}>Destination</small>
+                            <p>
+                                {payment.destination_type} ~ {payment.destination_subtype}
+                            </p>
+                        </div>
+                    </div>
+                </CardContent>
             </Card>
 
             {payment?.type === PaymentType.MPESA && <MpesaPayment payment={payment} />}
@@ -308,7 +278,7 @@ const Show = () => {
                 <SourceProvider payment={payment as Payment<FloatAccountTransaction | VoucherTransaction>} />
             )}
             <DestinationProvider payment={payment} />
-        </>
+        </div>
     );
 };
 

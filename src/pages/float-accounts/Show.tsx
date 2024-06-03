@@ -1,93 +1,85 @@
 import { useParams } from 'react-router-dom';
-import { SectionError, SectionLoader, Tooltip } from '@nabcellent/sui-react';
-import CardHeader from '@/components/common/CardHeader';
-import { Card, Col, Row } from 'react-bootstrap';
 import CardBgCorner from '@/components/CardBgCorner';
-import { CONFIG } from '@/config';
 import CountUp from 'react-countup';
-import { logger } from '@/utils/logger';
-import { useFloatAccountQuery, useFloatAccountsQuery, useTopUpFloatAccountMutation } from '@/services/floatAccountsApi';
+import { useFloatAccountQuery, useFloatAccountsQuery } from '@/services/floatAccountsApi';
 import FloatAccountTransactionsTable from '@/components/tables/FloatAccountTransactionsTable';
-import { FaInfo, FaPlus } from 'react-icons/fa6';
-import { topUpFloatAccount } from '@/components/TopUpFloatAccount.tsx';
+import { FaPlus } from 'react-icons/fa6';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import AlertInfo from '@/components/alerts/AlertInfo.tsx';
+import SidoohAccount from '@/components/common/SidoohAccount.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Separator } from '@/components/ui/separator.tsx';
+import TopUpFloatAccount from '@/components/TopUpFloatAccount.tsx';
 
 const Show = () => {
     const { id } = useParams();
     const { data: floatAccount, isError, error, isLoading, isSuccess } = useFloatAccountQuery(Number(id));
     const { data: floatAccounts } = useFloatAccountsQuery();
-    const [topUpMutation] = useTopUpFloatAccountMutation();
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !floatAccount) return <SectionLoader />;
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !floatAccount) return <Skeleton className={'h-[500px]'} />;
 
-    logger.log(floatAccount);
     const account = floatAccount.account;
 
     return (
-        <>
-            <Card className={'mb-3'}>
+        <div className={'space-y-3'}>
+            <Card className={'relative'}>
                 <CardBgCorner corner={3} />
-                <Card.Body className="position-relative">
-                    <h5>Float Account: {floatAccount.description}</h5>
-                    <h6>Account: #{account?.id}</h6>
-                    <h6 className="mb-2">
-                        <a
-                            href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${account?.user_id}`}
-                            target={'_blank'}
-                            rel={'noreferrer noopener'}
-                        >
-                            {account?.user?.name}
-                        </a>
-                    </h6>
-                    <p className="mb-0 fs--1">
-                        <a
-                            href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account?.id}`}
-                            target={'_blank'}
-                            rel={'noreferrer noopener'}
-                        >
-                            {account?.phone}
-                        </a>
-                    </p>
-                </Card.Body>
+                <CardHeader className={'relative font-semibold leading-none tracking-tight'}>
+                    <p>Float Account: #{floatAccount.id}</p>
+                    <p>Sidooh Account: #{account?.id}</p>
+                </CardHeader>
+                <CardContent className="relative space-y-3">
+                    <SidoohAccount account={account} />
+                    <Separator />
+                    <div>
+                        <p className={'text-muted-foreground text-xs'}>Description</p>
+                        <p>{floatAccount.description}</p>
+                    </div>
+                </CardContent>
             </Card>
 
-            <Row className={'justify-content-center mb-3'}>
-                <Col lg={6}>
-                    <Card className={'bg-line-chart-gradient'}>
-                        <Card.Body className={'bg-transparent light d-flex justify-content-between align-items-start'}>
-                            <div>
-                                <h6 className="text-white">BALANCE</h6>
-                                <h4 className="text-white m-0">
-                                    <CountUp end={floatAccount.balance} prefix={'KES '} separator="," />
-                                </h4>
-                            </div>
+            <div className={'grid lg:grid-cols-3'}>
+                <div className={'lg:col-start-2'}>
+                    <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center'}>
+                        <CardHeader className="text-muted-foreground text-sm pb-0">BALANCE</CardHeader>
+
+                        <CardContent>
+                            <CountUp
+                                className={'text-white text-xl'}
+                                end={floatAccount.balance}
+                                prefix={'KES '}
+                                separator=","
+                            />
 
                             {floatAccounts && floatAccounts?.length > 0 && (
-                                <button
-                                    className="btn btn-sm btn-light p-0 rounded-circle"
-                                    onClick={() => topUpFloatAccount(floatAccount, floatAccounts, topUpMutation)}
-                                    style={{ width: 30, height: 30 }}
-                                >
-                                    <Tooltip title={'Top Up'} placement={'top'}>
-                                        <FaPlus style={{ color: 'green' }} />
-                                    </Tooltip>
-                                </button>
+                                <TopUpFloatAccount
+                                    floatAccount={floatAccount}
+                                    floatAccounts={floatAccounts.filter((f) => f.id !== floatAccount.id)}
+                                    trigger={
+                                        <Button
+                                            size={'icon'}
+                                            variant={'secondary'}
+                                            className="rounded-full absolute top-3 end-3 w-7 h-7"
+                                        >
+                                            <FaPlus color={'green'} />
+                                        </Button>
+                                    }
+                                />
                             )}
-                        </Card.Body>
+                        </CardContent>
                     </Card>
-                </Col>
-            </Row>
+                </div>
+            </div>
 
             {floatAccount?.transactions?.length ? (
                 <FloatAccountTransactionsTable transactions={floatAccount.transactions} />
             ) : (
-                <Card className={'mb-3 bg-soft-primary'}>
-                    <CardHeader title={'No Float Transactions Made Yet.'}>
-                        <FaInfo />
-                    </CardHeader>
-                </Card>
+                <AlertInfo title={'No Float Account Transactions Made Yet.'} />
             )}
-        </>
+        </div>
     );
 };
 

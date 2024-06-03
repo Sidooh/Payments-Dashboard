@@ -1,13 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { authApi, LoginRequest } from './authApi.ts';
-
-//  Get user data from localstorage
-const auth = JSON.parse(String(localStorage.getItem('auth')));
+import { authAPI } from './authApi';
+import { LoginRequest } from '@/lib/types';
 
 export type AuthState = {
-    auth?: {
-        token?: string;
-    } | null;
+    token?: string;
     isError: boolean;
     isSuccess: boolean;
     isLoading: boolean;
@@ -15,7 +11,7 @@ export type AuthState = {
 };
 
 const initialState: AuthState = {
-    auth: auth || null,
+    token: JSON.parse(String(localStorage.getItem('token'))),
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -24,20 +20,14 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk('auth/login', async (user: LoginRequest, thunkAPI) => {
     try {
-        return await authApi.login(user);
-    } catch (err: any) {
-        const message =
-            err.response?.data?.errors[0]?.message ??
-            err.message ??
-            (err.response && err.response.data && err.response.data.message) ??
-            err.toString();
-
-        return thunkAPI.rejectWithValue(message);
+        return await authAPI.login(user);
+    } catch (err: unknown) {
+        return thunkAPI.rejectWithValue((err as { message: string }).message);
     }
 });
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-    await authApi.logout();
+    authAPI.logout();
 });
 
 export const authSlice = createSlice({
@@ -59,16 +49,16 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.auth = action.payload;
+                state.token = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = String(action.payload);
-                state.auth = undefined;
+                state.token = undefined;
             })
             .addCase(logout.fulfilled, (state) => {
-                state.auth = undefined;
+                state.token = undefined;
             });
     },
 });

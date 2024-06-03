@@ -1,15 +1,13 @@
 import { useVoucherTransactionsQuery } from '@/services/vouchersApi';
-import { SectionError, SectionLoader } from '@nabcellent/sui-react';
 import VoucherTransactionsTable from '@/components/tables/VoucherTransactionsTable';
-import { logger } from '@/utils/logger';
+import AlertError from '@/components/alerts/AlertError.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
 
 const VoucherTransactions = () => {
     let { data: transactions, isLoading, isSuccess, isError, error } = useVoucherTransactionsQuery();
 
-    if (isError) return <SectionError error={error} />;
-    if (isLoading || !isSuccess || !transactions) return <SectionLoader />;
-
-    logger.log(transactions);
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !transactions) return <Skeleton className={'h-[700px]'} />;
 
     return <VoucherTransactionsTable transactions={transactions} />;
 };
