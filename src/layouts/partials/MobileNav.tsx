@@ -34,15 +34,15 @@ export function MobileNav() {
                     <span className="sr-only">Toggle Menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-3/5 pr-0">
-                <MobileLink to="/" className="ps-4 flex items-center" onOpenChange={setOpen}>
+            <SheetContent side="left" className="w-4/6 pr-0">
+                <MobileLink to="/" className="flex items-center" onOpenChange={setOpen}>
                     <Logo />
                 </MobileLink>
                 <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10">
                     <div className="flex flex-col space-y-4">
                         {routes.map((r, index) => (
                             <div key={index} className="flex flex-col pt-6 pe-6">
-                                <h2 className="px-4 tracking-tight text-gray-400">{r.label}</h2>
+                                <h2 className="pe-4 tracking-tight text-gray-400">{r.label}</h2>
                                 <div className="space-y-2">
                                     {r.children.map(({ name, icon: Icon, to, children }, i) => (
                                         <Fragment key={`child-${name}-${i}`}>
@@ -51,7 +51,7 @@ export function MobileNav() {
                                                 to={to ?? ''}
                                                 onOpenChange={setOpen}
                                                 className={({ isActive }) =>
-                                                    cn('group flex items-center px-4 py-2 font-medium', {
+                                                    cn('group flex items-center pe-4 py-2 font-medium', {
                                                         'hover:text-gray-500': !children,
                                                         'text-primary border-e-2 border-e-primary/70':
                                                             isActive && !children,
@@ -71,7 +71,7 @@ export function MobileNav() {
                                                         onOpenChange={setOpen}
                                                         className={({ isActive }) =>
                                                             cn(
-                                                                'group flex items-center ps-9 py-0 font-medium text-gray-700 hover:text-gray-900',
+                                                                'group flex items-center ps-6 py-0 font-medium text-gray-700 hover:text-gray-900',
                                                                 {
                                                                     'text-primary border-e-2 border-e-primary/70':
                                                                         isActive,
