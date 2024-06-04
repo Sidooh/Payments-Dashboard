@@ -20,20 +20,27 @@ import { useMemo, useState } from 'react';
 import { DataTablePagination } from '@/components/datatable/DataTablePagination.tsx';
 import { CaretDownIcon, CaretSortIcon, CaretUpIcon } from '@radix-ui/react-icons';
 import DataTableToolbar from '@/components/datatable/DataTableToolbar.tsx';
-import { FacetedFilterType } from '@/lib/types';
+import { DataTableDefaultProps, FacetedFilterType } from '@/lib/types';
 import { Input } from '@/components/ui/input.tsx';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import DataTableColumnFilter from '@/components/datatable/DataTableColumnFilter.tsx';
 
-interface DataTableProps<TData, TValue> {
-    title?: string;
+export interface DataTableProps<TData, TValue> extends DataTableDefaultProps {
     columns: ColumnDef<TData, TValue>[];
+    currentServerPage?: number;
     data: TData[];
     facetedFilters?: FacetedFilterType[];
 }
 
-export function DataTable<TData, TValue>({ title, columns, data, facetedFilters }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+    title,
+    columns,
+    data,
+    facetedFilters,
+    isRefreshing = false,
+    onRefresh,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [globalFilter, setGlobalFilter] = useState('');
@@ -115,6 +122,8 @@ export function DataTable<TData, TValue>({ title, columns, data, facetedFilters 
                 facetedFilters={facetedFilters}
                 filtering={filtering}
                 setFiltering={setFiltering}
+                onRefresh={onRefresh}
+                isRefreshing={isRefreshing}
                 globalFilter={
                     <Input
                         type={'search'}

@@ -10,8 +10,7 @@ const TableDate = ({ date, dateOverTime }: TableDataProps) => {
     return (
         <>
             <strong>{dateOverTime ? relativeDate : time}</strong>
-            <br />
-            <small className={'text-gray-600 text-[7pt]'}>{dateOverTime ? time : relativeDate}</small>
+            <p className={'leading-snug text-gray-600 text-[7pt]'}>{dateOverTime ? time : relativeDate}</p>
         </>
     );
 };

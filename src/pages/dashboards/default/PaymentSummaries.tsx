@@ -40,7 +40,7 @@ const PaymentSummaries = () => {
                         </Badge>
                     </div>
                 </CardHeader>
-                <CardContent className={'flex flex-col justify-content-center'}>
+                <CardContent className={'relative flex flex-col justify-content-center'}>
                     <h5 className="text-xl font-semibold">
                         <CountUp end={stats.total_revenue} prefix={'KES '} separator="," />
                     </h5>

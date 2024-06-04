@@ -59,3 +59,32 @@ export type FacetedFilterType = {
         icon?: ComponentType<{ className?: string }>;
     }[];
 };
+
+export type DataTableDefaultProps = {
+    currentServerPage?: number;
+    isRefreshing?: boolean;
+    onGoToServerPage?: (page: number) => void;
+    onNextServerPage?: () => void;
+    onPreviousServerPage?: () => void;
+    onRefresh?: () => void;
+    onSetServerPageSize?: (page: number) => void;
+    serverPageCount?: number;
+    serverPageSize?: number;
+    serverTotal?: number;
+    title?: string;
+};
+
+export interface PaginationState {
+    page: number;
+    page_size: number;
+}
+
+export interface PaginatedResponse<T> {
+    data: T;
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number;
+    to: number;
+}

@@ -34,8 +34,8 @@ const StatusBadge = ({ status, statuses = [], onStatusChange }: StatusChipType) 
                 'bg-[#c0cfce] text-[#283434]': status === Status.EXPIRED,
             })}
         >
-            {Icon && <Icon />}
-            <small>{status}</small>
+            {Icon && <Icon size={10} />}
+            <small className={'leading-snug'}>{status}</small>
         </Badge>
     );
 

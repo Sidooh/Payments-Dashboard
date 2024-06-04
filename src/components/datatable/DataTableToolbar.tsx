@@ -1,12 +1,13 @@
 import { DataTableFacetedFilter } from '@/components/datatable/DataTableFacetedFilter.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { Cross2Icon, ReloadIcon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
 import { FacetedFilterType } from '@/lib/types';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { DataTableViewOptions } from '@/components/datatable/DataTableViewOptions.tsx';
 import Tooltip from '@/components/common/Tooltip.tsx';
 import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import { TbRefresh } from 'react-icons/tb';
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;
@@ -14,6 +15,8 @@ interface DataTableToolbarProps<TData> {
     facetedFilters?: FacetedFilterType[];
     filtering: boolean;
     setFiltering: Dispatch<SetStateAction<boolean>>;
+    isRefreshing?: boolean;
+    onRefresh?: () => void;
 }
 
 export function DataTableToolbar<TData>({
@@ -22,6 +25,8 @@ export function DataTableToolbar<TData>({
     filtering,
     setFiltering,
     globalFilter,
+    isRefreshing = false,
+    onRefresh,
 }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -48,6 +53,18 @@ export function DataTableToolbar<TData>({
                     </Button>
                 )}
             </div>
+            {onRefresh && (
+                <Tooltip title={'Refresh'} asChild>
+                    <Button
+                        variant={'ghost'}
+                        size="icon"
+                        className={'hidden lg:flex rounded-full text-red-700 hover:text-red-700 hover:bg-red-700/10'}
+                        onClick={onRefresh}
+                    >
+                        {isRefreshing ? <ReloadIcon className="animate-spin" /> : <TbRefresh />}
+                    </Button>
+                </Tooltip>
+            )}
             <Tooltip title={'Filter columns'} asChild>
                 <Button
                     variant="ghost"
