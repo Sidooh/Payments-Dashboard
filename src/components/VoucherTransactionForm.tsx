@@ -107,7 +107,7 @@ export const VoucherTransactionForm = ({ voucher }: VoucherTransactionFormProps)
                     </Tooltip>
                 </div>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className={'w-5/6'}>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                         <DialogHeader>

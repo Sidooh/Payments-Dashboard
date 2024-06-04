@@ -43,7 +43,7 @@ export function MobileNav() {
                         {routes.map((r, index) => (
                             <div key={index} className="flex flex-col pt-6 pe-6">
                                 <h2 className="px-4 tracking-tight text-gray-400">{r.label}</h2>
-                                <div className="space-y-1">
+                                <div className="space-y-2">
                                     {r.children.map(({ name, icon: Icon, to, children }, i) => (
                                         <Fragment key={`child-${name}-${i}`}>
                                             <MobileLink

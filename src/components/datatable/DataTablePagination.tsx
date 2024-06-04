@@ -10,7 +10,7 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
     return (
-        <div className="flex items-center justify-between px-2 overflow-x-auto gap-3 text-nowrap text-xs md:text-sm">
+        <div className="flex items-center justify-between px-2 overflow-x-auto gap-3 text-nowrap text-xs md:text-sm relative">
             <div className="flex-1 text-muted-foreground">
                 {table.getIsSomeRowsSelected() || table.getIsAllRowsSelected() ? (
                     <span>

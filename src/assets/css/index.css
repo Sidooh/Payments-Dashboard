@@ -78,6 +78,10 @@
     }
 }
 
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
 .divider-content-center {
     position: absolute;
     top: 50%;
