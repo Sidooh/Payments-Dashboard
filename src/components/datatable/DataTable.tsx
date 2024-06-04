@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import DataTableColumnFilter from '@/components/datatable/DataTableColumnFilter.tsx';
+import { ThreeDots } from '@/components/SVGLoader.tsx';
 
 export interface DataTableProps<TData, TValue> extends DataTableDefaultProps {
     columns: ColumnDef<TData, TValue>[];
@@ -135,64 +136,84 @@ export function DataTable<TData, TValue>({
                 }
             />
 
-            <Table>
-                <TableHeader>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <TableHead key={header.id}>
-                                    {!header.isPlaceholder && (
-                                        <>
-                                            <div
-                                                className="flex items-center -ml-4 h-8 px-3 data-[state=open]:bg-accent text-secondary-foreground hover:bg-secondary/80 cursor-pointer"
-                                                onClick={header.column.getToggleSortingHandler()}
-                                            >
-                                                <span className={'font-bold text-xs md:text-sm'}>
-                                                    {flexRender(header.column.columnDef.header, header.getContext())}
-                                                </span>
-                                                {header.column.getCanSort() &&
-                                                    ({
-                                                        asc: <CaretUpIcon className="ml-2 h-4 w-4" />,
-                                                        desc: <CaretDownIcon className="ml-2 h-4 w-4" />,
-                                                    }[header.column.getIsSorted() as string] ?? (
-                                                        <CaretSortIcon className="ml-2 h-4 w-4" />
-                                                    ))}
-                                            </div>
+            <div className="relative">
+                <div
+                    style={{
+                        zIndex: 2,
+                        backdropFilter: 'blur(10px)',
+                        opacity: isRefreshing ? 1 : 0,
+                        visibility: isRefreshing ? 'visible' : 'hidden',
+                        transition: 'opacity 1s, visibility 1s',
+                    }}
+                    className={'absolute start-0 top-0 end-0 bottom-0 flex justify-center items-center'}
+                >
+                    <div className={'text-center text-muted-foreground'} style={{ fontFamily: 'Pacifico, cursive' }}>
+                        <ThreeDots fill={'#0F1B4C'} />
+                    </div>
+                </div>
 
-                                            {filtering && header.column.getCanFilter() && (
-                                                <DataTableColumnFilter table={table} column={header.column} />
-                                            )}
-                                        </>
-                                    )}
-                                </TableHead>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && 'selected'}
-                                className={'border-muted'}
-                            >
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} className={'text-xs md:text-sm'}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </TableCell>
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {!header.isPlaceholder && (
+                                            <>
+                                                <div
+                                                    className="flex items-center -ml-4 h-8 px-3 data-[state=open]:bg-accent text-secondary-foreground hover:bg-secondary/80 cursor-pointer"
+                                                    onClick={header.column.getToggleSortingHandler()}
+                                                >
+                                                    <span className={'font-bold text-xs md:text-sm'}>
+                                                        {flexRender(
+                                                            header.column.columnDef.header,
+                                                            header.getContext()
+                                                        )}
+                                                    </span>
+                                                    {header.column.getCanSort() &&
+                                                        ({
+                                                            asc: <CaretUpIcon className="ml-2 h-4 w-4" />,
+                                                            desc: <CaretDownIcon className="ml-2 h-4 w-4" />,
+                                                        }[header.column.getIsSorted() as string] ?? (
+                                                            <CaretSortIcon className="ml-2 h-4 w-4" />
+                                                        ))}
+                                                </div>
+
+                                                {filtering && header.column.getCanFilter() && (
+                                                    <DataTableColumnFilter table={table} column={header.column} />
+                                                )}
+                                            </>
+                                        )}
+                                    </TableHead>
                                 ))}
                             </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                    className={'border-muted'}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id} className={'text-xs md:text-sm'}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
+                                    No results.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
 
             <DataTablePagination table={table} />
         </Card>
