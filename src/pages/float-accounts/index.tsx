@@ -3,7 +3,7 @@ import { useFloatAccountsQuery } from '@/services/floatAccountsApi.ts';
 import { FloatAccount } from '@/lib/types/models';
 import { FaPlus, FaRegEye } from 'react-icons/fa6';
 import SidoohAccount from '@/components/common/SidoohAccount.tsx';
-import TopUpFloatAccount from '@/components/TopUpFloatAccount.tsx';
+import FloatTopUpForm from '@/components/FloatTopUpForm.tsx';
 import AlertError from '@/components/alerts/AlertError.tsx';
 import { Skeleton } from '@/components/ui/skeleton.tsx';
 import { DataTable } from '@/components/datatable/DataTable.tsx';
@@ -54,7 +54,7 @@ const FloatAccounts = () => {
                     id: 'Actions',
                     cell: ({ row: { original } }) => (
                         <div className={'flex justify-between'}>
-                            <TopUpFloatAccount
+                            <FloatTopUpForm
                                 floatAccount={original}
                                 floatAccounts={floatAccounts.filter((f) => f.id !== original.id)}
                                 trigger={

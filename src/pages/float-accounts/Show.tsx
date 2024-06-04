@@ -11,7 +11,7 @@ import AlertInfo from '@/components/alerts/AlertInfo.tsx';
 import SidoohAccount from '@/components/common/SidoohAccount.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Separator } from '@/components/ui/separator.tsx';
-import TopUpFloatAccount from '@/components/TopUpFloatAccount.tsx';
+import FloatTopUpForm from '@/components/FloatTopUpForm.tsx';
 
 const Show = () => {
     const { id } = useParams();
@@ -55,7 +55,7 @@ const Show = () => {
                             />
 
                             {floatAccounts && floatAccounts?.length > 0 && (
-                                <TopUpFloatAccount
+                                <FloatTopUpForm
                                     floatAccount={floatAccount}
                                     floatAccounts={floatAccounts.filter((f) => f.id !== floatAccount.id)}
                                     trigger={

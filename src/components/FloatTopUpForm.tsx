@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { PaymentSubType } from '@/lib/enums.ts';
 import { FloatAccount } from '@/lib/types/models.ts';
-import { cn, currencyFormat, Str, toast } from '@/lib/utils.ts';
+import { cn, currencyFormat, toast } from '@/lib/utils.ts';
 import {
     Form,
     FormControl,
@@ -51,7 +51,7 @@ const schema = yup.object().shape({
     source_account: yup.number().required(),
 });
 
-export default function TopUpFloatAccount({ trigger, floatAccount, floatAccounts }: TopUpFloatAccountProps) {
+export default function FloatTopUpForm({ trigger, floatAccount, floatAccounts }: TopUpFloatAccountProps) {
     const [topUp, { isLoading, error }] = useTopUpFloatAccountMutation();
     const [open, setOpen] = useState(false);
 
@@ -79,7 +79,12 @@ export default function TopUpFloatAccount({ trigger, floatAccount, floatAccounts
 
     const getLabel = (a?: FloatAccount) =>
         a
-            ? `${a.account_id} - ${Str.headline(a.floatable_type)} ID, ${a.id} ${a.account?.user?.name ? ` - ${a.account?.user?.name}` : ''} ${a.description ? ` - ${a.description}` : ''} - ${currencyFormat(a.balance)}`
+            ? `${a.account_id} - Float Acc: ${a.id} ${a.account?.user?.name ? ` - ${a.account?.user?.name}` : ''} ${a.description ? ` - ${a.description}` : ''} - ${currencyFormat(a.balance)}`
+            : '';
+
+    const getShortLabel = (a?: FloatAccount) =>
+        a
+            ? `Float Account: ${a.id} ${a.account?.user?.name ? ` - ${a.account?.user?.name}` : ''} ${a.description ? ` | Store: ${a.description}` : ''}`
             : '';
 
     return (
@@ -113,13 +118,13 @@ export default function TopUpFloatAccount({ trigger, floatAccount, floatAccounts
                                                     )}
                                                 >
                                                     {field.value
-                                                        ? getLabel(floatAccounts.find((a) => a.id === field.value))
+                                                        ? getShortLabel(floatAccounts.find((a) => a.id === field.value))
                                                         : 'Select float account'}
                                                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                 </Button>
                                             </FormControl>
                                         </PopoverTrigger>
-                                        <PopoverContent className="w-full p-0">
+                                        <PopoverContent className="lg:w-full p-0">
                                             <Command>
                                                 <CommandInput placeholder="Search account..." className="h-9" />
                                                 <CommandList>
@@ -127,6 +132,7 @@ export default function TopUpFloatAccount({ trigger, floatAccount, floatAccounts
                                                     <CommandGroup>
                                                         {floatAccounts.map((a) => (
                                                             <CommandItem
+                                                                className={'border-b md:border-b-0'}
                                                                 value={getLabel(a)}
                                                                 key={a.id}
                                                                 onSelect={() => {
