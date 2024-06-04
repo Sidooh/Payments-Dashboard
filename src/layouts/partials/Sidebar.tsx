@@ -8,8 +8,8 @@ export default function Sidebar() {
         <nav className={'pb-12 fixed w-[12.625rem]'}>
             <div className="space-y-4 py-4">
                 {routes.map((r, i) => (
-                    <div key={`route-${i}`} className="px-3 py-2 text-sm">
-                        <h2 className="mb-2 px-4 tracking-tight text-gray-400">{r.label}</h2>
+                    <div key={`route-${i}`} className="pe-3 py-2 text-sm">
+                        <h2 className="mb-2 tracking-tight text-gray-400">{r.label}</h2>
                         <div className="space-y-1">
                             {r.children.map(({ name, icon: Icon, to, children }, i) => (
                                 <Fragment key={`child-${name}-${i}`}>
@@ -17,7 +17,7 @@ export default function Sidebar() {
                                         end
                                         to={to ?? ''}
                                         className={({ isActive }) =>
-                                            cn('group flex items-center px-3 py-2 font-medium', {
+                                            cn('group flex items-center py-2 font-medium', {
                                                 'hover:text-gray-500': !children,
                                                 'text-primary border-e-2 border-e-primary/70': isActive && !children,
                                             })
@@ -35,7 +35,7 @@ export default function Sidebar() {
                                                 key={`grand-child-${child.name}-${i}`}
                                                 className={({ isActive }) =>
                                                     cn(
-                                                        'group flex items-center ps-9 py-0 font-medium text-gray-700 hover:text-gray-900',
+                                                        'group flex items-center ps-6 py-0 font-medium text-gray-700 hover:text-gray-900',
                                                         {
                                                             'text-primary border-e-2 border-e-primary/70': isActive,
                                                         }
